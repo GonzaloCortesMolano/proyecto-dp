@@ -57,24 +57,39 @@ public class Charger
      * setters
      */
     
-    /*
-     * 
+    /**
+     * @return The unique identifier of the charger.
      */
     private void setId(String id){
         this.id=id;
     }
+    /**
+     * @return the charging speed of the charger.
+     */
     private void setChargingSpeed(int speed){
         this.chargingSpeed=speed;
     }
+    /**
+     * @return the charging fee of the charger.
+     */
     private void setChargingFee(double fee){
         this.chargingFee=fee;
     }
+    /**
+     * @return The list.
+     */
     private void setEVsRecharged(ArrayList<ElectricVehicle> v){
         this.eVsRecharged=v;
     }
+    /**
+     * @return The unique identifier of the charging station.
+     */
     private void setAmountCollected(double amount){
         this.amountCollected=amount;
     }
+    /**
+     * @return The unique identifier of the charging station.
+     */
     private void setFree(boolean free){
         this.free=free;
     }
