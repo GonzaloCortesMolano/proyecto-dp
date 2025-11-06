@@ -107,7 +107,7 @@ public class Location
     }
 
     /**
-     * @return The y coordinatee.
+     * @return The y coordinate.
      */
     public int getY()
     {
