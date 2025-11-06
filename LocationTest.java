@@ -45,6 +45,58 @@ public class LocationTest
     }
     
     /**
+     * Test the {@code Location} parameterized constructor method of the {@link Location} class.
+     * Verifies that the x and y coordinates are correctly initialized 
+     * when creating a new Location object with specific values.
+     */
+    @Test
+    public void testLocation()
+    {
+       Location a=new Location(5, 2);
+       assertEquals(5, a.getX());
+       assertEquals(2, a.getY());
+    }
+    /**
+     * Test the {@code getX} method of the {@link Location} class.
+     * Verifies that the x coordinate is correctly returned
+     * for a {@link Location} object initialized with specific values.
+     */
+    @Test
+    public void testGetX(){
+        assertEquals(4, ubi2.getX());
+    }
+    /**
+     * Test the {@code getY} method of the {@link Location} class.
+     * Verifies that the y coordinate is correctly returned
+     * for a {@link Location} object initialized with specific values.
+     */
+    @Test
+    public void testGetY(){
+        assertEquals(3, ubi2.getY());
+    }
+    /**
+     * Tests the {@code setX(int)} method of the {@link Location} class.
+     * Ensures that the x coordinate is correctly updated
+     * after setting a new value using {@code setX}.
+     */
+    @Test
+    public void testSetX(){
+        Location a=new Location(5, 2);
+        a.setX(8);
+        assertEquals(8, a.getX());
+    }
+    /**
+     * Tests the {@code setY(int)} method of the {@link Location} class.
+     * Ensures that the y coordinate is correctly updated
+     * after setting a new value using {@code setY}.
+     */
+    @Test
+    public void testSetY(){
+        Location a=new Location(5, 2);
+        a.setY(7);
+        assertEquals(7, a.getY());
+    }
+    /**
      * Test the {@code distance} method of the {@link Location} class.
      * Checks distances from a central location to surrounding points.
      */
@@ -93,5 +145,25 @@ public class LocationTest
         destiny.setX(2);
         destiny.setY(4);
         assertEquals( ubi2.nextLocation(destiny), nextStepLocation );
+    }
+    /**
+     * Tests the {@code equals(Object)} method of the {@link Location} class.
+     * Ensures that two {@link Location} objects with the same coordinates 
+     * are considered equal, and that objects with different coordinates are not.
+     */
+    @Test
+    public void testEquals(){
+        assertFalse(ubi1.equals(ubi2));
+        Location otro=new Location(4, 3);
+        assertTrue(ubi2.equals(otro));
+    }
+    /**
+     * Tests the {@code toString()} method of the {@link Location} class.
+     * Verifies that the string representation of a {@link Location} object
+     * matches the expected format containing its x and y coordinates.
+     */
+    @Test
+    public void testToString(){
+        assertEquals("4-3", ubi2.toString());
     }
 }
