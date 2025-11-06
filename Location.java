@@ -113,8 +113,14 @@ public class Location
     {
         return y;
     }
-    
+    /**
+     * Set the current X position .
+     * @param x New X position it is.
+     */
     public void setX(int x) {this.x=x;}
-    
+    /**
+     * Set the current Y position .
+     * @param y New Y position it is.
+     */
     public void setY(int y){this.y=y;}
 }
