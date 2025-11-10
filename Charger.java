@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Charger
 {
-    private String id;
+    private String id; //Hola campeon
     private int chargingSpeed;
     private double chargingFee;
     private ArrayList<ElectricVehicle> eVsRecharged;
