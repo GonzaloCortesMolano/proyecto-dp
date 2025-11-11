@@ -60,37 +60,37 @@ public class Charger
     /**
      * @return The unique identifier of the charger.
      */
-    private void setId(String id){
+    public void setId(String id){
         this.id=id;
     }
     /**
      * @return the charging speed of the charger.
      */
-    private void setChargingSpeed(int speed){
+    public void setChargingSpeed(int speed){
         this.chargingSpeed=speed;
     }
     /**
      * @return the charging fee of the charger.
      */
-    private void setChargingFee(double fee){
+    public void setChargingFee(double fee){
         this.chargingFee=fee;
     }
     /**
      * @return The list.
      */
-    private void setEVsRecharged(ArrayList<ElectricVehicle> v){
+    public void setEVsRecharged(ArrayList<ElectricVehicle> v){
         this.eVsRecharged=v;
     }
     /**
      * @return The unique identifier of the charging station.
      */
-    private void setAmountCollected(double amount){
+    public void setAmountCollected(double amount){
         this.amountCollected=amount;
     }
     /**
      * @return The unique identifier of the charging station.
      */
-    private void setFree(boolean free){
+    public void setFree(boolean free){
         this.free=free;
     }
     
@@ -145,6 +145,7 @@ public class Charger
         double fee=kwsRecharging*getChargingFee();
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
+        setFree(false); //PREGUNTAR
         return fee;
     }
     

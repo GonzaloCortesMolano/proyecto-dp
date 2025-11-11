@@ -9,3 +9,5 @@ charging speed y fee son int o float
 Si un metodo get/set no se utiliza hay que quitarlo?
 
 Que es un hash code
+
+En el recargar de Charge hay que poner a false el Free??

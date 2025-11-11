@@ -42,10 +42,16 @@ public class ChargingStationTest
         station2 = new ChargingStation("Caceres", "CC2", loc2);
         
         //Chargers for the ChargingStation
-        charger1 = new Charger("CH1", 60, 0.25f);
-        charger2 = new Charger("CH2", 50, 0,25f);
-        charger3 = new Charger("CH3", 60, 0,25f);
-        charger4 = new Charger("CH4", 60, 0,25f);
+        charger1 = new Charger("CH1", 40, 0.25f);
+        charger2 = new Charger("CH2", 50, 0.30f);
+        charger3 = new Charger("CH3", 30, 0.20f);
+        charger4 = new Charger("CH4", 60, 0.40f);
+        
+        //Add the chargers to the station
+        station1.getChargers().add(charger1);
+        station1.getChargers().add(charger2);
+        station1.getChargers().add(charger3);
+        station1.getChargers().add(charger4);
     
     }
 
@@ -59,7 +65,19 @@ public class ChargingStationTest
     {
         station1 = null;
         station2 = null;
-        station3 = null;
-        station4 = null;
+        charger1 = null;
+        charger2 = null;
+        charger3 = null;
+        charger4 = null;
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testGetFreeCharger()
+    {
+       station1.getChargers().setFree(false);
+       
     }
 }
