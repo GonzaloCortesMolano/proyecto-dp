@@ -59,7 +59,7 @@ public class ChargingStation
      */
     public List<Charger> getChargers()
     {
-        return this.chargers;
+        return Collections.unmodifiableList(chargers);
     }
     
     /*
@@ -124,7 +124,7 @@ public class ChargingStation
     {
         this.toString();
         for(Charger c: chargers){
-            c.toString();
+            c.getCompleteInfo();
         }
         return null;
     }
