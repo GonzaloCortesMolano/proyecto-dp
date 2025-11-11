@@ -147,4 +147,15 @@ public class ChargingStationTest
         station2.addCharger(charger5);
         assertEquals(2, station2.getChargers().size());
     }
+    
+    /**
+     * Tests the {@code toString()} method.
+     * Ensures that the string is in the same format than as required.
+     */
+    @Test
+    public void testToString()
+    {
+        ChargingStation otra=new ChargingStation("Cáceres","CC01", new Location(10, 11));
+        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n", otra.toString());
+    }
 }

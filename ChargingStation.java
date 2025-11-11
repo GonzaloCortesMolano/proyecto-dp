@@ -133,7 +133,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + "\n";
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")\n";
     }
     
     /**
