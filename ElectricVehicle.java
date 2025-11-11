@@ -174,6 +174,9 @@ public class ElectricVehicle
         if(!enoughBattery(distanceToTheTargetLocation())){
             calculateRechargingPosition();
         }
+        else{
+            setRechargingLocation(null);
+        }
     }
     
     /**
@@ -269,7 +272,29 @@ public class ElectricVehicle
       */
     public void recharge(int step)
     {
+       ChargingStation station = company.getChargingStation(rechargingLocation);
+       Charger cargadorLibre = null;
+       
+       Iterator<Charger> it = station.getChargers().iterator();
+       while (it.hasNext() && cargadorLibre == null){
+           Charger cargador = it.next();
+           if(charger.getFree()){
+               cargadorLibre = cargador; //Guardamos el primer cargador que se encuentre libre
+           }
+       }
+       
+       if (cargadorLibre != null){
+           int kwhNeeded = getBatteryCapacity() - getBatteryLevel();
            
+           double cost = cargadorLibre.recharge(kwhNeeded, this);
+           
+           setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
+           incrementCharges();
+           incrementChargesCost(cost);
+           
+           setRechargingLocation(null);
+           calculateRoute();
+       }
     } 
     
     /**
