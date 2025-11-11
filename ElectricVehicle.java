@@ -319,6 +319,7 @@ public class ElectricVehicle
         String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
         if(){
             
+        
         }this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";
     }
 
