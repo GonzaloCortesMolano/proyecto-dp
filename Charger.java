@@ -22,7 +22,7 @@ public class Charger
      * @param speed The maximum charging speed in kWh.
      * @param fee The cost per kWh for charging.
      */
-    public Charger(String id, int speed, float fee)
+    public Charger(String id, int speed, double fee)
     {
         this.id=id;
         this.chargingSpeed=speed;

@@ -5,3 +5,7 @@ en las pruebas tendriamos que hacer todos los casos del modulo nextLocation?
 el id de charger como le ponemso el formato, igual que emn la Estacion de Recarga??
 
 charging speed y fee son int o float
+
+Si un metodo get/set no se utiliza hay que quitarlo?
+
+Que es un hash code
