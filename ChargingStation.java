@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
  */
 public class ChargingStation
 {
-    //TODO: Complete this code
     private String id;
     private String city;
     private Location locationE;
