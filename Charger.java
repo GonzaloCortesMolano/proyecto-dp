@@ -34,21 +34,40 @@ public class Charger
     /**
      * getters
      */
+    
+    /**
+     * @return The charger's id .
+     */
     public String getId(){
         return this.id;
     }
+    /**
+     * @return The charger's charging velocity.
+     */
     public int getChargingSpeed(){
         return this.chargingSpeed;
     }
+    /**
+     * @return The charger's charging fee.
+     */
     public double getChargingFee(){
         return this.chargingFee;
     }
+    /**
+     * @return The charger's list of charged vehicles.
+     */
     public ArrayList<ElectricVehicle> getEVsRecharged(){
         return this.eVsRecharged;
     }
+    /**
+     * @return The charger's cuantity of collected money.
+     */
     public double getAmountCollected(){
         return this.amountCollected;
     }
+    /**
+     * @return if the charger is or not free for use.
+     */
     public boolean getFree(){
         return this.free;
     }
@@ -58,31 +77,36 @@ public class Charger
      */
     
     /**
-     * @return The unique identifier of the charger.
+     * Set the charger's id
+     * @param id New id for the charger
      */
     public void setId(String id){
         this.id=id;
     }
     /**
-     * @return the charging speed of the charger.
+     * Set the charging speed
+     * @param speed New charging speed for the charger
      */
     public void setChargingSpeed(int speed){
         this.chargingSpeed=speed;
     }
     /**
-     * @return the charging fee of the charger.
+     * Set the charger's fee
+     * @param fee New fee for the charger
      */
     public void setChargingFee(double fee){
         this.chargingFee=fee;
     }
     /**
-     * @return The list.
+     * Set the list new of charged {@link ElectricVehicles}
+     * @param v New charger's list of {@link ElectricVehicles}
      */
     public void setEVsRecharged(ArrayList<ElectricVehicle> v){
         this.eVsRecharged=v;
     }
     /**
-     * @return The unique identifier of the charging station.
+     * Set the charger's money collected
+     * @param .
      */
     public void setAmountCollected(double amount){
         this.amountCollected=amount;

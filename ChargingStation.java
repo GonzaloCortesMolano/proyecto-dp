@@ -33,7 +33,6 @@ public class ChargingStation
     /*
      * getters
      */
-
     /**
      * @return The unique identifier of the charging station.
      */
@@ -59,21 +58,12 @@ public class ChargingStation
      */
     public List<Charger> getChargers()
     {
-        return chargers;
+        return chargers; //meted lo de no modificable
     }
     
     /*
      * setters
      */
-    /*
-     * 
-     */
-    public void setId(String id){
-        this.id=id;
-    }
-    public void setCity(String city){
-        this.city=city;
-    }
     /**
      * Set the current location of the charging station.
      * @param location Where it is. Must not be null.
@@ -81,9 +71,6 @@ public class ChargingStation
      */
     public void setLocation(Location location){
         this.locationE=location;
-    }
-    public void setChargers(ArrayList<Charger> v){
-        this.chargers=v;
     }
     
     /**
