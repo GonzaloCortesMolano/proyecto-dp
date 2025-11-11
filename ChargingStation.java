@@ -59,7 +59,7 @@ public class ChargingStation
      */
     public List<Charger> getChargers()
     {
-        return Collections.unmodifiableList(chargers);
+        return chargers;
     }
     
     /*
