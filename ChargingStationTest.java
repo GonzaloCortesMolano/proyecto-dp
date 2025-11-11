@@ -17,6 +17,9 @@ public class ChargingStationTest
     private Charger charger2;
     private Charger charger3;
     private Charger charger4;
+    private ElectricVehicle eVehicle1;
+    private ElectricVehicle eVehicle2;
+    private EVCompany Vectalia;
     /**
      * Default constructor for test class ChargingStationTest
      */
@@ -35,6 +38,8 @@ public class ChargingStationTest
         //Locations for the ChargingStation
         Location loc1 = new Location(5, 7);
         Location loc2 = new Location(12, 9);
+        Location locEV1 = new Location(4,7);
+        Location locEV2 = new Location(10,9);
         
         station1 = new ChargingStation("Caceres", "CC1", loc1);
         station2 = new ChargingStation("Caceres", "CC2", loc2);
@@ -45,6 +50,7 @@ public class ChargingStationTest
         charger3 = new Charger("CH3", 30, 0.20f);
         charger4 = new Charger("CH4", 60, 0.40f);
         
+        //Is necesary for one test
         charger3.setFree(false);
         
         //Add the chargers to the station
@@ -52,6 +58,15 @@ public class ChargingStationTest
         station1.getChargers().add(charger2);
         station1.getChargers().add(charger3);
         station1.getChargers().add(charger4);
+        //Company
+        Vectalia = new EVCompany();
+        //Vehicles
+        eVehicle1 = new ElectricVehicle(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
+        eVehicle1 = new ElectricVehicle(Vectalia, locEV2,loc2, "Tesla", "CC15", 60);
+        
+        //Recharge the vehicles
+        charger1.recharge(eVehicle1, 20); 
+        charger2.recharge(eVehicle2, 15); 
     
     }
 
@@ -69,6 +84,9 @@ public class ChargingStationTest
         charger2 = null;
         charger3 = null;
         charger4 = null;
+        eVehicle1 = null;
+        eVehicle2 = null;
+        Vectalia = null;
     }
     
     /**
@@ -86,6 +104,7 @@ public class ChargingStationTest
     @Test
     public void testGetNumerEVRecharged()
     {
+        assertEquals(2, station1.getNumberEVRecharged());
         assertEquals(0, station2.getNumberEVRecharged());
     }
 }
