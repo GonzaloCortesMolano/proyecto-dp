@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 /**
  * Model the common elements of an Electric Vehicle (EV) that operates 
  * within the simulation, moving towards a target and potentially recharging.
@@ -153,6 +153,15 @@ public class ElectricVehicle
     {
         this.rechargingLocation=location;
     }
+    /**
+     * Set the required final target location.
+     * @param location Where to go. Must not be null.
+     * @throws NullPointerException If location is null.
+     */
+    public void setBatteryLevel(int level)
+    {
+        this.batteryLevel=level;
+    }
     
     
     /**
@@ -212,25 +221,25 @@ public class ElectricVehicle
     public void calculateRechargingPosition()
     {
         //buscar la mejor estacion
-        List<ChargingStations> stations=this.getCompany().getCityStations();
-        Iterator<ChargingStations> it = stations.iterator();
+        List<ChargingStation> stations=this.getCompany().getCityStations();
+        Iterator<ChargingStation> it = stations.iterator();
         int betterDistance=0;
         Location betterStation=null;
         if(it.hasNext()){
-            betterStation=it.next();
-            betterDistance=this.getLocation().distance(betterLocation)+betterLocation.distance(this.getTargetLocation());
+            betterStation=it.next().getLocation();
+            betterDistance=this.getLocation().distance(betterStation)+betterStation.distance(this.getTargetLocation());
         }
         while(it.hasNext()){
-            Location currentLocation=it.next();
-            if(enoughBattery(currentLocation)){
+            Location currentLocation=it.next().getLocation();
+            if(enoughBattery(currentLocation.distance(this.getLocation()))){
                 int distance=this.getLocation().distance(currentLocation)+currentLocation.distance(this.getTargetLocation());
                 if(betterDistance>distance){
-                    betterLocation=currentLocation;
+                    betterStation=currentLocation;
                     betterDistance=distance;
                 }
             }
         }
-        setRechargingLocation(betterLocation);
+        setRechargingLocation(betterStation);
     }
     
     
@@ -244,9 +253,6 @@ public class ElectricVehicle
         return true;
      }
 
-    
-    
-    
     /**
      * Increment the number of steps on which this vehicle has been idle.
      */
@@ -278,16 +284,16 @@ public class ElectricVehicle
        
        Iterator<Charger> it = station.getChargers().iterator();
        while (it.hasNext() && cargadorLibre == null){
-           Charger cargador = it.next();
+           Charger charger = it.next();
            if(charger.getFree()){
-               cargadorLibre = cargador; //Guardamos el primer cargador que se encuentre libre
+               cargadorLibre = charger; //Guardamos el primer cargador que se encuentre libre
            }
        }
        
        if (cargadorLibre != null){
            int kwhNeeded = getBatteryCapacity() - getBatteryLevel();
            
-           double cost = cargadorLibre.recharge(kwhNeeded, this);
+           double cost = cargadorLibre.recharge(this, kwhNeeded);
            
            setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
            incrementCharges();
@@ -310,7 +316,7 @@ public class ElectricVehicle
      * Adds a cost amount to the total charges cost.
      * @param cost The cost of the last recharge.
      */
-    public void incrementChargesCost(float cost)
+    public void incrementChargesCost(double cost)
     {
          this.chargestCost+=cost;
     }   
@@ -338,6 +344,7 @@ public class ElectricVehicle
      * Returns a detailed string representation of the electric vehicle.
      * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
      */
+    /*
     @Override
     public String toString(){ //hay que poner el de la recarga aqui
         String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
@@ -346,7 +353,7 @@ public class ElectricVehicle
         
         }this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";
     }
-
+    */
     /**
      * Generates a string containing the vehicle's details prefixed with the current step number.
      * @param step The current simulation step.
