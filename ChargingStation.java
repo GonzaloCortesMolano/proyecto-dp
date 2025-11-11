@@ -122,7 +122,10 @@ public class ChargingStation
      */
     public String getCompleteInfo()
     {
-        //TODO: Complete this code
+        this.toString();
+        for(Charger c: chargers){
+            c.toString();
+        }
         return null;
     }
     
@@ -134,8 +137,7 @@ public class ChargingStation
      */
     public String showFinalInfo()
     {
-        //TODO: Complete this code
-        return null;
+        return toString();
     }
 
     /**
@@ -144,8 +146,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        //TODO: Complete this code
-        return null;
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumerEVRecharged() + ", " + getLocation().toString() + "\n";
     }
     
     /**

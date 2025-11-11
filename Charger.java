@@ -101,7 +101,7 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(Charger: "+getId()+", "+getChargingSpeed()+", "+getChargingFee()+", "+getNumberEVRecharged()+", "+getAmountCollected()+"€)";
+        return "(Charger: "+getId()+", "+getChargingSpeed()+", "+getChargingFee()+", "+getNumberEVRecharged()+", "+getAmountCollected()+"€)\n";
     }
 
     

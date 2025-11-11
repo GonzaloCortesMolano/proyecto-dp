@@ -45,26 +45,17 @@ public class ElectricVehicle
         this.chargestCost=0;
     }
 
-    
+    /*
+     * getters
+     */
     /**
      * Get the current location.
      * @return Where this vehicle is currently located.
      */
-    public Location getLocation()
+    private Location getLocation()
     {
         return this.location;
     }
-
-    /**
-     * Set the current location.
-     * @param location Where it is. Must not be null.
-     * @throws NullPointerException If location is null.
-     */
-    public void setLocation(Location location)
-    {
-        this.location=location;
-    }
-
     /**
      * Get the final target location.
      * @return Where this vehicle is ultimately headed.
@@ -72,6 +63,28 @@ public class ElectricVehicle
     public Location getTargetLocation()
     {
         return this.targetLocation;
+    }
+
+    /*
+     * setters
+     */
+    /**
+     * Set the current location.
+     * @param location Where it is. Must not be null.
+     * @throws NullPointerException If location is null.
+     */
+    private void setLocation(Location location)
+    {
+        this.location=location;
+    }
+    /**
+     * Set the required final target location.
+     * @param location Where to go. Must not be null.
+     * @throws NullPointerException If location is null.
+     */
+    private void setTargetLocation(Location location)
+    {
+        this.targetLocation=location;
     }
 
     /**
@@ -94,18 +107,6 @@ public class ElectricVehicle
         //TODO: Complete this code
         return 0;
     }
-    
-    
-    /**
-     * Set the required final target location.
-     * @param location Where to go. Must not be null.
-     * @throws NullPointerException If location is null.
-     */
-    public void setTargetLocation(Location location)
-    {
-        this.targetLocation=location;
-    }
-
     
     /**
      * Calculates the optimal route for the vehicle. 
@@ -250,9 +251,8 @@ public class ElectricVehicle
      * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
      */
     @Override
-    public String toString(){
-        //TODO: Complete this code
-        return null;
+    public String toString(){ //hay que poner el de la recarga aqui
+        return "(ElectricVehicle: "+this.name+", "+this.plate+", "+this.batteryCapacity+"kwh, "+this.batteryLevel+"kws, "+this.chargesCount+", "+this.chargestCost+"€, "+getIdleCount()+", "+getLocation().toString()+", "+getTargetLocation().toString()+", "+getTargetLocation().toString()+")\n";
     }
 
     /**
