@@ -125,7 +125,7 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(Charger: "+getId()+", "+getChargingSpeed()+", "+getChargingFee()+", "+getNumberEVRecharged()+", "+getAmountCollected()+"€)\n";
+        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+getChargingFee()+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)\n";
     }
 
     
@@ -135,11 +135,11 @@ public class Charger
      */
     public String getCompleteInfo()
     {
-         System.out.println(toString());
+         String texto=this.toString();
          for(ElectricVehicle v: eVsRecharged){
-            System.out.println(v.toString());
+            texto+=v.toString();
          }
-         return null;
+         return texto;
     }
     
     /**

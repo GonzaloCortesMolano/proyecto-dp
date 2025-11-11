@@ -149,13 +149,17 @@ public class ChargingStationTest
     }
     
     /**
-     * Tests the {@code toString()} method.
+     * Tests the {@code getCompleteInfo()} method.
      * Ensures that the string is in the same format than as required.
      */
     @Test
-    public void testToString()
+    public void testGetCompleteInfo()
     {
         ChargingStation otra=new ChargingStation("Cáceres","CC01", new Location(10, 11));
-        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n", otra.toString());
+        otra.addCharger(new Charger("CC01_003", 80, 0.8));
+        otra.addCharger(new Charger("CC01_002", 60, 0.6));
+        otra.addCharger(new Charger("CC01_001", 40, 0.4));
+        otra.addCharger(new Charger("CC01_000", 20, 0.2));
+        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(Charger: CC01_003, 80kwh, 0.8€, 0, 0.0€)\n(Charger: CC01_002, 60kwh, 0.6€, 0, 0.0€)\n(Charger: CC01_001, 40kwh, 0.4€, 0, 0.0€)\n(Charger: CC01_000, 20kwh, 0.2€, 0, 0.0€)\n", otra.getCompleteInfo());
     }
 }

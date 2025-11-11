@@ -109,11 +109,11 @@ public class ChargingStation
      */
     public String getCompleteInfo()
     {
-        this.toString();
+        String texto=this.toString();
         for(Charger c: chargers){
-            c.getCompleteInfo();
+            texto+=c.getCompleteInfo();
         }
-        return null;
+        return texto;
     }
     
 
