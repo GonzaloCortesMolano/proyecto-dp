@@ -272,6 +272,7 @@ public class ElectricVehicle
       */
     public void recharge(int step)
     {
+
        ChargingStation station = company.getChargingStation(rechargingLocation);
        Charger cargadorLibre = null;
        
