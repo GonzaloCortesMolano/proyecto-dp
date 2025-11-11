@@ -109,4 +109,24 @@ public class ChargingStationTest
         assertEquals(2, station1.getNumberEVRecharged());
         assertEquals(0, station2.getNumberEVRecharged());
     }
+    /**
+     * 
+     */
+    @Test
+    public void testChargingStation()
+    {
+        Location loc3 = new Location(10,9);
+        ChargingStation stationTest = new ChargingStation("Caceres", "CC3", loc3);
+        assertEquals("Caceres", stationTest.getCity());
+        assertEquals("CC3", stationTest.getId());
+        assertEquals(loc3, stationTest.getLocation());
+    }
+    /**
+     * 
+     */
+    @Test
+    public void testAddCharger()
+    {
+        
+    }
 }
