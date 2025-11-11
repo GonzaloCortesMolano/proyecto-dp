@@ -47,6 +47,8 @@ public class ChargingStationTest
         charger3 = new Charger("CH3", 30, 0.20f);
         charger4 = new Charger("CH4", 60, 0.40f);
         
+        charger3.setFree(false);
+        
         //Add the chargers to the station
         station1.getChargers().add(charger1);
         station1.getChargers().add(charger2);
@@ -77,7 +79,15 @@ public class ChargingStationTest
     @Test
     public void testGetFreeCharger()
     {
-       station1.getChargers().setFree(false);
-       
+       Charger chargerFree = station1.getFreeCharger();
+       assertEquals(charger3, chargerFree);
+    }
+    /**
+     * 
+     */
+    @Test
+    public void testGetNumerEVRecharged()
+    {
+        assertEquals(0, station2.getNumberEVRecharged());
     }
 }

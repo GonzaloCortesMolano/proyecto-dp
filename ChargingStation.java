@@ -106,7 +106,7 @@ public class ChargingStation
      * Calculates the total number of {@link ElectricVehicle}s recharged across all {@link Charger}s at this station.
      * @return The total number of unique recharges.
      */
-    public int getNumerEVRecharged(){
+    public int getNumberEVRecharged(){
         int total=0;
         for(Charger c: chargers){
             total+=c.getNumberEVRecharged();
@@ -146,7 +146,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumerEVRecharged() + ", " + getLocation().toString() + "\n";
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + "\n";
     }
     
     /**
