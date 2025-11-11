@@ -13,6 +13,7 @@ public class ElectricVehicle
     private EVCompany company;
     private Location location;
     private Location targetLocation;
+    private Location rechargingLocation;
     private int idleCount;
     private int batteryCapacity;
     private int batteryLevel;
@@ -35,6 +36,7 @@ public class ElectricVehicle
         this.company=company;
         this.location=location;
         this.targetLocation=targetLocation;
+        this.rechargingLocation=null;
         this.name=name;
         this.plate=plate;
         this.batteryCapacity=batteryCapacity;
@@ -64,6 +66,62 @@ public class ElectricVehicle
     {
         return this.targetLocation;
     }
+    /**
+     * Get the final target location.
+     * @return Where this vehicle is ultimately headed.
+     */
+    public String getName()
+    {
+        return this.name;
+    }
+    /**
+     * Get the final target location.
+     * @return Where this vehicle is ultimately headed.
+     */
+    public String getPlate()
+    {
+        return this.plate;
+    }
+    /**
+     * Get the final target location.
+     * @return Where this vehicle is ultimately headed.
+     */
+    public int getBatteryCapacity()
+    {
+        return this.batteryCapacity;
+    }
+     /**
+      * @return The number of simulation steps this vehicle has been idle.
+      */
+    public int getIdleCount()
+    {
+        return this.idleCount;
+    }
+     /**
+      * @return The count of total recharges performed by this vehicle.
+      */
+    public int getChargesCount()
+    {  
+        return this.chargesCount;
+    }
+     /**
+      * @return The count of total recharges performed by this vehicle.
+      */
+    public int getBatteryLevel()
+    {  
+        return this.batteryLevel;
+    }
+    /**
+     * Get the temporary recharging location.
+     * @return The {@link Location} of the next {@link ChargingStation} to visit, or null if no recharge is planned.
+     */
+    public Location getRechargingLocation()
+    {
+        return this.rechargingLocation;
+    }
+    public EVCompany getCompany(){
+        return this.company;
+    }
 
     /*
      * setters
@@ -86,15 +144,14 @@ public class ElectricVehicle
     {
         this.targetLocation=location;
     }
-
     /**
-     * Get the temporary recharging location.
-     * @return The {@link Location} of the next {@link ChargingStation} to visit, or null if no recharge is planned.
+     * Set the required final target location.
+     * @param location Where to go. Must not be null.
+     * @throws NullPointerException If location is null.
      */
-    public Location getRechargingLocation()
+    private void setRechargingLocation(Location location)
     {
-        //TODO: Complete this code
-        return null;
+        this.rechargingLocation=location;
     }
     
     
@@ -104,8 +161,7 @@ public class ElectricVehicle
      */
     public int getArrivingStep()
     {
-        //TODO: Complete this code
-        return 0;
+        return this.idleCount;
     }
     
     /**
@@ -116,7 +172,7 @@ public class ElectricVehicle
     public void calculateRoute()
     {
         if(!enoughBattery(distanceToTheTargetLocation())){
-            
+            calculateRechargingPosition();
         }
     }
     
@@ -152,7 +208,26 @@ public class ElectricVehicle
      */
     public void calculateRechargingPosition()
     {
-        //TODO: Complete this code
+        //buscar la mejor estacion
+        List<ChargingStations> stations=this.getCompany().getCityStations();
+        Iterator<ChargingStations> it = stations.iterator();
+        int betterDistance=0;
+        Location betterStation=null;
+        if(it.hasNext()){
+            betterStation=it.next();
+            betterDistance=this.getLocation().distance(betterLocation)+betterLocation.distance(this.getTargetLocation());
+        }
+        while(it.hasNext()){
+            Location currentLocation=it.next();
+            if(enoughBattery(currentLocation)){
+                int distance=this.getLocation().distance(currentLocation)+currentLocation.distance(this.getTargetLocation());
+                if(betterDistance>distance){
+                    betterLocation=currentLocation;
+                    betterDistance=distance;
+                }
+            }
+        }
+        setRechargingLocation(betterLocation);
     }
     
     
@@ -161,26 +236,13 @@ public class ElectricVehicle
       * @return Whether or not this vehicle has a recharging location set.
       */
      public boolean hasRechargingLocation(){
-        //TODO: Complete this code
-        return false;
+        if(getRechargingLocation()==null)
+            return false;
+        return true;
      }
 
     
-     /**
-      * @return The number of simulation steps this vehicle has been idle.
-      */
-    public int getIdleCount()
-    {
-        return this.idleCount;
-    }
-
-     /**
-      * @return The count of total recharges performed by this vehicle.
-      */
-    public int getChargesCount()
-    {  
-        return this.chargesCount;
-    }
+    
     
     /**
      * Increment the number of steps on which this vehicle has been idle.
@@ -207,7 +269,9 @@ public class ElectricVehicle
       */
     public void recharge(int step)
     {
-        //TODO: Complete this code    
+        if(){
+        
+        }    
     } 
     
     /**
@@ -252,7 +316,11 @@ public class ElectricVehicle
      */
     @Override
     public String toString(){ //hay que poner el de la recarga aqui
-        return "(ElectricVehicle: "+this.name+", "+this.plate+", "+this.batteryCapacity+"kwh, "+this.batteryLevel+"kws, "+this.chargesCount+", "+this.chargestCost+"€, "+getIdleCount()+", "+getLocation().toString()+", "+getTargetLocation().toString()+", "+getTargetLocation().toString()+")\n";
+        String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
+        if(){
+            
+        
+        }this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";
     }
 
     /**

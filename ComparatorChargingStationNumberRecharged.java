@@ -18,9 +18,9 @@ public class ComparatorChargingStationNumberRecharged implements Comparator<Char
      * zero if both are equal, or a positive integer otherwise.
      */
     public int compare(ChargingStation st1, ChargingStation st2){  
-         if (st1.getNumerEVRecharged() > st2.getNumerEVRecharged())
+         if (st1.getNumberEVRecharged() > st2.getNumberEVRecharged())
             return -1;
-        else if (st1.getNumerEVRecharged() < st2.getNumerEVRecharged())
+        else if (st1.getNumberEVRecharged() < st2.getNumberEVRecharged())
             return 1;
         else return (new ComparatorChargingStationId().compare(st1,st2));
     } 
