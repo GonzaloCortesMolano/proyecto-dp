@@ -125,6 +125,8 @@ public class ChargingStationTest
     @Test
     public void testAddCharger()
     {
-        
+        assertEquals(0, station2.chargers.getSize());
+        Charger charger5 = new Charger("CH5", 60, 0.40f);
+        assertEquals(1, station2.chargers.getSize());
     }
 }
