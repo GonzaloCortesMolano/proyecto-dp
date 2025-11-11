@@ -174,6 +174,9 @@ public class ElectricVehicle
         if(!enoughBattery(distanceToTheTargetLocation())){
             calculateRechargingPosition();
         }
+        else{
+            setRechargingLocation(null);
+        }
     }
     
     /**
@@ -270,7 +273,7 @@ public class ElectricVehicle
     public void recharge(int step)
     {
         if(){
-        
+            
         }    
     } 
     
