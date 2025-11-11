@@ -269,9 +269,7 @@ public class ElectricVehicle
       */
     public void recharge(int step)
     {
-        if(){
-        
-        }    
+           
     } 
     
     /**
