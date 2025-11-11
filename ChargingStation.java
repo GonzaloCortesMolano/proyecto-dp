@@ -68,10 +68,10 @@ public class ChargingStation
     /*
      * 
      */
-    private void setId(String id){
+    public void setId(String id){
         this.id=id;
     }
-    private void setCity(String city){
+    public void setCity(String city){
         this.city=city;
     }
     /**
@@ -79,10 +79,10 @@ public class ChargingStation
      * @param location Where it is. Must not be null.
      * @throws NullPointerException If location is null.
      */
-    private void setLocation(Location location){
+    public void setLocation(Location location){
         this.locationE=location;
     }
-    private void setChargers(ArrayList<Charger> v){
+    public void setChargers(ArrayList<Charger> v){
         this.chargers=v;
     }
     

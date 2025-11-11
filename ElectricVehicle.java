@@ -54,7 +54,7 @@ public class ElectricVehicle
      * Get the current location.
      * @return Where this vehicle is currently located.
      */
-    private Location getLocation()
+    public Location getLocation()
     {
         return this.location;
     }
@@ -131,7 +131,7 @@ public class ElectricVehicle
      * @param location Where it is. Must not be null.
      * @throws NullPointerException If location is null.
      */
-    private void setLocation(Location location)
+    public void setLocation(Location location)
     {
         this.location=location;
     }
@@ -140,7 +140,7 @@ public class ElectricVehicle
      * @param location Where to go. Must not be null.
      * @throws NullPointerException If location is null.
      */
-    private void setTargetLocation(Location location)
+    public void setTargetLocation(Location location)
     {
         this.targetLocation=location;
     }
@@ -149,7 +149,7 @@ public class ElectricVehicle
      * @param location Where to go. Must not be null.
      * @throws NullPointerException If location is null.
      */
-    private void setRechargingLocation(Location location)
+    public void setRechargingLocation(Location location)
     {
         this.rechargingLocation=location;
     }
