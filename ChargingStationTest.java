@@ -4,10 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class ChargingStationTest.
- *
- * @author  (your name)
- * @version (a version number or a date)
+ * Test class for the {@link ChargingStation} class.
+ * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @version 11-11-2025
+ * Provides unit tests for core functionalities such as managing chargers,
+ * tracking recharged vehicles, and verifying station properties.
+ * 
+ * Tests include:
+ * - Getting a free charger
+ * - Counting the total number of recharged vehicles
+ * - Station construction and property getters
+ * - Adding chargers to a station
  */
 public class ChargingStationTest
 {
@@ -87,7 +94,10 @@ public class ChargingStationTest
     }
     
     /**
-     * 
+     * Tests the {@code getFreeCharger()} method.
+     * Ensures that the method returns the first charger that is free
+     * (i.e., has {@code free == true}) among all chargers in the station.
+     * Also validates behavior when some chargers are occupied.
      */
     @Test
     public void testGetFreeCharger()
@@ -96,7 +106,10 @@ public class ChargingStationTest
        assertEquals(charger3, chargerFree);
     }
     /**
-     * 
+     * Tests the {@code getNumberEVRecharged()} method.
+     * Verifies that the method correctly sums all electric vehicles
+     * recharged across all chargers in the station.
+     * Checks both a station with recharged vehicles and a station with none.
      */
     @Test
     public void testGetNumerEVRecharged()
@@ -105,7 +118,8 @@ public class ChargingStationTest
         assertEquals(0, station2.getNumberEVRecharged());
     }
     /**
-     * 
+     * Tests the {@link ChargingStation} constructor and some of its getters.
+     * Ensures that the station is created with the correct city, ID, and location.
      */
     @Test
     public void testChargingStation()
@@ -115,9 +129,12 @@ public class ChargingStationTest
         assertEquals("Caceres", stationTest.getCity());
         assertEquals("CC3", stationTest.getId());
         assertEquals(loc3, stationTest.getLocation());
+        assertEquals(0, stationTest.getChargers().size());
     }
     /**
-     * 
+     * Tests the {@code addCharger()} method.
+     * Ensures that chargers can be added to a station and that
+     * the station's list of chargers updates its size correctly.
      */
     @Test
     public void testAddCharger()
