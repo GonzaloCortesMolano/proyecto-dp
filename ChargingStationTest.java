@@ -50,10 +50,6 @@ public class ChargingStationTest
         charger3 = new Charger("CH3", 30, 0.20f);
         charger4 = new Charger("CH4", 60, 0.40f);
         
-        //Is necesary for one test
-        charger3.setFree(false);
-        charger4.setFree(false);
-        
         //Add the chargers to the station
         station1.addCharger(charger1);
         station1.addCharger(charger2);
@@ -97,7 +93,7 @@ public class ChargingStationTest
     public void testGetFreeCharger()
     {
        Charger chargerFree = station1.getFreeCharger();
-       assertEquals(charger2, chargerFree);
+       assertEquals(charger3, chargerFree);
     }
     /**
      * 
@@ -130,5 +126,8 @@ public class ChargingStationTest
         Charger charger5 = new Charger("CH5", 60, 0.40f);
         station2.addCharger(charger5);
         assertEquals(1, station2.getChargers().size());
+        Charger charger6 = new Charger("CH6", 60, 0.40f);
+        station2.addCharger(charger5);
+        assertEquals(2, station2.getChargers().size());
     }
 }
