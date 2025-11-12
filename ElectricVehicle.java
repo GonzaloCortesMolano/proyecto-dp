@@ -194,8 +194,11 @@ public class ElectricVehicle
      */
     public String getStringRoute()
     {
-        //TODO: Complete this code
-        return null;
+        String texto= "("+this.getLocation().toString();
+        if(this.hasRechargingLocation()){
+            texto+=" ";//TODO
+        }
+        return texto;
     }
     
 
@@ -328,7 +331,12 @@ public class ElectricVehicle
       */
      public void act(int step)
      {
-        //TODO: Complete this code     
+        if(this.hasRechargingLocation()){
+            this.getLocation().nextLocation(this.getRechargingLocation());
+        }
+        else{
+            this.getLocation().nextLocation(this.getTargetLocation());
+        }
     }
      
     /**
