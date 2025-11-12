@@ -122,6 +122,12 @@ public class ElectricVehicle
     public EVCompany getCompany(){
         return this.company;
     }
+    public int getKwsCharged(){
+        return this.kwsCharged;
+    }
+    public double getChargestCost(){
+        return this.chargestCost;
+    }
 
     /*
      * setters
