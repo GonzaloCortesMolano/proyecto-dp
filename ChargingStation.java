@@ -107,18 +107,19 @@ public class ChargingStation
      * @return A comprehensive string representation of the station.
      */
     public String getCompleteInfo()
+
     {
-        StringBuilder builder = new StringBuilder();
-        //Añade la información de la estación (de su propio toString)
-        builder.append(this.toString());
-        //salto de línea 
-        builder.append("\n"); 
-        //Itera sobre los cargadores
-        for(Charger c : chargers){
-            //Añade la información de cada cargador
-            builder.append(c.getCompleteInfo()); 
+
+        String texto=this.toString();
+
+        for(Charger c: chargers){
+
+            texto+=c.getCompleteInfo();
+
         }
-        return builder.toString();
+
+        return texto;
+
     }
     
 
@@ -138,7 +139,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")";
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")" + "\n";
     }
     
     /**

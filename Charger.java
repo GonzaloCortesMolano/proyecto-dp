@@ -135,11 +135,7 @@ public class Charger
     @Override
     public String toString()
     {
-        // Formato: (Charger: CC00_003, 80kwh, 0.8€, 0, 0.0€)
-        // El \n (salto de línea) al final es incorrecto, debe estar en la clase Demo.
-        return "(Charger: " + getId() + ", " + getChargingSpeed() + "kwh, " + 
-               String.format("%.1f", getChargingFee()) + "€, " + getNumberEVRecharged() + ", " + 
-               String.format("%.1f", getAmountCollected()) + "€)";
+        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+getChargingFee()+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)";
     }
 
     
@@ -149,9 +145,9 @@ public class Charger
      */
     public String getCompleteInfo()
     {
-         String texto = this.toString() + "/n";
+         String texto = this.toString() + "\n";
          for(ElectricVehicle v: eVsRecharged){
-            texto += v.toString() + "/n";
+            texto += v.toString() + "\n";
          }
          return texto;
     }
@@ -185,8 +181,6 @@ public class Charger
         double fee=kwsRecharging*getChargingFee();
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
-        
-        setFree(true); //el cargador deja de ser utilizado
         return fee;
     }
     
