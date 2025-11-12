@@ -45,7 +45,6 @@ public class ElectricVehicle
         this.kwsCharged=0;
         this.chargesCount=0;
         this.chargestCost=0;
-        /*this.arrivingStep = -1;*/
     }
 
     /*

@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
  */
 public class ElectricVehicleTest
 {
+    private ElectricVehicle v1;
+    
     /**
      * Default constructor for test class ElectricVehicleTest
      */
@@ -38,5 +40,19 @@ public class ElectricVehicleTest
     @AfterEach
     public void tearDown()
     {
+    }
+    
+    @Test
+    public void testCreation(){
+        Company c =new EVCompany("nueva");
+        Location l = new Location(5, 8);
+        Location target = new Location(20, 20);
+        v1=new ElectricVehicle(c, l, target, "name", "plate", 200);
+        assertTrue(c.equals(v1.getCompany()) && l.equals(v1.getLocation)
+        && !v1.hasRechargingLocation() && v1.getTargetLocation().equals(target)
+        && v1.getName().equals("name") && v1.getPlate().equals("plate")
+        && v1.getBatteryCapacity().equals(200) && v1.getIdleCount().equals(0)
+        && v1.getBatteryLevel().equals(200) && v1.getIdleCount().equals(0)
+        && v1.getKwsCharged().equals);
     }
 }

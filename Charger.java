@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 /**
  * Model a charger unit within a {@link ChargingStation}.
  * It tracks its charging capabilities, fee, and the electric vehicles it has recharged.
@@ -12,7 +13,7 @@ public class Charger
     private String id; 
     private int chargingSpeed;
     private double chargingFee;
-    private ArrayList<ElectricVehicle> eVsRecharged;
+    private List<ElectricVehicle> eVsRecharged;
     private double amountCollected;
     private boolean free;
 
@@ -59,8 +60,8 @@ public class Charger
     /**
      * @return The charger's list of charged vehicles.
      */
-    public ArrayList<ElectricVehicle> getEVsRecharged(){
-        return this.eVsRecharged;
+    public List<ElectricVehicle> getEVsRecharged(){
+        return Collections.unmodifiableList(this.eVsRecharged);
     }
     
     /**
