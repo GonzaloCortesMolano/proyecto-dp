@@ -284,20 +284,10 @@ public class ElectricVehicle
     {
 
        ChargingStation station = company.getChargingStation(rechargingLocation);
-       Charger cargadorLibre = null;
-       
-       Iterator<Charger> it = station.getChargers().iterator();
-       while (it.hasNext() && cargadorLibre == null){
-           Charger charger = it.next();
-           if(charger.getFree()){
-               cargadorLibre = charger; //Guardamos el primer cargador que se encuentre libre
-           }
-       }
+       Charger cargadorLibre = station.getFreeCharger();
        
        if (cargadorLibre != null){
-           int kwhNeeded = getBatteryCapacity() - getBatteryLevel();
-           
-           double cost = cargadorLibre.recharge(this, kwhNeeded);
+           double cost = cargadorLibre.recharge(this, getBatteryCapacity() - getBatteryLevel());
            
            setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
            incrementCharges();
@@ -355,8 +345,7 @@ public class ElectricVehicle
                 destination = targetLocation;
             }
             
-             Location nextLoc = location.nextLocation(destination);
-             setLocation(nextLoc);
+             setLocation(location.nextLocation(destination));
              
              reduceBatteryLevel();
          }    
@@ -379,9 +368,7 @@ public class ElectricVehicle
      * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
      */
     @Override
-    public String toString(){ //hay que poner el de la recarga aqui
-        /*String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
-        if(){*/
+    public String toString(){
         String route = this.location.toString();
         
         if (hasRechargingLocation()){
@@ -394,8 +381,7 @@ public class ElectricVehicle
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
                String.format("%.1f", this.chargestCost) + "€, " + 
-               this.idleCount + ", " + route + ")";
-        /*}this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";*/
+               this.idleCount + ", " + route + ")\n";
     }
     
     /**
@@ -406,7 +392,7 @@ public class ElectricVehicle
     public String getStepInfo(int step){
         String info = this.toString();
         
-        return "(step: " + step + " " + info.substring(1);
+        return "(step: " + step + " " + info.substring(1) + "\n";
     }
     
     /**
