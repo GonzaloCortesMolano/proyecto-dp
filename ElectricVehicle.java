@@ -195,10 +195,15 @@ public class ElectricVehicle
      * Gets a string representation of the planned route, including the recharging stop if one exists.
      * @return A string showing the route: {@code currentLocation -> [rechargingLocation ->] targetLocation}.
      */
-    /*public String getStringRoute()
+    public String getStringRoute()
     {
+        String texto= "("+this.getLocation().toString();
+        if(this.hasRechargingLocation()){
+            texto+=" ";//TODO
+        }
+        return texto;
+    }
 
-    }*/
     
 
     /**
@@ -329,6 +334,7 @@ public class ElectricVehicle
      public void act(int step)
      {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
          if(location.equals(targetLocation)) {
             // Si idleCount es 0, es la primera vez que entra
@@ -365,6 +371,14 @@ public class ElectricVehicle
             this.getLocation().nextLocation(this.getTargetLocation());
         }
 
+=======
+        if(this.hasRechargingLocation()){
+            this.getLocation().nextLocation(this.getRechargingLocation());
+        }
+        else{
+            this.getLocation().nextLocation(this.getTargetLocation());
+        }
+>>>>>>> 8865445e29af538661e54a2427dcd04559a50ef4
 =======
         if(this.hasRechargingLocation()){
             this.getLocation().nextLocation(this.getRechargingLocation());
