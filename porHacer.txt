@@ -1,2 +1,6 @@
 clase Location:
     prueba del metodo hash 'capaz hay que cambiar cosas en el .cpp'
+    
+12/11:
+    Pruebas de la clases Charger y EV. Verificar si todos los métodos están correctos y no dan fallos y testing en verde.
+    Empezar con la clase EVDemo.
