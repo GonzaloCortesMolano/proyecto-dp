@@ -26,10 +26,10 @@ public class Charger
     {
         this.id=id;
         this.chargingSpeed=speed;
-        this.chargingFee=fee;
-        this.eVsRecharged=new ArrayList<ElectricVehicle>();
-        this.amountCollected=0;
-        this.free=true;
+        this.chargingFee = fee;
+        this.eVsRecharged = new ArrayList<ElectricVehicle>();
+        this.amountCollected = 0;
+        this.free = true;
     }
     /**
      * getters
@@ -41,24 +41,28 @@ public class Charger
     public String getId(){
         return this.id;
     }
+    
     /**
      * @return The charger's charging velocity.
      */
     public int getChargingSpeed(){
         return this.chargingSpeed;
     }
+    
     /**
      * @return The charger's charging fee.
      */
     public double getChargingFee(){
         return this.chargingFee;
     }
+    
     /**
      * @return The charger's list of charged vehicles.
      */
     public ArrayList<ElectricVehicle> getEVsRecharged(){
         return this.eVsRecharged;
     }
+    
     /**
      * @return The charger's cuantity of collected money.
      */
@@ -95,24 +99,30 @@ public class Charger
      * @param fee New fee for the charger
      */
     public void setChargingFee(double fee){
-        this.chargingFee=fee;
+        this.chargingFee = fee;
     }
+    
     /**
      * Set the list new of charged {@link ElectricVehicles}
      * @param v New charger's list of {@link ElectricVehicles}
      */
+    /*
     public void setEVsRecharged(ArrayList<ElectricVehicle> v){
-        this.eVsRecharged=v;
+        this.eVsRecharged = v;
     }
+    */ //Rompe la encapsulación y no hace falta ya que tenemos el método addEvRecharged
+    
     /**
      * Set the charger's money collected
-     * @param .
+     * @param amount The new total amount collected
      */
     public void setAmountCollected(double amount){
-        this.amountCollected=amount;
+        this.amountCollected = amount;
     }
+    
     /**
-     * @return The unique identifier of the charging station.
+     * Sets the free status of the charger.
+     * @param free The new free status (true or false).
      */
     public void setFree(boolean free){
         this.free=free;
@@ -125,7 +135,11 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+getChargingFee()+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)\n";
+        // Formato: (Charger: CC00_003, 80kwh, 0.8€, 0, 0.0€)
+        // El \n (salto de línea) al final es incorrecto, debe estar en la clase Demo.
+        return "(Charger: " + getId() + ", " + getChargingSpeed() + "kwh, " + 
+               String.format("%.1f", getChargingFee()) + "€, " + getNumberEVRecharged() + ", " + 
+               String.format("%.1f", getAmountCollected()) + "€)";
     }
 
     
@@ -135,9 +149,9 @@ public class Charger
      */
     public String getCompleteInfo()
     {
-         String texto=this.toString();
+         String texto = this.toString() + "/n";
          for(ElectricVehicle v: eVsRecharged){
-            texto+=v.toString();
+            texto += v.toString() + "/n";
          }
          return texto;
     }
@@ -166,10 +180,13 @@ public class Charger
      * @return The cost of the recharge operation.
      */
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
+        setFree(false); //el cargador está siendo utilizado
+        
         double fee=kwsRecharging*getChargingFee();
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
-        setFree(false); //PREGUNTAR
+        
+        setFree(true); //el cargador deja de ser utilizado
         return fee;
     }
     
