@@ -197,13 +197,13 @@ public class ElectricVehicle
      */
     public String getStringRoute()
     {
-        String texto= "("+this.getLocation().toString();
-        if(this.hasRechargingLocation()){
-            texto+=" ";//TODO
+        String route = location.toString();
+        if(hasRechargingLocation()){
+            route = route + " -> " + rechargingLocation.toString();
         }
-        return texto;
+        route = route + " -> " + targetLocation.toString();
+        return route;
     }
-
     
 
     /**
@@ -333,9 +333,6 @@ public class ElectricVehicle
       */
      public void act(int step)
      {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
          if(location.equals(targetLocation)) {
             // Si idleCount es 0, es la primera vez que entra
              if(idleCount == 0) {
@@ -364,29 +361,6 @@ public class ElectricVehicle
              
              reduceBatteryLevel();
          }    
-        if(this.hasRechargingLocation()){
-            this.getLocation().nextLocation(this.getRechargingLocation());
-        }
-        else{
-            this.getLocation().nextLocation(this.getTargetLocation());
-        }
-
-=======
-        if(this.hasRechargingLocation()){
-            this.getLocation().nextLocation(this.getRechargingLocation());
-        }
-        else{
-            this.getLocation().nextLocation(this.getTargetLocation());
-        }
->>>>>>> 8865445e29af538661e54a2427dcd04559a50ef4
-=======
-        if(this.hasRechargingLocation()){
-            this.getLocation().nextLocation(this.getRechargingLocation());
-        }
-        else{
-            this.getLocation().nextLocation(this.getTargetLocation());
-        }
->>>>>>> 8865445e29af538661e54a2427dcd04559a50ef4
     }
      
     /**
