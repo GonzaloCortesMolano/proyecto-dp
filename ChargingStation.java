@@ -57,7 +57,7 @@ public class ChargingStation
      */
     public List<Charger> getChargers()
     {
-        return chargers; //meted lo de no modificable
+        return Collections.unmodifiableList(chargers); 
     }
     
     /*

@@ -20,6 +20,7 @@ public class ElectricVehicle
     private int kwsCharged;
     private int chargesCount;
     private double chargestCost;
+    private int arrivingStep;
 
     /**
      * Constructor of class ElectricVehicle.
@@ -45,6 +46,7 @@ public class ElectricVehicle
         this.kwsCharged=0;
         this.chargesCount=0;
         this.chargestCost=0;
+        /*this.arrivingStep = -1;*/
     }
 
     /*
@@ -133,7 +135,7 @@ public class ElectricVehicle
      */
     public void setLocation(Location location)
     {
-        this.location=location;
+        this.location = location;
     }
     /**
      * Set the required final target location.
@@ -142,7 +144,7 @@ public class ElectricVehicle
      */
     public void setTargetLocation(Location location)
     {
-        this.targetLocation=location;
+        this.targetLocation = location;
     }
     /**
      * Set the required final target location.
@@ -151,7 +153,7 @@ public class ElectricVehicle
      */
     public void setRechargingLocation(Location location)
     {
-        this.rechargingLocation=location;
+        this.rechargingLocation = location;
     }
     /**
      * Set the required final target location.
@@ -160,7 +162,7 @@ public class ElectricVehicle
      */
     public void setBatteryLevel(int level)
     {
-        this.batteryLevel=level;
+        this.batteryLevel = level;
     }
     
     
@@ -168,11 +170,12 @@ public class ElectricVehicle
      * Get the simulation step when the vehicle arrived at its final target location.
      * @return The arriving step.
      */
+    /*
     public int getArrivingStep()
     {
         return this.idleCount;
     }
-    
+    */
     /**
      * Calculates the optimal route for the vehicle. 
      * If there isn't enough battery to reach the target, it attempts to find an intermediate 
@@ -194,8 +197,12 @@ public class ElectricVehicle
      */
     public String getStringRoute()
     {
-        //TODO: Complete this code
-        return null;
+        String route = location.toString();
+        if(hasRechargingLocation()){
+            route = route + " -> " + rechargingLocation.toString();
+        }
+        route = route + " -> " + targetLocation.toString();
+        return route;
     }
     
 
@@ -207,7 +214,7 @@ public class ElectricVehicle
     public boolean enoughBattery(int distanceToTargetLocation)
     {
         boolean enough=false;
-        if(distanceToTargetLocation*5<batteryLevel)
+        if(distanceToTargetLocation*5 <= batteryLevel)
             enough=true;
         return enough;
     }
@@ -220,30 +227,28 @@ public class ElectricVehicle
      */
     public void calculateRechargingPosition()
     {
-        //buscar la mejor estacion
-        List<ChargingStation> stations=this.getCompany().getCityStations();
+        List<ChargingStation> stations = this.getCompany().getCityStations();
         Iterator<ChargingStation> it = stations.iterator();
-        int betterDistance=0;
-        Location betterStation=null;
-        if(it.hasNext()){
-            betterStation=it.next().getLocation();
-            betterDistance=this.getLocation().distance(betterStation)+betterStation.distance(this.getTargetLocation());
-        }
-        while(it.hasNext()){
-            Location currentLocation=it.next().getLocation();
-            if(enoughBattery(currentLocation.distance(this.getLocation()))){
-                int distance=this.getLocation().distance(currentLocation)+currentLocation.distance(this.getTargetLocation());
-                if(betterDistance>distance){
-                    betterStation=currentLocation;
-                    betterDistance=distance;
+        int betterDistance = 0;
+        Location betterStation = null;
+
+        while (it.hasNext()) {
+            ChargingStation currentStation = it.next();
+            Location currentLocation = currentStation.getLocation();
+            int distToStation = this.getLocation().distance(currentLocation);
+            if (enoughBattery(distToStation)) { //Si puedo llegar a la estación:
+                int distance = distToStation + currentLocation.distance(this.getTargetLocation());
+                if (distance < betterDistance) { // Si es la actual la ruta más corta:
+                    betterStation = currentLocation;
+                    betterDistance = distance;
                 }
             }
+            setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
-        setRechargingLocation(betterStation);
-    }
     
-    
-     /**
+    }  
+     
+    /**
       * Checks if the vehicle has a planned recharging stop.
       * @return Whether or not this vehicle has a recharging location set.
       */
@@ -262,10 +267,10 @@ public class ElectricVehicle
     }
 
     
-     /**
+    /**
       * Get the Manhattan-like distance to the final target location from the current location.
       * @return The distance to the target location.
-      */
+    */
      public int distanceToTheTargetLocation()
      {
         return this.location.distance(this.targetLocation);
@@ -328,7 +333,34 @@ public class ElectricVehicle
       */
      public void act(int step)
      {
-        //TODO: Complete this code     
+         if(location.equals(targetLocation)) {
+            // Si idleCount es 0, es la primera vez que entra
+             if(idleCount == 0) {
+                 System.out.println("(step: " + step + " ElectricVehicle: " + this.plate +
+                                    " at target destination ********)");
+             }
+            incrementIdleCount();
+         }
+         //Si está en una estación de recarga
+         else if(hasRechargingLocation() && location.equals(rechargingLocation)) {
+             recharge(step); 
+         }
+         //Si está en movimiento
+         else {
+            
+             Location destination;
+
+            if (hasRechargingLocation()) {
+                destination = rechargingLocation;
+            }   else {
+                destination = targetLocation;
+            }
+            
+             Location nextLoc = location.nextLocation(destination);
+             setLocation(nextLoc);
+             
+             reduceBatteryLevel();
+         }    
     }
      
     /**
@@ -336,7 +368,10 @@ public class ElectricVehicle
      * Ensures the battery level does not go below zero.
      */
     public void reduceBatteryLevel(){
-        this.batteryLevel-=5;   
+        this.batteryLevel-=5;  
+        if (this.batteryLevel < 0){
+            this.batteryLevel = 0; //No debe haber baterías negativas
+        }
     }
 
     
@@ -344,24 +379,35 @@ public class ElectricVehicle
      * Returns a detailed string representation of the electric vehicle.
      * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
      */
-    /*
     @Override
     public String toString(){ //hay que poner el de la recarga aqui
-        String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
-        if(){
-            
+        /*String texto= "(ElectricVehicle: "+this.getName()+", "+this.getPlate()+", "+this.getBatteryCapacity()+"kwh, "+this.getBatteryLevel()+"kws, "+this.getChargesCount()+", "+this.getChargestCost+"€, "+this.getIdleCount()+", "+this.getLocation().toString()+", ";
+        if(){*/
+        String route = this.location.toString();
         
-        }this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";
+        if (hasRechargingLocation()){
+            route = route + ", " + this.rechargingLocation.toString();
+        }
+        
+        route += ", " + this.targetLocation.toString();
+        
+        return "(ElectricVehicle: " + this.name + ", " + 
+               this.plate + ", " + this.batteryCapacity + "kwh, " + 
+               this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
+               String.format("%.1f", this.chargestCost) + "€, " + 
+               this.idleCount + ", " + route + ")";
+        /*}this.getTargetLocation().toString()+", "+this.getTargetLocation().toString()+")\n";*/
     }
-    */
+    
     /**
      * Generates a string containing the vehicle's details prefixed with the current step number.
      * @param step The current simulation step.
      * @return A formatted string for a step log.
      */
     public String getStepInfo(int step){
-         //TODO: Complete this code
-         return null;
+        String info = this.toString();
+        
+        return "(step: " + step + " " + info.substring(1);
     }
     
     /**
@@ -369,7 +415,6 @@ public class ElectricVehicle
      * @return The output of {@link #toString()} wrapped in parentheses.
      */
     public String getInitialFinalInfo(){
-         //TODO: Complete this code
-         return null;
+         return this.toString();
     }
 }
