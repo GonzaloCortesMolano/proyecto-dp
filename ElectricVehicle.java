@@ -20,7 +20,6 @@ public class ElectricVehicle
     private int kwsCharged;
     private int chargesCount;
     private double chargestCost;
-    private int arrivingStep;
 
     /**
      * Constructor of class ElectricVehicle.
