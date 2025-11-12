@@ -15,3 +15,4 @@ En el recargar de Charge hay que poner a false el Free??
 que es eso de lista no modificable en chargerStation
 y no de null pointer exception en la misma clase la debemos poner nosotros?
 el show final info de la misma clase es necesario?
+que hace en siel metodo act de electricvevhicle, para que sirve su parametro step

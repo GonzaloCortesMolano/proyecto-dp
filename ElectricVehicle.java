@@ -333,6 +333,7 @@ public class ElectricVehicle
       */
      public void act(int step)
      {
+
          if(location.equals(targetLocation)) {
             // Si idleCount es 0, es la primera vez que entra
              if(idleCount == 0) {
@@ -361,6 +362,13 @@ public class ElectricVehicle
              
              reduceBatteryLevel();
          }    
+        if(this.hasRechargingLocation()){
+            this.getLocation().nextLocation(this.getRechargingLocation());
+        }
+        else{
+            this.getLocation().nextLocation(this.getTargetLocation());
+        }
+
     }
      
     /**

@@ -52,10 +52,10 @@ public class ChargingStationTest
         station2 = new ChargingStation("Caceres", "CC2", loc2);
         
         //Chargers for the ChargingStation
-        charger1 = new Charger("CH1", 40, 0.25f);
-        charger2 = new Charger("CH2", 50, 0.30f);
-        charger3 = new Charger("CH3", 30, 0.20f);
-        charger4 = new Charger("CH4", 60, 0.40f);
+        charger1 = new Charger("CH1", 40, 0.25);
+        charger2 = new Charger("CH2", 50, 0.30);
+        charger3 = new Charger("CH3", 30, 0.20);
+        charger4 = new Charger("CH4", 60, 0.40);
         
         //Add the chargers to the station
         station1.addCharger(charger1);
