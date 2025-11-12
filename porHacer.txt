@@ -4,3 +4,6 @@ clase Location:
 12/11:
     Pruebas de la clases Charger y EV. Verificar si todos los métodos están correctos y no dan fallos y testing en verde.
     Empezar con la clase EVDemo.
+    
+12/11(Ricardo): de momento llevamos todas las clases, con las pruebas ya implementadas. Falta la docuemntación interna completa
+y empezar con la clase EVDemo. El resto creo que de momento no da fallos.
