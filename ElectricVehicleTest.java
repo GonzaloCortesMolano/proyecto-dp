@@ -17,6 +17,7 @@ public class ElectricVehicleTest
     private EVCompany c;
     private Location l;
     private Location target;
+    private Charger ch;
     
     /**
      * Default constructor for test class ElectricVehicleTest
@@ -37,7 +38,10 @@ public class ElectricVehicleTest
         l = new Location(5, 8);
         v1 = new ElectricVehicle(c, l, new Location(20, 20), "name", "plate", 200);
         target = new Location(20, 20);
-        c.addChargingStation(new ChargingStation("Cáceres", "1", target));
+        ChargingStation station = new ChargingStation("Cáceres", "1", target);
+        c.addChargingStation(station);
+        ch=new Charger("id", 60, 0.1);
+        station.addCharger(ch);
     }
 
     /**
@@ -85,5 +89,16 @@ public class ElectricVehicleTest
         v1.setTargetLocation(new Location(120, 120));
         v1.calculateRoute();
         assertEquals("5-8 -> 20-20 -> 120-120", v1.getStringRoute());
+    }
+    
+    @Test
+    public void testRecharge(){
+        v1.setRechargingLocation(target);
+        v1.setBatteryLevel(0);
+        v1.recharge(0);
+        assertEquals(200, v1.getBatteryLevel());
+        assertEquals(1, v1.getChargesCount());
+        assertEquals(20, v1.getChargestCost());
+        assertFalse(v1.hasRechargingLocation());
     }
 }

@@ -233,14 +233,14 @@ public class ElectricVehicle
     {
         List<ChargingStation> stations = this.getCompany().getCityStations();
         Iterator<ChargingStation> it = stations.iterator();
-        int betterDistance = 0;
+        int betterDistance = 999;
         Location betterStation = null;
 
         while (it.hasNext()) {
             ChargingStation currentStation = it.next();
             Location currentLocation = currentStation.getLocation();
             int distToStation = this.getLocation().distance(currentLocation);
-            if (enoughBattery(distToStation)) { //Si puedo llegar a la estación:
+            if (enoughBattery(distToStation) && !getLocation().equals(currentLocation)) { //Si puedo llegar a la estación:
                 int distance = distToStation + currentLocation.distance(this.getTargetLocation());
                 if (distance < betterDistance) { // Si es la actual la ruta más corta:
                     betterStation = currentLocation;
