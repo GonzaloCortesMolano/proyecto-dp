@@ -13,7 +13,7 @@ public class ChargingStation
 {
     private String id;
     private String city;
-    private Location locationE;
+    private Location location;
     private List<Charger> chargers;
     /**
      * Constructor for objects of class ChargingStation.
@@ -23,10 +23,10 @@ public class ChargingStation
      */
     public ChargingStation(String city, String id, Location location)
     {
-       this.id=id;
-       this.city=city;
-       this.locationE=location;
-       chargers=new ArrayList<Charger>();
+       this.id = id;
+       this.city = city;
+       this.location = location;
+       chargers = new ArrayList<Charger>();
     }
     
     /*
@@ -50,7 +50,7 @@ public class ChargingStation
      */
     public Location getLocation()
     {
-        return this.locationE;
+        return this.location;
     }
     /**
      * @return An unmodifiable list of all {@link Charger}s at the station.
@@ -69,7 +69,7 @@ public class ChargingStation
      * @throws NullPointerException If location is null.
      */
     public void setLocation(Location location){
-        this.locationE=location;
+        this.location = location;
     }
     
     /**
@@ -80,9 +80,9 @@ public class ChargingStation
     public Charger getFreeCharger()
     {
         Charger c=null;
-        for(int i=0; c==null && i<chargers.size();i++){
+        for(int i=0; c == null && i < chargers.size();i++){
             if(chargers.get(i).getFree()){
-                c=chargers.get(i);
+                c = chargers.get(i);
             }
         }  
         return c;
@@ -93,9 +93,9 @@ public class ChargingStation
      * @return The total number of unique recharges.
      */
     public int getNumberEVRecharged(){
-        int total=0;
+        int total = 0;
         for(Charger c: chargers){
-            total+=c.getNumberEVRecharged();
+            total += c.getNumberEVRecharged();
         }
         return total;
     }
@@ -108,11 +108,17 @@ public class ChargingStation
      */
     public String getCompleteInfo()
     {
-        String texto=this.toString();
-        for(Charger c: chargers){
-            texto+=c.getCompleteInfo();
+        StringBuilder builder = new StringBuilder();
+        //Añade la información de la estación (de su propio toString)
+        builder.append(this.toString());
+        //salto de línea 
+        builder.append("\n"); 
+        //Itera sobre los cargadores
+        for(Charger c : chargers){
+            //Añade la información de cada cargador
+            builder.append(c.getCompleteInfo()); 
         }
-        return texto;
+        return builder.toString();
     }
     
 
@@ -132,7 +138,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")\n";
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")";
     }
     
     /**
