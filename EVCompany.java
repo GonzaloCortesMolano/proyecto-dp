@@ -125,5 +125,36 @@ public class EVCompany
         this.subscribedVehicles.clear();
         this.stations.clear();
     }
+    /**
+     * 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof EVCompany)) { 
+            return false;
+        }
+        EVCompany other = (EVCompany) obj;
+        
+        if (this.name == null) {
+            return other.name == null;
+        }
+        return this.name.equals(other.name);
+    }
+
+    /**
+     * Generates a hash code for the company.
+     * Based on the 'name' field, consistent with equals().
+     * @return A hashcode for the company.
+     */
+    @Override
+    public int hashCode()
+    {
+        int result = 7; 
+        result = 3 * result + getName().hashCode();
+        return result;
+    }
     
 }

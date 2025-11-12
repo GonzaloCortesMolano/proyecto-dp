@@ -407,4 +407,30 @@ public class ElectricVehicle
     public String getInitialFinalInfo(){
          return this.toString();
     }
+    
+    /**
+     * 
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) {
+            return true; 
+        }
+        if(!(obj instanceof ElectricVehicle)) {
+            return false;
+        }
+        ElectricVehicle other = (ElectricVehicle) obj;
+        return this.plate.equals(other.plate);
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public int hashCode()
+    {
+        int result = 7; 
+        result = 3 * result + getPlate().hashCode();
+        return result;
+    }
 }

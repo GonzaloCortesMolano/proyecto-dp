@@ -182,11 +182,37 @@ public class Charger
         double fee=kwsRecharging*getChargingFee();
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
-        setFree(true); //No tiene mucho sentido, pero durante el turno estaria usado
+        
         return fee;
     }
     
     public void updateAmountCollected(double money){
         this.amountCollected+=money;
+    }
+    
+    /**
+     * 
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) {
+            return true; 
+        }
+        if(!(obj instanceof Charger)) {
+            return false; 
+        }
+        Charger other = (Charger) obj;
+        return this.id.equals(other.id);
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public int hashCode()
+    {
+        int result = 7; 
+        result = 3 * result + getId().hashCode(); 
+        return result;
     }
 }

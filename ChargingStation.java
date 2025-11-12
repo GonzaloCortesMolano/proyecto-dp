@@ -151,4 +151,29 @@ public class ChargingStation
         this.chargers.add(charger);
     }
     
+    /**
+     * 
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) {
+            return true;
+        }
+        if(!(obj instanceof ChargingStation)) {
+            return false;
+        }
+        ChargingStation other = (ChargingStation) obj;
+        return this.id.equals(other.id);
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public int hashCode()
+    {
+        int result = 7; 
+        result = 3 * result + getId().hashCode(); 
+        return result;
+    }    
 }
