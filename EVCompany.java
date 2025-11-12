@@ -24,9 +24,9 @@ public class EVCompany
      * Constructor for objects of class EVCompany.
      * @param name The name of the company.
      */
-    public EVCompany()
+    public EVCompany(String name)
     {
-        this.name = "EVCharging Cáceres"; 
+        this.name = name; 
         this.subscribedVehicles = new ArrayList<>(); 
         this.stations = new ArrayList<>();
     }
