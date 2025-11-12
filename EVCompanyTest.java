@@ -5,11 +5,17 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 /**
- * Test implementation of the {@link EVCompany} class.
- * Provides unit tests for methods like {@code addElectricVehicle()}, 
- * {@code addChargingStation()}, and {@code getChargingStation()}.
- * @author (Tu nombre)
- * @version (Hoy)
+ * Test class for the {@link EVCompany} class.
+ * 
+ * Sergio Zambrano, Gonzalo Cofrtes, Ricardo ALvarez
+ * @version 12-11-2025
+ * 
+ * Provides unit tests for the core functionalities of the {@code EVCompany} class,
+ * including:
+ * - Creation of a company and initialization of attributes
+ * - Adding electric vehicles and charging stations
+ * - Searching charging stations by ID or location
+ * - Resetting company data
  */
 public class EVCompanyTest
 {
@@ -32,29 +38,36 @@ public class EVCompanyTest
      * Sets up the test fixture.
      *
      * Called before every test case method.
-     * This ensures each test runs with a clean, independent company object.
+     * Initializes the company, locations, stations, and electric vehicles,
+     * ensuring a clean environment for each test execution.
      */
     @BeforeEach
     public void setUp()
     {
+        //Company
         company = new EVCompany("EVCharging Cáceres");
         
+        //Locations
         loc1 = new Location(10, 5);
         loc2 = new Location(1, 1);
         
+        //Stations
         station1 = new ChargingStation("Cáceres", "CC00", loc1);
         station2 = new ChargingStation("Cáceres", "CC01", loc2);
         
+        //Locations for the Vehicle
         Location evStart = new Location(0, 0);
         Location evTarget = new Location(19, 19);
+        //Vehicles
         ev1 = new ElectricVehicle(company, evStart, evTarget, "EV1", "01-CCC", 60);
         ev2 = new ElectricVehicle(company, evStart, evTarget, "EV2", "02-CCC", 80);
     }
 
-    /**
+     /**
      * Tears down the test fixture.
      *
      * Called after every test case method.
+     * Frees all references to ensure full independence between tests.
      */
     @AfterEach
     public void tearDown()
@@ -69,8 +82,11 @@ public class EVCompanyTest
     }
 
     /**
-     * Test the EVCompany constructor.
-     * Verifies that the name is correct and all collections are initialized empty.
+     * Tests the {@link EVCompany} constructor.
+     * Ensures that a company object is correctly initialized with:
+     * - The expected name
+     * - Empty lists for vehicles and stations
+     * - A station count of zero
      */
     @Test
     public void testConstructor()
@@ -87,7 +103,9 @@ public class EVCompanyTest
     }
 
     /**
-     * Test the {@code addElectricVehicle} method.
+     * Tests the {@code addElectricVehicle()} method.
+     * Verifies that vehicles can be added to the company list
+     * and that {@code null} inputs are ignored without affecting existing data.
      */
     @Test
     public void testAddElectricVehicle()
@@ -105,7 +123,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code addChargingStation} method.
+     * Tests the {@code addChargingStation()} method.
+     * Ensures that charging stations can be correctly added to the company,
+     * increasing the total count, and that {@code null} entries are ignored.
      */
     @Test
     public void testAddChargingStation()
@@ -124,7 +144,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code getChargingStation(String id)} method.
+     * Tests the {@code getChargingStation(String id)} method.
+     * Verifies that stations can be correctly retrieved
+     * by their unique identifier.
      */
     @Test
     public void testGetChargingStationById()
@@ -137,7 +159,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code getChargingStation(String id)} method for a non-existent ID.
+     * Tests the {@code getChargingStation(String id)} method
+     * for cases where the ID does not correspond to any registered station.
+     * Ensures that the method returns {@code null}.
      */
     @Test
     public void testGetChargingStationByIdNotFound()
@@ -149,7 +173,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code getChargingStation(Location location)} method.
+     * Tests the {@code getChargingStation(Location location)} method.
+     * Ensures that the correct station is returned when a valid
+     * location is provided.
      */
     @Test
     public void testGetChargingStationByLocation()
@@ -162,7 +188,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code getChargingStation(Location location)} method for a non-existent location.
+     * Tests the {@code getChargingStation(Location location)} method
+     * when the location does not match any registered station.
+     * Verifies that the method returns {@code null}.
      */
     @Test
     public void testGetChargingStationByLocationNotFound()
@@ -174,7 +202,9 @@ public class EVCompanyTest
     }
     
     /**
-     * Test the {@code reset} method.
+     * Tests the {@code reset()} method.
+     * Verifies that invoking {@code reset()} clears all company data,
+     * including its list of electric vehicles and charging stations.
      */
     @Test
     public void testReset()

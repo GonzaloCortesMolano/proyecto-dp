@@ -386,7 +386,7 @@ public class ElectricVehicle
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
                String.format("%.1f", this.chargestCost) + "€, " + 
-               this.idleCount + ", " + route + ")\n";
+               this.idleCount + ", " + route + ")"; // Hemos quitado el \n final, si no funcionan laas pruebas es por eso
     }
     
     /**

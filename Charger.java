@@ -182,6 +182,7 @@ public class Charger
         double fee=kwsRecharging*getChargingFee();
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
+        setFree(true); //No tiene mucho sentido, pero durante el turno estaria usado
         return fee;
     }
     
