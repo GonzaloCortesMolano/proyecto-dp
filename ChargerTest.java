@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link Charger} class.
- * Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez 
+ * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez 
  * @version 12-11-2025
  * 
  * Provides unit tests for the core functionalities of the {@code Charger} class,

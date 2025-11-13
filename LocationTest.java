@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Test implementation of the {@link Location} class.
  * Provides unit tests for methods like {@code distance()} and {@code nextLocation()}.
- * @author David J. Barnes and Michael Kölling
+ * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
  * @version 2016.02.29
  * @version 2024.10.07 DP classes (adaptado a Java 8+)
  */

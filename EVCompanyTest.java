@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Test class for the {@link EVCompany} class.
  * 
- * Sergio Zambrano, Gonzalo Cofrtes, Ricardo ALvarez
+ * @author: Sergio Zambrano, Gonzalo Cofrtes, Ricardo ALvarez
  * @version 12-11-2025
  * 
  * Provides unit tests for the core functionalities of the {@code EVCompany} class,

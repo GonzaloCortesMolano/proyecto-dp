@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 /**
  * The test class ElectricVehicleTest.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @version 12-11-2025
  */
 public class ElectricVehicleTest
 {
