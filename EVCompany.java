@@ -1,27 +1,33 @@
 import java.util.*;
 
 /**
- * Models the operation of an Electric Vehicle (EV) Company. 
- * It manages a fleet of {@link ElectricVehicle}s and a network of {@link ChargingStation}s.
- * @author DP classes
- * @version 2024.10.07
+ * Represents an Electric Vehicle (EV) company that manages a fleet of 
+ * {@link ElectricVehicle}s and a network of {@link ChargingStation}s.
+ * The {@code EVCompany} class provides operations to register electric vehicles, 
+ * manage charging stations, and retrieve them by ID or {@link Location}. 
+ * It also supports resetting and replacing the subscribed vehicle list.
+ * 
+ * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @version 12-11-2025
  */
 public class EVCompany  
 {
     /**
-    * ID of the charging company
-    */
+     * The name (unique identifier) of the EV company.
+     */
     private String name;
     /**
-    * Set of ElectricVehicle objects that are subscribed
-    */
+     * The list of {@link ElectricVehicle}s subscribed to this company.
+     */
     private List<ElectricVehicle> subscribedVehicles;
     /**
-    * Collection of charging stations managed by the company
-    */
+     * The list of {@link ChargingStation}s managed by this company.
+     */
     private List<ChargingStation> stations;
+    
     /**
-     * Constructor for objects of class EVCompany.
+     * Constructs a new {@code EVCompany} with the specified name.
+     * 
      * @param name The name of the company.
      */
     public EVCompany(String name)
@@ -117,12 +123,18 @@ public class EVCompany
     public int getNumberOfStations(){
         return this.stations.size();
     }
+    
     /**
      * 
      */
     public void setSubscribedVehicles(List<ElectricVehicle> subsVehicles)
     {
         this.subscribedVehicles = subsVehicles;
+    }
+    
+    public void setChargingStations(List<ChargingStation> lStations)
+    {
+        this.stations = lStations;
     }
     /**
      * Clears all managed vehicles and stations, resetting the company to an empty state.
