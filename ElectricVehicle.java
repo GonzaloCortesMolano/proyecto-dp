@@ -353,7 +353,9 @@ public class ElectricVehicle
              setLocation(location.nextLocation(destination));
              
              reduceBatteryLevel();
-         }    
+         }
+         //Añdir info del paso (step)
+         getStepInfo(step);
     }
      
     /**

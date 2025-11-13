@@ -11,4 +11,3 @@ y empezar con la clase EVDemo. El resto creo que de momento no da fallos.
 13/11(por la tarde): En Vehicle hacer getStepInfo dentro del metodo Act()
                         Hacer los comentarios de Vehicle (NO EN PREUBAS)                 
     * Terminar la clase Demo
-    * 2 metodos nuevos en EVCompany pueden romper la encapsulacion, preguntar y eliminar si es necesario
