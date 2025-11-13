@@ -37,7 +37,11 @@ public class EVCompany
         this.stations = new ArrayList<>();
     }
 
-     /**
+    // -------------------------------------------------
+    // -------------------- Getters --------------------
+    // -------------------------------------------------
+    
+    /**
      * @return The name of the company.
      */
     public String getName()
@@ -47,7 +51,7 @@ public class EVCompany
     
     
     /**
-     * @return An unmodifiable list of all {@link ElectricVehicle}s.
+     * @return An unmodifiable list of all {@link ElectricVehicle}s subscribed to the company.
      */
     public List<ElectricVehicle> getVehicles()
     {       
@@ -55,8 +59,10 @@ public class EVCompany
     }
 
     /**
-     * Adds an {@link ElectricVehicle} to the company's fleet.
-     * @param vehicle The electric vehicle to add.
+     * Adds a new {@link ElectricVehicle} to the company's subscribed fleet.
+     * 
+     * @param vehicle The electric vehicle to add. 
+     *      If {@code null}, the method does nothing.
      */
     public void addElectricVehicle(ElectricVehicle vehicle)
     {       
@@ -65,10 +71,11 @@ public class EVCompany
         }
     }
 
-    
     /**
-     * Adds a {@link ChargingStation} to the company's network.
-     * @param station The charging station to add.
+     * Adds a new {@link ChargingStation} to the company's managed network.
+     * 
+     * @param station The charging station to add. 
+     *      If {@code null}, the method does nothing.
      */
     public void addChargingStation(ChargingStation station)
     {       
@@ -77,11 +84,11 @@ public class EVCompany
         }    
     }
     
-    
     /**
-     * Retrieves a {@link ChargingStation} by its unique ID.
-     * @param id The ID of the station to find.
-     * @return The {@link ChargingStation} with the matching ID, or {@code null} if not found.
+     * Retrieves a {@link ChargingStation} by its unique identifier.
+     * 
+     * @param id The ID of the charging station to find.
+     * @return The matching {@link ChargingStation}, or {@code null} if no station matches the given ID.
      */
     public ChargingStation getChargingStation(String id)
     {
@@ -94,9 +101,10 @@ public class EVCompany
     }
 
     /**
-     * Retrieves a {@link ChargingStation} by its {@link Location}.
+     * Retrieves a {@link ChargingStation} located at the specified {@link Location}.
+     * 
      * @param location The {@link Location} of the station to find.
-     * @return The {@link ChargingStation} at the matching location, or {@code null} if not found.
+     * @return The {@link ChargingStation} at that location, or {@code null} if not found.
      */
     public ChargingStation getChargingStation(Location location)
     {
@@ -116,35 +124,60 @@ public class EVCompany
        return Collections.unmodifiableList(stations);
     }
     
-    
     /**
-     * @return The total number of managed {@link ChargingStation}s.
+     * @return The total number of {@link ChargingStation}s managed by the company.
      */
     public int getNumberOfStations(){
         return this.stations.size();
     }
     
+    // -------------------------------------------------
+    // -------------------- Setters --------------------
+    // -------------------------------------------------
+    
     /**
+     * Replaces the list of subscribed {@link ElectricVehicle}s with a new list.
+     * This method overwrites the current list of vehicles. 
+     * Use with caution, as it can remove existing vehicle registrations.
      * 
+     * @param subsVehicles The new list of {@link ElectricVehicle}s to assign.
+     *      If {@code null}, the operation is ignored.
      */
     public void setSubscribedVehicles(List<ElectricVehicle> subsVehicles)
     {
-        this.subscribedVehicles = subsVehicles;
+        if(subsVehicles != null)
+            this.subscribedVehicles = subsVehicles;
     }
     
+    /**
+     * Replaces the list of managed {@link ChargingStation}s with a new list.
+     * This method overwrites the current collection of charging stations. 
+     * Use with caution, as it will remove any previously managed stations.
+     * 
+     * @param lStations The new list of {@link ChargingStation}s to assign. 
+     *      If {@code null}, the operation is ignored.
+     */
     public void setChargingStations(List<ChargingStation> lStations)
     {
-        this.stations = lStations;
+        if(lStations != null)
+            this.stations = lStations;
     }
+    
     /**
-     * Clears all managed vehicles and stations, resetting the company to an empty state.
+     * Removes all subscribed vehicles and managed stations, 
+     * resetting the company to an empty state.
      */
     public void reset(){
         this.subscribedVehicles.clear();
         this.stations.clear();
     }
     /**
+     * Compares this company to another object for equality.
+     * Two {@code EVCompany} instances are considered equal 
+     * if they have the same company name.
      * 
+     * @param obj The object to compare with.
+     * @return {@code true} if both objects represent the same company; {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -162,10 +195,12 @@ public class EVCompany
         return this.name.equals(other.name);
     }
 
-    /**
-     * Generates a hash code for the company.
-     * Based on the 'name' field, consistent with equals().
-     * @return A hashcode for the company.
+     /**
+     * Generates a hash code for this company.
+     * The hash code is derived from the company name, 
+     * consistent with the {@link #equals(Object)} method.
+     * 
+     * @return The hash code of this company.
      */
     @Override
     public int hashCode()
