@@ -355,7 +355,7 @@ public class ElectricVehicle
              reduceBatteryLevel();
          }
          //Añdir info del paso (step)
-         getStepInfo(step);
+         System.out.println(getStepInfo(step));
     }
      
     /**
@@ -387,7 +387,7 @@ public class ElectricVehicle
         return "(ElectricVehicle: " + this.name + ", " + 
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
-               String.format("%.1f", this.chargestCost) + "€, " + 
+               String.format(java.util.Locale.US, "%.2f", this.chargestCost) + "€, " + 
                this.idleCount + ", " + route + ")"; // Hemos quitado el \n final, si no funcionan laas pruebas es por eso
     }
     
@@ -399,7 +399,7 @@ public class ElectricVehicle
     public String getStepInfo(int step){
         String info = this.toString();
         
-        return "(step: " + step + " " + info.substring(1) + "\n";
+        return "(step: " + step + " " + info.substring(1); // quie hay un \n
     }
     
     /**

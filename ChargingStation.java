@@ -83,6 +83,20 @@ public class ChargingStation
         this.location = location;
     }
     
+     /**
+     * Replaces the list of managed {@link Charger}s with a new list.
+     * This method overwrites the current collection of chargers. 
+     * Use with caution, as it will remove any previously managed stations.
+     * 
+     * @param chargers The new list of {@link Charger}s to assign. 
+     *      If {@code null}, the operation is ignored.
+     */
+    public void setChargers(List<Charger> chargers)
+    {
+        if(chargers != null)
+            this.chargers = chargers;
+    }
+    
     /**
      * Retrieves the first free {@link Charger} available at the station.
      *

@@ -153,7 +153,9 @@ public class EVDemo
                 // Creates chargers with varying speed and fee based on index 'i'.
                 station.addCharger(new Charger(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
             }
-            Collections.sort(station.getChargers(), new ComparatorChargers());
+            List<Charger> copia=new ArrayList<>(station.getChargers());
+            Collections.sort(copia, new ComparatorChargers());
+            station.setChargers(copia);
         }    
     }
     
