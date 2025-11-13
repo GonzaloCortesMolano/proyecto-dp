@@ -175,7 +175,7 @@ public class EVDemo
      * the details of all {@link ElectricVehicle}s and {@link ChargingStation}s.
      */
     private void showInitialInfo() {
-        System.out.println("( "+company.getName()+" )");
+        System.out.println("( Compañía "+company.getName()+" )");
         System.out.println("(-------------------)");
         System.out.println("( Electric Vehicles )");
         System.out.println("(-------------------)");

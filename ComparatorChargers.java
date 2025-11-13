@@ -18,10 +18,10 @@ public class ComparatorChargers implements Comparator<Charger>
      */
     public int compare(Charger c1, Charger c2){ 
         int comparation;
-        if(c1.getChargingSpeed()<c2.getChargingSpeed()){
+        if(c1.getChargingSpeed()>c2.getChargingSpeed()){
             comparation=-1;
         }
-        else if (c1.getChargingSpeed()>c2.getChargingSpeed()){
+        else if (c1.getChargingSpeed()<c2.getChargingSpeed()){
             comparation=1;
         }
         else{

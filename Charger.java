@@ -150,7 +150,7 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.2f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)";
+        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)";
     }
 
     /**
@@ -161,10 +161,11 @@ public class Charger
      */
     public String getCompleteInfo()
     {
-         String texto = this.toString()+"\n";
+         String texto = this.toString(); //n
          for(ElectricVehicle v: eVsRecharged){
-            texto += v.toString()+"\n";
+            texto +="\n"+ v.toString();
          }
+         texto+="\n";
          return texto;
     }
     

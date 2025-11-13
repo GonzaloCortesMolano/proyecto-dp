@@ -326,36 +326,46 @@ public class ElectricVehicle
       * @param step The current step of the simulation.
       */
      public void act(int step)
-     {
-         if(location.equals(targetLocation)) {
-            // Si idleCount es 0, es la primera vez que entra
-             if(idleCount == 0) {
-                 System.out.println("(step: " + step + " ElectricVehicle: " + this.plate +
-                                    " at target destination ********)");
+     {   
+         if(getBatteryLevel()!=0 && ((hasRechargingLocation() && enoughBattery(location.distance(getRechargingLocation()))) || enoughBattery(location.distance(getTargetLocation())))){
+             if(location.equals(targetLocation)) {
+                // Si idleCount es 0, es la primera vez que entra
+                 if(idleCount == 0) {
+                     System.out.println("(step: " + step + " ElectricVehicle: " + this.getPlate() +
+                                        " at target destination ********)");
+                 }
+                incrementIdleCount();
              }
+             else {
+                
+                 Location destination;
+    
+                if (hasRechargingLocation()) {
+                    destination = rechargingLocation;
+                }   else {
+                    destination = targetLocation;
+                }
+                
+                 setLocation(location.nextLocation(destination));
+                 
+                 reduceBatteryLevel();
+                 
+             }
+             //si llega a una estacion recarga
+             if(hasRechargingLocation() && location.equals(rechargingLocation)) {
+                 ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
+                 Charger charger=station.getFreeCharger();
+                 System.out.println("(step: "+step+" - ElectricVehicle: "+getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at charger: "+charger.getId()+" with cost: "
+                 +String.format(java.util.Locale.US, "%.1f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)");
+                recharge(step); 
+             }
+        }
+        else{
             incrementIdleCount();
-         }
-         //Si está en una estación de recarga
-         else if(hasRechargingLocation() && location.equals(rechargingLocation)) {
-             recharge(step); 
-         }
-         //Si está en movimiento
-         else {
-            
-             Location destination;
-
-            if (hasRechargingLocation()) {
-                destination = rechargingLocation;
-            }   else {
-                destination = targetLocation;
-            }
-            
-             setLocation(location.nextLocation(destination));
-             
-             reduceBatteryLevel();
-         }
+        }
          //Añdir info del paso (step)
          System.out.println(getStepInfo(step));
+         
     }
      
     /**
@@ -387,8 +397,8 @@ public class ElectricVehicle
         return "(ElectricVehicle: " + this.name + ", " + 
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
-               String.format(java.util.Locale.US, "%.2f", this.chargestCost) + "€, " + 
-               this.idleCount + ", " + route + ")"; // Hemos quitado el \n final, si no funcionan laas pruebas es por eso
+               String.format(java.util.Locale.US, "%.1f", this.chargestCost) + "€, " + 
+               this.idleCount + ", " + route + ")";
     }
     
     /**
@@ -399,7 +409,7 @@ public class ElectricVehicle
     public String getStepInfo(int step){
         String info = this.toString();
         
-        return "(step: " + step + " " + info.substring(1); // quie hay un \n
+        return "(step: " + step + " - " + info.substring(1); // quie hay un \n
     }
     
     /**
