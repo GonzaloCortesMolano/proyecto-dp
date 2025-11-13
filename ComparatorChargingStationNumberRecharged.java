@@ -12,11 +12,13 @@ public class ComparatorChargingStationNumberRecharged implements Comparator<Char
 {
     /**
      * Compares its two {@link ChargingStation} arguments for order.
+     * The comparison is based on the number order of their number of recharged vehicles.
      * * @param st1 The first charging station to be compared.
      * @param st2 The second charging station to be compared.
      * @return A negative integer if st1 has more recharges or an equal number but smaller ID, 
      * zero if both are equal, or a positive integer otherwise.
      */
+    @Override
     public int compare(ChargingStation st1, ChargingStation st2){  
          if (st1.getNumberEVRecharged() > st2.getNumberEVRecharged())
             return -1;

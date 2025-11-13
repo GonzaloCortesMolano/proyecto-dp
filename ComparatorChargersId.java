@@ -17,7 +17,10 @@ public class ComparatorChargersId implements Comparator<Charger>
      * charger's ID is lexicographically less than, equal to, or greater than the second.
      */
     public int compare(Charger c1, Charger c2){  
-       //TODO: Complete this code
-       return 0;
+       if (st1.getNumberEVRecharged() > st2.getNumberEVRecharged())
+            return -1;
+        else if (st1.getNumberEVRecharged() < st2.getNumberEVRecharged())
+            return 1;
+        else return (new ComparatorChargingStationId().compare(st1,st2));
     } 
 }

@@ -17,8 +17,7 @@ public class ComparatorChargingStationId implements Comparator<ChargingStation>
      * @return A negative integer, zero, or a positive integer as the first
      * station's ID is less than, equal to, or greater than the second.
      */
-    public int compare(ChargingStation st1, ChargingStation st2){  
-        //TODO: Complete this code
-        return 0;
+    public int compare(ChargingStation st1, ChargingStation st2){ 
+        return st1.getId().compareTo(st2.getId());
     } 
 }

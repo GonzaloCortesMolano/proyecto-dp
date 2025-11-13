@@ -57,6 +57,7 @@ public class EVDemo
      */
     public void run()
     {        
+        
         //Ejecutamos un número de pasos la simulación.
         //En cada paso, cada persona de reparto realiza su acción
         for(int step = 0; step < MAXSTEPS; step++) {
@@ -113,7 +114,8 @@ public class EVDemo
             vehicles.add(ev);
             // TODO: Complete the code here
         }
-        
+        Collections.sort(vehicles, new ComparatorElectricVehicle(vehicles));
+        company.setVehicles(vehicles);
         // TODO: Complete the code here
         
     }
@@ -157,7 +159,9 @@ public class EVDemo
       * This determines if an intermediate recharging stop is necessary.
       */
      private void configureRoutes() {
-         // TODO: Complete the code here
+         for(ElectricVehicle vehicle: vehicles){
+            vehicle.calculateRoute();
+        }
      }
 
     /**
@@ -170,13 +174,17 @@ public class EVDemo
         System.out.println("( Electric Vehicles )");
         System.out.println("(-------------------)");
         
-        // TODO: Complete the code here
+        for(ElectricVehicle vehicle: vehicles){
+            System.out.println(vehicle.getInitialFinalInfo());
+        }
 
         System.out.println("(-------------------)");
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
        
-        // TODO: Complete the code here
+        for(ChargingStation station: stations){
+            System.out.println(station.getCompleteInfo());
+        }
         
         System.out.println("(------------------)");
         System.out.println("( Simulation start )");
@@ -198,13 +206,17 @@ public class EVDemo
         System.out.println("( Electric Vehicles )");
         System.out.println("(-------------------)");
         
-        // TODO: Complete the code here
+        for(ElectricVehicle vehicle: vehicles){
+            System.out.println(vehicle.getInitialFinalInfo());
+        }
 
         System.out.println("(-------------------)");
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
        
-        // TODO: Complete the code here
+        for(ChargingStation station: stations){
+            System.out.println(station.getCompleteInfo());
+        }
 
     }
     
