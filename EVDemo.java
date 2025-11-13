@@ -48,6 +48,9 @@ public class EVDemo
      */
     public EVDemo()
     {
+        company=new EVCompany("EVCharging Cáceres");
+        vehicles=new ArrayList<ElectricVehicle>();
+        stations=new ArrayList<ChargingStation>();
         //TODO: Complete this code
         createElectricVehicles();
         createStations(); 
