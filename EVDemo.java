@@ -74,7 +74,9 @@ public class EVDemo
      */
     public void step(int step)
     {
-        //TODO: Complete the code here
+        for(ElectricVehicle vehicle: vehicles){
+            vehicle.act(step);
+        }
     }
 
     /**
@@ -112,11 +114,9 @@ public class EVDemo
         for (int i=0;i < DEMO.getNumVehiclesToCreate();i++){
             ElectricVehicle ev = new ElectricVehicle(company, locations[i],targetLocations[i],("EV"+i),(i+"CCC"),(i+1)*15);
             vehicles.add(ev);
-            // TODO: Complete the code here
         }
-        Collections.sort(vehicles, new ComparatorElectricVehicle(vehicles));
-        company.setVehicles(vehicles);
-        // TODO: Complete the code here
+        Collections.sort(vehicles, new ComparatorElectricVehicle());
+        company.setSubscribedVehicles(vehicles);
         
     }
     
@@ -130,10 +130,9 @@ public class EVDemo
                                 
         for (int i=0;i<DEMO.getNumStationsToCreate();i++){
             stations.add(new ChargingStation("Cáceres","CC0" + i,locations[i]));
-            // TODO: Complete the code here
         }
-        
-        // TODO: Complete the code here
+        Collections.sort(stations, new ComparatorChargingStationId());
+        company.setChargingStations(stations);
     }
 
     /**
@@ -141,15 +140,12 @@ public class EVDemo
      * and orders the chargers within each station.
      */
     private void createChargers() {  
-        // TODO: Complete the code here
-        
         for (ChargingStation station : stations){
             for (int i=0;i<DEMO.getNumChargersToCreate();i++){
                 // Creates chargers with varying speed and fee based on index 'i'.
                 station.addCharger(new Charger(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
-                // TODO: Complete the code here
             }
-            // TODO: Complete the code here
+            Collections.sort(station.getChargers(), new ComparatorChargers());
         }    
     }
     
