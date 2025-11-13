@@ -18,9 +18,15 @@ public class ComparatorElectricVehicleIdleCount implements Comparator<ElectricVe
      * vehicle's idle time is less than, equal to, or greater than the second.
      */
     @Override
-    public int compare(ElectricVehicle v1, ElectricVehicle v2){  
-        if(v1.getIdleCount()<v2.getIdleCount()) return -1;
-        else if(v1.getIdleCount()>v2.getIdleCount()) return 1;
-        else return 0;
+    public int compare(ElectricVehicle v1, ElectricVehicle v2){ 
+        boolean ev1AtTarget = v1.getLocation().equals(v1.getTargetLocation());
+        boolean ev2AtTarget = v2.getLocation().equals(v2.getTargetLocation());
+        if(ev1AtTarget && !ev2AtTarget) return -1;
+        else if(!ev1AtTarget && ev2AtTarget) return 1;
+        else {
+            if(v1.getIdleCount()>v2.getIdleCount()) return -1;
+            else if(v1.getIdleCount()<v2.getIdleCount()) return 1;
+            else return (new ComparatorElectricVehicle().compare(v1,v2));
+        }
     } 
 }
