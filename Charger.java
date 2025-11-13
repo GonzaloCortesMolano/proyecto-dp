@@ -203,6 +203,7 @@ public class Charger
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
         
+        setFree(true);
         return fee;
     }
     
