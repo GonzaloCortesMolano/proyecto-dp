@@ -87,10 +87,10 @@ public class Location
     }
 
     /**
-     * Generates a hash code for the location.
+     * Generates a hash code for this location.
      * It uses the top 16 bits for the y value and the bottom 16 bits for the x value
-     * to ensure a unique hash code for most grid sizes.
-     * @return A hashcode for the location.
+     * to ensure a unique hash code for most grid sizes. This method is consistent with {@link #equals(Object)}.
+     * @return A hash code value for this location.
      */
     @Override
     public int hashCode()

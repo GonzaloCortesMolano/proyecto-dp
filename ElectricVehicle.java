@@ -2,7 +2,7 @@ import java.util.*;
 /**
  * Model the common elements of an Electric Vehicle (EV) that operates 
  * within the simulation, moving towards a target and potentially recharging.
- * * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling
  * @author DP classes 
  * @version 2024.10.07
  */

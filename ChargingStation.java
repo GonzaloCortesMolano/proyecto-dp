@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * Models an Electric Vehicle Charging Station.
- * A charging station contains multiple {@link Charger} units.
- * @author DP classes 
- * @version 2024.10.07
+ * Represents an Electric Vehicle Charging Station that contains multiple {@link Charger} units.
+ * Each station is identified by a unique ID and is associated with a specific city and {@link Location}.
+ * The class provides methods to manage its chargers, obtain information about available chargers,
+ * and calculate the total number of vehicles recharged.
+ *
+ * This class forms part of the electric vehicle simulation model.
+ *
+ * @author: Sergio Zambrano, Gonzalo Cortes
+ * @version 11-11-2025
  */
+
 public class ChargingStation
 {
     private String id;
@@ -16,7 +22,8 @@ public class ChargingStation
     private Location location;
     private List<Charger> chargers;
     /**
-     * Constructor for objects of class ChargingStation.
+     * Constructs a new {@link ChargingStation}.
+     *
      * @param city The city where the station is located.
      * @param id The unique identifier of the station.
      * @param location The {@link Location} of the station.
@@ -28,10 +35,9 @@ public class ChargingStation
        this.location = location;
        chargers = new ArrayList<Charger>();
     }
-    
-    /*
-     * getters
-     */
+    // ---------------------------------------------------
+    // Getters
+    // ---------------------------------------------------
     /**
      * @return The unique identifier of the charging station.
      */
@@ -40,42 +46,48 @@ public class ChargingStation
         return this.id;
     }
     /**
-     * @return The city of the charging station.
+     * @return The city where this station is located.
      */
     public String getCity(){
         return this.city;
     }
     /**
-     * @return The {@link Location} of the charging station.
+     * Returns the {@link Location} of the charging station. 
+     *
+     * @return The location coordinates.
      */
     public Location getLocation()
     {
         return this.location;
     }
     /**
-     * @return An unmodifiable list of all {@link Charger}s at the station.
+     * Returns an unmodifiable list of all {@link Charger}s in this station.
+     *
+     * @return An unmodifiable list of chargers.
      */
     public List<Charger> getChargers()
     {
         return Collections.unmodifiableList(chargers); 
     }
-    
-    /*
-     * setters
-     */
+    // ---------------------------------------------------
+    // Setters
+    // ---------------------------------------------------
+
     /**
-     * Set the current location of the charging station.
-     * @param location Where it is. Must not be null.
-     * @throws NullPointerException If location is null.
+     * Sets the current {@link Location} of this charging station.
+     *
+     * @param location The new location (must not be {@code null}).
+     * @throws NullPointerException If the provided location is {@code null}.
      */
     public void setLocation(Location location){
         this.location = location;
     }
     
     /**
-     * Retrieves the first free {@link Charger} found at the station.
-     * @return A free {@link Charger}, or possibly throws an exception if none are found (depending on stream implementation details).
-     * **Note: The implementation assumes at least one free charger exists if called.**
+     * Retrieves the first free {@link Charger} available at the station.
+     *
+     * @return A free {@link Charger}, or {@code null} if no charger is currently free.
+     * Note: The implementation assumes at least one free charger exists if called.**
      */
     public Charger getFreeCharger()
     {
@@ -89,8 +101,10 @@ public class ChargingStation
     }
     
     /**
-     * Calculates the total number of {@link ElectricVehicle}s recharged across all {@link Charger}s at this station.
-     * @return The total number of unique recharges.
+     * Calculates the total number of {@link ElectricVehicle}s recharged
+     * across all {@link Charger}s at this station.
+     *
+     * @return The total number of recharge operations performed.
      */
     public int getNumberEVRecharged(){
         int total = 0;
@@ -100,11 +114,11 @@ public class ChargingStation
         return total;
     }
 
-
     /**
-     * Returns a string containing complete information about the charging station, 
-     * including details of all its {@link Charger}s and their usage history.
-     * @return A comprehensive string representation of the station.
+     * Returns a detailed textual description of this charging station,
+     * including all contained {@link Charger}s and their individual usage information.
+     *
+     * @return A full multi-line string representation of this station and its chargers.
      */
     public String getCompleteInfo()
 
@@ -122,19 +136,24 @@ public class ChargingStation
 
     }
     
-
     /**
-     * Shows a final information summary about the charging station (currently the same as {@code toString()}).
-     * @return A string representation of the station's final status.
-     * @deprecated Consider using {@link #toString()} or {@link #getCompleteInfo()} instead.
+     * Shows a final summary about this charging station.
+     * Currently identical to {@link #toString()}.
+     *
+     * @return A string summary of the station’s final state.
+     * @deprecated Use {@link #toString()} or {@link #getCompleteInfo()} instead.
      */
+    @Deprecated
     public String showFinalInfo()
     {
         return toString();
     }
 
     /**
-     * @return A string representation of the charging station, including its ID, city, total number of EVs recharged, and location.
+     * Returns a short string representation of this charging station,
+     * including its ID, city, number of EVs recharged, and location.
+     *
+     * @return A formatted string with the station’s main information.
      */
     @Override
     public String toString()
@@ -143,8 +162,10 @@ public class ChargingStation
     }
     
     /**
-     * Adds a new {@link Charger} to the station.
-     * @param charger The new charger unit.
+     * Adds a new {@link Charger} to this charging station.
+     *
+     * @param charger The new charger to add (must not be {@code null}).
+     * @throws NullPointerException If {@code charger} is {@code null}.
      */
     public void addCharger(Charger charger)
     {
@@ -152,7 +173,11 @@ public class ChargingStation
     }
     
     /**
-     * 
+     * Compares this charging station to another object for equality.
+     * Two stations are considered equal if they share the same ID.
+     *
+     * @param obj The object to compare to.
+     * @return {@code true} if the objects represent the same station; {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj){
@@ -167,7 +192,10 @@ public class ChargingStation
     }
 
     /**
-     * 
+     * Returns a hash code consistent with {@link #equals(Object)}.
+     * The hash is derived from the station ID.
+     *
+     * @return A hash code for this charging station.
      */
     @Override
     public int hashCode()

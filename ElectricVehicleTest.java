@@ -4,9 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class ElectricVehicleTest.
- *
- * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * Test implementation of the {@link ElectricVehicle} class.
+ * Provides unit tests for methods related to electric vehicle creation,
+ * route calculation, battery management, and recharging behavior.
+ * 
+ * Each test verifies that the vehicle behaves correctly in different scenarios,
+ * including initialization, battery sufficiency, route calculation, and the recharge process.
+ * 
+ * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
  * @version 12-11-2025
  */
 public class ElectricVehicleTest
@@ -44,14 +49,21 @@ public class ElectricVehicleTest
 
     /**
      * Tears down the test fixture.
-     *
+     * 
      * Called after every test case method.
+     * Resets references to ensure clean state for each test.
      */
     @AfterEach
     public void tearDown()
     {
     }
-    
+    /**
+     * Tests the {@link ElectricVehicle} constructor and its getter methods.
+     * 
+     * Verifies that all attributes are correctly initialized when creating a new
+     * electric vehicle, including company, locations, identifiers, and battery state.
+     * Also ensures that numeric values (battery, counters, etc.) start at expected defaults.
+     */
     @Test
     public void testCreation(){
         v1=new ElectricVehicle(new EVCompany("nueva"), new Location(5, 8), new Location(20, 20), "name", "plate", 200);
@@ -72,14 +84,25 @@ public class ElectricVehicleTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargestCost(), 0);
     }
-    
+    /**
+     * Tests the {@code enoughBattery()} method.
+     * 
+     * Ensures that the vehicle can correctly determine whether it has enough battery
+     * to reach its target location. It checks both a reachable and an unreachable destination.
+     */
     @Test
     public void testEnoughBattery(){
         assertTrue(v1.enoughBattery(v1.distanceToTheTargetLocation()));
         v1.setTargetLocation(new Location(120, 120));
         assertFalse(v1.enoughBattery(v1.distanceToTheTargetLocation()));
     }
-    
+    /**
+     * Tests the {@code calculateRoute()} method.
+     * 
+     * Verifies that the vehicle correctly generates its travel route
+     * as a string showing the sequence of locations to visit.
+     * Checks both a direct route and one with an intermediate recharge stop.
+     */
     @Test
     public void testCalculateRoute(){
         v1.calculateRoute();
@@ -88,7 +111,14 @@ public class ElectricVehicleTest
         v1.calculateRoute();
         assertEquals("5-8 -> 20-20 -> 120-120", v1.getStringRoute());
     }
-    
+    /**
+     * Tests the {@code recharge()} method.
+     * 
+     * Simulates the vehicle recharging process at a station.
+     * Verifies that the battery level is restored to full capacity,
+     * the recharge count and total cost are updated,
+     * and the vehicle no longer has a pending recharging location.
+     */
     @Test
     public void testRecharge(){
         v1.setRechargingLocation(target);
