@@ -71,6 +71,18 @@ public class EVDemo
         for(int step = 0; step < MAXSTEPS; step++) {
             step(step);
         }
+        //ordena finalmente las estaciones
+        Collections.sort(stations, new ComparatorChargingStationNumberRecharged());
+        company.setChargingStations(stations);
+        //ordena finalmente los vehiculos
+        Collections.sort(vehicles, new ComparatorElectricVehicleIdleCount());
+        company.setSubscribedVehicles(vehicles);
+        //ordena finalmente los cargadores
+        for (ChargingStation station : stations){
+            List<Charger> copia=new ArrayList<>(station.getChargers());
+            Collections.sort(copia, new ComparatorChargers());
+            station.setChargers(copia);
+        } 
         
         showFinalInfo();
 

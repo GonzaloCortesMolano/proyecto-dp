@@ -329,11 +329,6 @@ public class ElectricVehicle
      {   
          if(getBatteryLevel()!=0 && ((hasRechargingLocation() && enoughBattery(location.distance(getRechargingLocation()))) || enoughBattery(location.distance(getTargetLocation())))){
              if(location.equals(targetLocation)) {
-                // Si idleCount es 0, es la primera vez que entra
-                 if(idleCount == 0) {
-                     System.out.println("(step: " + step + " ElectricVehicle: " + this.getPlate() +
-                                        " at target destination ********)");
-                 }
                 incrementIdleCount();
              }
              else {
@@ -347,7 +342,10 @@ public class ElectricVehicle
                 }
                 
                  setLocation(location.nextLocation(destination));
-                 
+                 if(location.equals(targetLocation)) { //si llega a la estacion muestra mensaje
+                     System.out.println("(step: " + step + " - ElectricVehicle: " + this.getPlate() +
+                                        " at target destination ********)");
+                 }
                  reduceBatteryLevel();
                  
              }

@@ -150,7 +150,7 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+getAmountCollected()+"€)";
+        return "(Charger: "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+String.format(java.util.Locale.US,"%.1f", getAmountCollected())+"€)";
     }
 
     /**
