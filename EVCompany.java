@@ -117,7 +117,13 @@ public class EVCompany
     public int getNumberOfStations(){
         return this.stations.size();
     }
-    
+    /**
+     * 
+     */
+    public void setSubscribedVehicles(List<ElectricVehicle> subsVehicles)
+    {
+        this.subscribedVehicles = subsVehicles;
+    }
     /**
      * Clears all managed vehicles and stations, resetting the company to an empty state.
      */
@@ -156,5 +162,4 @@ public class EVCompany
         result = 3 * result + getName().hashCode();
         return result;
     }
-    
 }
