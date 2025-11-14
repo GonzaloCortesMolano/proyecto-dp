@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Test class for the {@link EVCompany} class.
  * 
- * @author: Sergio Zambrano, Gonzalo Cofrtes, Ricardo ALvarez
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
  * 
  * Provides unit tests for the core functionalities of the {@code EVCompany} class,
@@ -209,18 +209,16 @@ public class EVCompanyTest
     @Test
     public void testReset()
     {
-        // Añadir datos
         company.addElectricVehicle(ev1);
         company.addChargingStation(station1);
-        
-        // Comprobar que los datos están
+        // Check that data is present
         assertEquals(1, company.getVehicles().size());
         assertEquals(1, company.getNumberOfStations());
         
-        // Resetear la compañía
+        // Reset the Company
         company.reset();
         
-        // Comprobar que todo está vacío
+        // Check that everything is empty
         assertEquals(0, company.getVehicles().size());
         assertEquals(0, company.getNumberOfStations());
         assertTrue(company.getCityStations().isEmpty());

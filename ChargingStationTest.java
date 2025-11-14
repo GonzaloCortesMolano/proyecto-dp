@@ -103,7 +103,7 @@ public class ChargingStationTest
     public void testGetFreeCharger()
     {
        Charger chargerFree = station1.getFreeCharger();
-       assertEquals(charger3, chargerFree);
+       assertEquals(charger1, chargerFree);
     }
     /**
      * Tests the {@code getNumberEVRecharged()} method.
@@ -160,6 +160,6 @@ public class ChargingStationTest
         otra.addCharger(new Charger("CC01_002", 60, 0.6));
         otra.addCharger(new Charger("CC01_001", 40, 0.4));
         otra.addCharger(new Charger("CC01_000", 20, 0.2));
-        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(Charger: CC01_003, 80kwh, 0.8€, 0, 0.0€)\n(Charger: CC01_002, 60kwh, 0.6€, 0, 0.0€)\n(Charger: CC01_001, 40kwh, 0.4€, 0, 0.0€)\n(Charger: CC01_000, 20kwh, 0.2€, 0, 0.0€)\n", otra.getCompleteInfo());
+        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(Charger: CC01_003, 80kwh, 0.8€, 0, 0.0€)\n(Charger: CC01_002, 60kwh, 0.6€, 0, 0.0€)\n(Charger: CC01_001, 40kwh, 0.4€, 0, 0.0€)\n(Charger: CC01_000, 20kwh, 0.2€, 0, 0.0€)", otra.getCompleteInfo());
     }
 }

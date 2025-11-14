@@ -9,7 +9,7 @@ import java.util.Collections;
  * the electric vehicles it has recharged. It also maintains its availability 
  * status (whether it is free or currently in use).
  *
- * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez 
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano 
  * @version 12-11-2025
  */
 public class Charger
@@ -96,6 +96,7 @@ public class Charger
     public void setId(String id){
         this.id=id;
     }
+    
     /**
      * Sets the charging speed.
      * 
@@ -104,6 +105,7 @@ public class Charger
     public void setChargingSpeed(int speed){
         this.chargingSpeed=speed;
     }
+    
     /**
      * Sets the charging fee.
      * 
@@ -113,15 +115,8 @@ public class Charger
         this.chargingFee = fee;
     }
     
-    /*
-     * Set the list new of charged {@link ElectricVehicles}
-     * @param v New charger's list of {@link ElectricVehicles}
-     */
-    /*
-    public void setEVsRecharged(ArrayList<ElectricVehicle> v){
-        this.eVsRecharged = v;
-    }
-    */ //Rompe la encapsulación y no hace falta ya que tenemos el método addEvRecharged
+    //No hacemos setEVsRecharged porque rompe la encapsulación y no hace falta,
+    //ya que tenemos el método addEvRecharged
     
     /**
      * Sets the total amount of money collected by this charger.
@@ -161,7 +156,7 @@ public class Charger
      */
     public String getCompleteInfo()
     {
-         String texto = this.toString(); //n
+         String texto = this.toString();
          for(ElectricVehicle v: eVsRecharged){
             texto +="\n"+ v.toString();
          }
@@ -184,7 +179,6 @@ public class Charger
     public void addEvRecharged(ElectricVehicle vehicle){
         eVsRecharged.add(vehicle);
     }
-    
     
     /**
      * Simulates the charging process for an {@link ElectricVehicle}.

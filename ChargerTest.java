@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link Charger} class.
- * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez 
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
  * 
  * Provides unit tests for the core functionalities of the {@code Charger} class,
@@ -25,6 +25,7 @@ public class ChargerTest
     private ElectricVehicle eVehicle2;
     private ElectricVehicle eVehicle3;
     private EVCompany Vectalia;
+    
     /**
      * Default constructor for test class ChargerTest
      */
@@ -85,6 +86,7 @@ public class ChargerTest
         eVehicle3 = null;
         Vectalia = null;
     }
+    
     /**
      * Tests the {@link Charger} constructor and its getter methods.
      * Ensures that a new charger is initialized with correct properties:
@@ -100,6 +102,7 @@ public class ChargerTest
         assertEquals(0 ,chargerTest.getAmountCollected());
         assertEquals(true ,chargerTest.getFree());
     }
+    
     /**
      * Tests the {@code getNumberEVRecharged()} method.
      * Verifies that it correctly counts the number of electric vehicles
@@ -113,6 +116,7 @@ public class ChargerTest
         charger2.recharge(eVehicle2, 25);
         assertEquals(2, charger2.getNumberEVRecharged());
     }
+    
     /**
      * Tests the {@code addEvRecharged()} method.
      * Ensures that manually adding vehicles to the recharged list
@@ -125,6 +129,7 @@ public class ChargerTest
        charger2.addEvRecharged(eVehicle3);
        assertEquals(2, charger2.getNumberEVRecharged());
     }
+    
     /**
      * Tests the {@code recharge()} method.
      * Validates that performing recharges increases the counter
@@ -138,6 +143,7 @@ public class ChargerTest
         assertEquals(2, charger2.getNumberEVRecharged());
         assertEquals(13,5, charger2.getAmountCollected());
     }
+    
     /**
      * Tests the {@code updateAmountCollected()} method.
      * Ensures that the amount collected by a charger updates correctly
@@ -155,6 +161,7 @@ public class ChargerTest
         assertEquals(4, charger3.getAmountCollected());
         
     }
+    
     /**
      * Tests the {@code getCompleteInfo()} method.
      * Verifies that the method returns a formatted string representation
