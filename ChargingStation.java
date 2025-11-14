@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * This class forms part of the electric vehicle simulation model.
  *
- * @author: Sergio Zambrano, Gonzalo Cortes
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 11-11-2025
  */
 
@@ -21,6 +21,7 @@ public class ChargingStation
     private String city;
     private Location location;
     private List<Charger> chargers;
+    
     /**
      * Constructs a new {@link ChargingStation}.
      *
@@ -51,6 +52,7 @@ public class ChargingStation
     public String getCity(){
         return this.city;
     }
+    
     /**
      * Returns the {@link Location} of the charging station. 
      *
@@ -58,8 +60,9 @@ public class ChargingStation
      */
     public Location getLocation()
     {
-        return this.location;
+       return this.location;
     }
+    
     /**
      * Returns an unmodifiable list of all {@link Charger}s in this station.
      *
@@ -69,6 +72,7 @@ public class ChargingStation
     {
         return Collections.unmodifiableList(chargers); 
     }
+    
     // ---------------------------------------------------
     // Setters
     // ---------------------------------------------------

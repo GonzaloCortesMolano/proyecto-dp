@@ -2,8 +2,7 @@ import java.util.*;
 /**
  * Model the common elements of an Electric Vehicle (EV) that operates 
  * within the simulation, moving towards a target and potentially recharging.
- * @author David J. Barnes and Michael Kölling
- * @author DP classes 
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano  
  * @version 2024.10.07
  */
 public class ElectricVehicle 
@@ -41,7 +40,7 @@ public class ElectricVehicle
         this.plate=plate;
         this.batteryCapacity=batteryCapacity;
         this.idleCount=0;
-        this.batteryLevel=batteryCapacity; //suponemos que la bateria esta al maximo al crear el coche
+        this.batteryLevel=batteryCapacity; //battery level is maxed
         this.kwsCharged=0;
         this.chargesCount=0;
         this.chargestCost=0;
@@ -58,6 +57,7 @@ public class ElectricVehicle
     {
         return this.location;
     }
+    
     /**
      * Get the final target location.
      * @return Where this vehicle is ultimately headed.
@@ -66,51 +66,58 @@ public class ElectricVehicle
     {
         return this.targetLocation;
     }
+    
     /**
-     * Get the final target location.
-     * @return Where this vehicle is ultimately headed.
+     * Get the name of the vehicle.
+     * @return The vehicle's name.
      */
     public String getName()
     {
         return this.name;
     }
+    
     /**
-     * Get the final target location.
-     * @return Where this vehicle is ultimately headed.
+     * Get the license plate of the vehicle.
+     * @return The vehicle's unique license plate.
      */
     public String getPlate()
     {
         return this.plate;
     }
+    
     /**
-     * Get the final target location.
-     * @return Where this vehicle is ultimately headed.
+     * Get the maximum battery capacity.
+     * @return The battery capacity in kWh.
      */
     public int getBatteryCapacity()
     {
         return this.batteryCapacity;
     }
-     /**
+    
+    /**
       * @return The number of simulation steps this vehicle has been idle.
       */
     public int getIdleCount()
     {
         return this.idleCount;
     }
-     /**
+    
+    /**
       * @return The count of total recharges performed by this vehicle.
       */
     public int getChargesCount()
     {  
         return this.chargesCount;
     }
-     /**
-      * @return The count of total recharges performed by this vehicle.
+    
+    /**
+      * @return The current battery level in kWh.
       */
     public int getBatteryLevel()
     {  
         return this.batteryLevel;
     }
+    
     /**
      * Get the temporary recharging location.
      * @return The {@link Location} of the next {@link ChargingStation} to visit, or null if no recharge is planned.
@@ -119,12 +126,27 @@ public class ElectricVehicle
     {
         return this.rechargingLocation;
     }
+    
+    /**
+     * Gets the company this vehicle is subscribed to.
+     * @return The {@link EVCompany} instance.
+     */
     public EVCompany getCompany(){
         return this.company;
     }
+    
+    /**
+     * Gets the total kwh charged by this vehicle over its lifetime.
+     * @return The total kwh charged.
+     */
     public int getKwsCharged(){
         return this.kwsCharged;
     }
+    
+    /**
+     * Gets the total cost of all recharges.
+     * @return The total cost in euros.
+     */
     public double getChargestCost(){
         return this.chargestCost;
     }
@@ -132,6 +154,7 @@ public class ElectricVehicle
     /*
      * setters
      */
+    
     /**
      * Set the current location.
      * @param location Where it is. Must not be null.
@@ -141,6 +164,7 @@ public class ElectricVehicle
     {
         this.location = location;
     }
+    
     /**
      * Set the required final target location.
      * @param location Where to go. Must not be null.
@@ -150,36 +174,25 @@ public class ElectricVehicle
     {
         this.targetLocation = location;
     }
+    
     /**
-     * Set the required final target location.
-     * @param location Where to go. Must not be null.
-     * @throws NullPointerException If location is null.
+     * Set the intermediate recharging location.
+     * @param location The {@link Location} of the station to visit, or {@code null} to clear it.
      */
     public void setRechargingLocation(Location location)
     {
         this.rechargingLocation = location;
     }
+    
     /**
-     * Set the required final target location.
-     * @param location Where to go. Must not be null.
-     * @throws NullPointerException If location is null.
+     * Set the current battery level.
+     * @param level The new battery level in kWh.
      */
     public void setBatteryLevel(int level)
     {
         this.batteryLevel = level;
     }
     
-    
-    /**
-     * Get the simulation step when the vehicle arrived at its final target location.
-     * @return The arriving step.
-     */
-    /*
-    public int getArrivingStep()
-    {
-        return this.idleCount;
-    }
-    */
     /**
      * Calculates the optimal route for the vehicle. 
      * If there isn't enough battery to reach the target, it attempts to find an intermediate 
@@ -208,7 +221,6 @@ public class ElectricVehicle
         route = route + " -> " + targetLocation.toString();
         return route;
     }
-    
 
     /**
      * Checks if the current battery level is sufficient to cover a given distance.
@@ -222,7 +234,6 @@ public class ElectricVehicle
             enough=true;
         return enough;
     }
-    
     
     /**
      * Determines the optimal intermediate {@link ChargingStation} to visit for recharging
@@ -249,7 +260,6 @@ public class ElectricVehicle
             }
             setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
-    
     }  
      
     /**
@@ -270,7 +280,6 @@ public class ElectricVehicle
         this.idleCount++;
     }
 
-    
     /**
       * Get the Manhattan-like distance to the final target location from the current location.
       * @return The distance to the target location.
@@ -373,11 +382,10 @@ public class ElectricVehicle
     public void reduceBatteryLevel(){
         this.batteryLevel-=5;  
         if (this.batteryLevel < 0){
-            this.batteryLevel = 0; //No debe haber baterías negativas
+            this.batteryLevel = 0; //No negative battery level
         }
     }
 
-    
     /**
      * Returns a detailed string representation of the electric vehicle.
      * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
@@ -419,7 +427,11 @@ public class ElectricVehicle
     }
     
     /**
-     * 
+     * Compares this vehicle to another object for equality.
+     * Two vehicles are considered equal if they have the same license plate.
+     *
+     * @param obj The object to compare with.
+     * @return {@code true} if both objects represent the same vehicle; {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj){
@@ -434,7 +446,11 @@ public class ElectricVehicle
     }
 
     /**
-     * 
+     * Generates a hash code for this vehicle.
+     * The hash code is derived from the vehicle's plate,
+     * consistent with the {@link #equals(Object)} method.
+     *
+     * @return The hash code of this vehicle.
      */
     @Override
     public int hashCode()

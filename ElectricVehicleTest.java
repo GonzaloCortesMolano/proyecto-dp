@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  * Each test verifies that the vehicle behaves correctly in different scenarios,
  * including initialization, battery sufficiency, route calculation, and the recharge process.
  * 
- * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
  */
 public class ElectricVehicleTest
@@ -57,6 +57,7 @@ public class ElectricVehicleTest
     public void tearDown()
     {
     }
+    
     /**
      * Tests the {@link ElectricVehicle} constructor and its getter methods.
      * 
@@ -84,6 +85,7 @@ public class ElectricVehicleTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargestCost(), 0);
     }
+    
     /**
      * Tests the {@code enoughBattery()} method.
      * 
@@ -96,6 +98,7 @@ public class ElectricVehicleTest
         v1.setTargetLocation(new Location(120, 120));
         assertFalse(v1.enoughBattery(v1.distanceToTheTargetLocation()));
     }
+    
     /**
      * Tests the {@code calculateRoute()} method.
      * 
@@ -111,6 +114,7 @@ public class ElectricVehicleTest
         v1.calculateRoute();
         assertEquals("5-8 -> 20-20 -> 120-120", v1.getStringRoute());
     }
+    
     /**
      * Tests the {@code recharge()} method.
      * 

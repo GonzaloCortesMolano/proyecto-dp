@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * Model a location in a two-dimensional grid city using (x, y) coordinates.
- * @author DP classes 
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano 
  * @version 2024.10.07
  */
 public class Location
@@ -48,6 +48,7 @@ public class Location
             siguiente.setY(this.getY()-resultado);
         return siguiente;
     }
+    
     /**
      * Determines the number of movements required to get from here to the destination, 
      * using the Chebyshev distance (maximum of the absolute differences of the coordinates).
@@ -113,14 +114,20 @@ public class Location
     {
         return y;
     }
+    
     /**
      * Set the current X position .
      * @param x New X position it is.
      */
-    public void setX(int x) {this.x=x;}
+    public void setX(int x) {
+        this.x=x;
+    }
+    
     /**
      * Set the current Y position .
      * @param y New Y position it is.
      */
-    public void setY(int y){this.y=y;}
+    public void setY(int y){
+        this.y=y;
+    }
 }

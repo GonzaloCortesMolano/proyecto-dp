@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link ChargingStation} class.
- * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 11-11-2025
  * Provides unit tests for core functionalities such as managing chargers,
  * tracking recharged vehicles, and verifying station properties.
@@ -48,6 +48,7 @@ public class ChargingStationTest
         Location locEV1 = new Location(4,7);
         Location locEV2 = new Location(10,9);
         
+        //Stations
         station1 = new ChargingStation("Caceres", "CC1", loc1);
         station2 = new ChargingStation("Caceres", "CC2", loc2);
         
@@ -105,6 +106,7 @@ public class ChargingStationTest
        Charger chargerFree = station1.getFreeCharger();
        assertEquals(charger1, chargerFree);
     }
+    
     /**
      * Tests the {@code getNumberEVRecharged()} method.
      * Verifies that the method correctly sums all electric vehicles
@@ -117,6 +119,7 @@ public class ChargingStationTest
         assertEquals(2, station1.getNumberEVRecharged());
         assertEquals(0, station2.getNumberEVRecharged());
     }
+    
     /**
      * Tests the {@link ChargingStation} constructor and some of its getters.
      * Ensures that the station is created with the correct city, ID, and location.
@@ -131,6 +134,7 @@ public class ChargingStationTest
         assertEquals(loc3, stationTest.getLocation());
         assertEquals(0, stationTest.getChargers().size());
     }
+    
     /**
      * Tests the {@code addCharger()} method.
      * Ensures that chargers can be added to a station and that

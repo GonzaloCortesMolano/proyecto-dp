@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Test implementation of the {@link Location} class.
  * Provides unit tests for methods like {@code distance()} and {@code nextLocation()}.
- * @author Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 2016.02.29
  * @version 2024.10.07 DP classes (adaptado a Java 8+)
  */
@@ -107,6 +107,7 @@ public class LocationTest
         destiny.setY(4);
         assertEquals( ubi2.nextLocation(destiny), nextStepLocation );
     }
+    
     /**
      * Tests the {@code equals(Object)} method of the {@link Location} class.
      * Ensures that two {@link Location} objects with the same coordinates 
@@ -118,6 +119,7 @@ public class LocationTest
         Location otro=new Location(4, 3);
         assertTrue(ubi2.equals(otro));
     }
+    
     /**
      * Tests the {@code toString()} method of the {@link Location} class.
      * Verifies that the string representation of a {@link Location} object
