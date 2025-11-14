@@ -20,5 +20,5 @@ y empezar con la clase EVDemo. El resto creo que de momento no da fallos.
         (Hecho el comparador de cargadores, tambien los 2 de vehiculo)
         (El de estaciones por numero de recargas solo he cambiado el autor)
         
-14/11 (Ricardo): EVCompanyTest comentarios terminados.
+14/11 (Ricardo): EVCompanyTest comentarios terminados. EVCompany comentarios terminados. ChargerTest y Charger comentarios terminados.
         

@@ -103,7 +103,7 @@ public class ChargingStationTest
     public void testGetFreeCharger()
     {
        Charger chargerFree = station1.getFreeCharger();
-       assertEquals(charger3, chargerFree);
+       assertEquals(charger1, chargerFree);
     }
     /**
      * Tests the {@code getNumberEVRecharged()} method.

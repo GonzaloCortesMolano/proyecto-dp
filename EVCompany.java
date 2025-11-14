@@ -7,13 +7,13 @@ import java.util.*;
  * manage charging stations, and retrieve them by ID or {@link Location}. 
  * It also supports resetting and replacing the subscribed vehicle list.
  * 
- * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
  */
 public class EVCompany  
 {
     /**
-     * The name (unique identifier) of the EV company.
+     * The name of the EV company.
      */
     private String name;
     /**
@@ -48,7 +48,6 @@ public class EVCompany
     {
         return this.name;
     }
-    
     
     /**
      * @return An unmodifiable list of all {@link ElectricVehicle}s subscribed to the company.
@@ -171,6 +170,7 @@ public class EVCompany
         this.subscribedVehicles.clear();
         this.stations.clear();
     }
+    
     /**
      * Compares this company to another object for equality.
      * Two {@code EVCompany} instances are considered equal 
