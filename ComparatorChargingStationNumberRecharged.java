@@ -5,8 +5,8 @@ import java.util.*;
  * {@link ElectricVehicle}s recharged in descending order.
  * If the number of recharges is equal, it uses {@link ComparatorChargingStationId}
  * to compare by ID in ascending order as a tie-breaker.
- * * @author DP Clasess
- * @version 2023
+ * * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
+ * @version 13-11-2025
  */
 public class ComparatorChargingStationNumberRecharged implements Comparator<ChargingStation>
 {

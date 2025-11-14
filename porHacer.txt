@@ -13,5 +13,10 @@ y empezar con la clase EVDemo. El resto creo que de momento no da fallos.
     * Terminar la clase Demo
 
 14/11: hacer comentarios de la clase vehiculo, revisar el resto por si queda
-        algun comenatario por poner o se ha tocado algo
-        Hacer el de los comparadores
+        algun comenatario por poner o se ha tocado algo.
+        Borrar la prueba de mostrar de la clase Estacion.
+        Hacer comentarios de la EVDemo
+        Hacer el de los comparadores (Hechas: comparador de Estaciones por Id)
+        (Hecho el comparador de cargadores, tambien los 2 de vehiculo)
+        (El de estaciones por numero de recargas solo he cambiado el autor)
+        
