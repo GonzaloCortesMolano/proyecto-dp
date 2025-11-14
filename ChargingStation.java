@@ -36,9 +36,11 @@ public class ChargingStation
        this.location = location;
        chargers = new ArrayList<Charger>();
     }
-    // ---------------------------------------------------
-    // Getters
-    // ---------------------------------------------------
+    
+    // -------------------------------------------------
+    // -------------------- Getters --------------------
+    // -------------------------------------------------
+    
     /**
      * @return The unique identifier of the charging station.
      */
@@ -73,9 +75,23 @@ public class ChargingStation
         return Collections.unmodifiableList(chargers); 
     }
     
-    // ---------------------------------------------------
-    // Setters
-    // ---------------------------------------------------
+    /**
+     * Calculates the total number of {@link ElectricVehicle}s recharged
+     * across all {@link Charger}s at this station.
+     *
+     * @return The total number of recharge operations performed.
+     */
+    public int getNumberEVRecharged(){
+        int total = 0;
+        for(Charger c: chargers){
+            total += c.getNumberEVRecharged();
+        }
+        return total;
+    }
+    
+    // -------------------------------------------------
+    // -------------------- Setters --------------------
+    // -------------------------------------------------
 
     /**
      * Sets the current {@link Location} of this charging station.
@@ -101,6 +117,10 @@ public class ChargingStation
             this.chargers = chargers;
     }
     
+    // ------------------------------------------------
+    // -------------------- Others --------------------
+    // ------------------------------------------------
+    
     /**
      * Retrieves the first free {@link Charger} available at the station.
      *
@@ -116,20 +136,6 @@ public class ChargingStation
             }
         }  
         return c;
-    }
-    
-    /**
-     * Calculates the total number of {@link ElectricVehicle}s recharged
-     * across all {@link Charger}s at this station.
-     *
-     * @return The total number of recharge operations performed.
-     */
-    public int getNumberEVRecharged(){
-        int total = 0;
-        for(Charger c: chargers){
-            total += c.getNumberEVRecharged();
-        }
-        return total;
     }
 
     /**

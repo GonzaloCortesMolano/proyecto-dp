@@ -84,6 +84,13 @@ public class Charger
         return this.free;
     }
     
+    /**
+     * @return The total number of {@link ElectricVehicle}s that have been recharged by this charger.
+     */
+    public int getNumberEVRecharged(){
+        return eVsRecharged.size();
+    }
+    
     // -------------------------------------------------
     // -------------------- Setters --------------------
     // -------------------------------------------------
@@ -115,9 +122,6 @@ public class Charger
         this.chargingFee = fee;
     }
     
-    //No hacemos setEVsRecharged porque rompe la encapsulación y no hace falta,
-    //ya que tenemos el método addEvRecharged
-    
     /**
      * Sets the total amount of money collected by this charger.
      * 
@@ -136,6 +140,12 @@ public class Charger
         this.free=free;
     }
     
+    //No hacemos setEVsRecharged porque rompe la encapsulación y no hace falta,
+    //ya que tenemos el método addEvRecharged
+
+    // ------------------------------------------------
+    // -------------------- Others --------------------
+    // ------------------------------------------------
     /**
      * Returns a string representation of the charger, including its ID, speed, fee, 
      * number of recharged vehicles, and total amount collected.
@@ -164,12 +174,6 @@ public class Charger
          return texto;
     }
     
-    /**
-     * @return The total number of {@link ElectricVehicle}s that have been recharged by this charger.
-     */
-    public int getNumberEVRecharged(){
-        return eVsRecharged.size();
-    }
     
     /**
      * Adds an {@link ElectricVehicle} to the list of vehicles that have been recharged.
@@ -197,7 +201,8 @@ public class Charger
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
         
-        setFree(true);
+        setFree(true); //el cargador se termina de utilizar, lo ponemos inmediatamente despues porque la carga es inmediata 
+                       //y no coinciden dos coches en el mismo cargador
         return fee;
     }
     

@@ -44,7 +44,7 @@ public class ComparatorElectricVehicleIdleCount implements Comparator<ElectricVe
         else {
             if(v1.getIdleCount()>v2.getIdleCount()) return -1;
             else if(v1.getIdleCount()<v2.getIdleCount()) return 1;
-            else return (new ComparatorElectricVehicle().compare(v1,v2));
+            else return (new ComparatorElectricVehiclePlate().compare(v1,v2));
         }
     } 
 }

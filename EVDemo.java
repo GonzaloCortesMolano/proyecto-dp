@@ -119,8 +119,6 @@ public class EVDemo
     {
         vehicles.clear();
         stations.clear();
-                
-        // TODO: Complete the code here
 
         createElectricVehicles();
         createStations(); 
@@ -151,7 +149,7 @@ public class EVDemo
             ElectricVehicle ev = new ElectricVehicle(company, locations[i],targetLocations[i],("EV"+i),(i+"CCC"),(i+1)*15);
             vehicles.add(ev);
         }
-        Collections.sort(vehicles, new ComparatorElectricVehicle());
+        Collections.sort(vehicles, new ComparatorElectricVehiclePlate());
         company.setSubscribedVehicles(vehicles);
         
     }
@@ -176,7 +174,9 @@ public class EVDemo
      * using {@link ComparatorChargers}.
      */
     private void createChargers() {  
-        for (ChargingStation station : stations){
+        Iterator<ChargingStation> it = stations.iterator();
+        while(it.hasNext()){
+            ChargingStation station=it.next();
             for (int i=0;i<DEMO.getNumChargersToCreate();i++){
                 // Creates chargers with varying speed and fee based on index 'i'.
                 station.addCharger(new Charger(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
@@ -184,7 +184,7 @@ public class EVDemo
             List<Charger> copia=new ArrayList<>(station.getChargers());
             Collections.sort(copia, new ComparatorChargers());
             station.setChargers(copia);
-        }    
+        } 
     }
     
     /**
@@ -192,9 +192,10 @@ public class EVDemo
      * determining whether it must stop to recharge before reaching its target.
      */
      private void configureRoutes() {
-         for(ElectricVehicle vehicle: vehicles){
-            vehicle.calculateRoute();
-        }
+        Iterator<ElectricVehicle> it = vehicles.iterator();
+        while(it.hasNext()){
+            it.next().calculateRoute();
+        } 
      }
 
     /**

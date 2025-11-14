@@ -46,9 +46,10 @@ public class ElectricVehicle
         this.chargestCost=0;
     }
 
-    /*
-     * getters
-     */
+    // -------------------------------------------------
+    // -------------------- Getters --------------------
+    // -------------------------------------------------
+    
     /**
      * Get the current location.
      * @return Where this vehicle is currently located.
@@ -151,9 +152,9 @@ public class ElectricVehicle
         return this.chargestCost;
     }
 
-    /*
-     * setters
-     */
+    // -------------------------------------------------
+    // -------------------- Setters --------------------
+    // -------------------------------------------------
     
     /**
      * Set the current location.
@@ -193,6 +194,46 @@ public class ElectricVehicle
         this.batteryLevel = level;
     }
     
+    // ------------------------------------------------
+    // -------------------- Others --------------------
+    // ------------------------------------------------
+    
+    /**
+     * Increments the count of recharges performed by this vehicle.
+     */
+    public void incrementCharges()
+    {
+         this.chargesCount++;
+    }
+    
+    /**
+     * Adds a cost amount to the total charges cost.
+     * @param cost The cost of the last recharge.
+     */
+    public void incrementChargesCost(double cost)
+    {
+         this.chargestCost+=cost;
+    } 
+    
+    /**
+     * Increment the number of steps on which this vehicle has been idle.
+     */
+    public void incrementIdleCount()
+    {
+        this.idleCount++;
+    }
+    
+    /**
+     * Reduces the battery level by the cost of one movement step (defined in {@link EVCompany#MOVINGCOST}).
+     * Ensures the battery level does not go below zero.
+     */
+    public void reduceBatteryLevel(){
+        this.batteryLevel-=5;  
+        if (this.batteryLevel < 0){
+            this.batteryLevel = 0; //No negative battery level
+        }
+    }
+    
     /**
      * Calculates the optimal route for the vehicle. 
      * If there isn't enough battery to reach the target, it attempts to find an intermediate 
@@ -206,20 +247,6 @@ public class ElectricVehicle
         else{
             setRechargingLocation(null);
         }
-    }
-    
-    /**
-     * Gets a string representation of the planned route, including the recharging stop if one exists.
-     * @return A string showing the route: {@code currentLocation -> [rechargingLocation ->] targetLocation}.
-     */
-    public String getStringRoute()
-    {
-        String route = location.toString();
-        if(hasRechargingLocation()){
-            route = route + " -> " + rechargingLocation.toString();
-        }
-        route = route + " -> " + targetLocation.toString();
-        return route;
     }
 
     /**
@@ -238,7 +265,7 @@ public class ElectricVehicle
     /**
      * Determines the optimal intermediate {@link ChargingStation} to visit for recharging
      * if the vehicle cannot reach the final target directly.
-     * Sets {@code rechargingLocation} to the chosen station's location.
+     * Sets {@code rechargingLocation} to the chosen station's location or null if doesn't exists one.
      */
     public void calculateRechargingPosition()
     {
@@ -273,14 +300,6 @@ public class ElectricVehicle
      }
 
     /**
-     * Increment the number of steps on which this vehicle has been idle.
-     */
-    public void incrementIdleCount()
-    {
-        this.idleCount++;
-    }
-
-    /**
       * Get the Manhattan-like distance to the final target location from the current location.
       * @return The distance to the target location.
     */
@@ -313,23 +332,60 @@ public class ElectricVehicle
     } 
     
     /**
-     * Increments the count of recharges performed by this vehicle.
+     * Generates a string containing the vehicle's details prefixed with the current step number.
+     * @param step The current simulation step.
+     * @return A formatted string for a step log.
      */
-    public void incrementCharges()
-    {
-         this.chargesCount++;
+    public String getStepInfo(int step){
+        String info = this.toString();
+        
+        return "(step: " + step + " - " + info.substring(1); // quie hay un \n
     }
     
     /**
-     * Adds a cost amount to the total charges cost.
-     * @param cost The cost of the last recharge.
+     * Gets a string representation of the planned route, including the recharging stop if one exists.
+     * @return A string showing the route: {@code currentLocation -> [rechargingLocation ->] targetLocation}.
      */
-    public void incrementChargesCost(double cost)
+    public String getStringRoute()
     {
-         this.chargestCost+=cost;
-    }   
-     
-     /**
+        String route = location.toString();
+        if(hasRechargingLocation()){
+            route = route + " -> " + rechargingLocation.toString();
+        }
+        route = route + " -> " + targetLocation.toString();
+        return route;
+    }
+    
+    /**
+     * Returns a detailed string representation of the electric vehicle.
+     * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
+     */
+    @Override
+    public String toString(){
+        String route = this.location.toString();
+        
+        if (hasRechargingLocation()){
+            route = route + ", " + this.rechargingLocation.toString();
+        }
+        
+        route += ", " + this.targetLocation.toString();
+        
+        return "(ElectricVehicle: " + this.name + ", " + 
+               this.plate + ", " + this.batteryCapacity + "kwh, " + 
+               this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
+               String.format(java.util.Locale.US, "%.1f", this.chargestCost) + "€, " + 
+               this.idleCount + ", " + route + ")";
+    }
+    
+    /**
+     * Generates a string of the vehicle's initial or final status for summary display.
+     * @return The output of {@link #toString()} wrapped in parentheses.
+     */
+    public String getInitialFinalInfo(){
+         return this.toString();
+    }
+    
+         /**
       * Carries out a single step of the vehicle's actions.
       * Moves one step towards the target (recharging or final) or stays idle.
       * @param step The current step of the simulation.
@@ -373,57 +429,6 @@ public class ElectricVehicle
          //Añdir info del paso (step)
          System.out.println(getStepInfo(step));
          
-    }
-     
-    /**
-     * Reduces the battery level by the cost of one movement step (defined in {@link EVCompany#MOVINGCOST}).
-     * Ensures the battery level does not go below zero.
-     */
-    public void reduceBatteryLevel(){
-        this.batteryLevel-=5;  
-        if (this.batteryLevel < 0){
-            this.batteryLevel = 0; //No negative battery level
-        }
-    }
-
-    /**
-     * Returns a detailed string representation of the electric vehicle.
-     * @return A string containing the vehicle's name, plate, battery info, charge counts, costs, idle count, and route.
-     */
-    @Override
-    public String toString(){
-        String route = this.location.toString();
-        
-        if (hasRechargingLocation()){
-            route = route + ", " + this.rechargingLocation.toString();
-        }
-        
-        route += ", " + this.targetLocation.toString();
-        
-        return "(ElectricVehicle: " + this.name + ", " + 
-               this.plate + ", " + this.batteryCapacity + "kwh, " + 
-               this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
-               String.format(java.util.Locale.US, "%.1f", this.chargestCost) + "€, " + 
-               this.idleCount + ", " + route + ")";
-    }
-    
-    /**
-     * Generates a string containing the vehicle's details prefixed with the current step number.
-     * @param step The current simulation step.
-     * @return A formatted string for a step log.
-     */
-    public String getStepInfo(int step){
-        String info = this.toString();
-        
-        return "(step: " + step + " - " + info.substring(1); // quie hay un \n
-    }
-    
-    /**
-     * Generates a string of the vehicle's initial or final status for summary display.
-     * @return The output of {@link #toString()} wrapped in parentheses.
-     */
-    public String getInitialFinalInfo(){
-         return this.toString();
     }
     
     /**

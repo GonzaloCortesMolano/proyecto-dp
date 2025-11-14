@@ -11,7 +11,7 @@ import java.util.*;
  * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
  * @version 13-11-2025
  */
-public class ComparatorElectricVehicle implements Comparator<ElectricVehicle>
+public class ComparatorElectricVehiclePlate implements Comparator<ElectricVehicle>
 {
     /**
      * Compares two {@link ElectricVehicle} instances for ordering.

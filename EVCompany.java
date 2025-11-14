@@ -56,33 +56,8 @@ public class EVCompany
     {       
         return Collections.unmodifiableList(subscribedVehicles);
     }
-
-    /**
-     * Adds a new {@link ElectricVehicle} to the company's subscribed fleet.
-     * 
-     * @param vehicle The electric vehicle to add. 
-     *      If {@code null}, the method does nothing.
-     */
-    public void addElectricVehicle(ElectricVehicle vehicle)
-    {       
-        if (vehicle != null) {
-            this.subscribedVehicles.add(vehicle);
-        }
-    }
-
-    /**
-     * Adds a new {@link ChargingStation} to the company's managed network.
-     * 
-     * @param station The charging station to add. 
-     *      If {@code null}, the method does nothing.
-     */
-    public void addChargingStation(ChargingStation station)
-    {       
-        if (station != null) {
-            this.stations.add(station);
-        }    
-    }
     
+    // ESTE NO SE USA PERO VENIA INCLUIDO YA EN LA PLANTILLA
     /**
      * Retrieves a {@link ChargingStation} by its unique identifier.
      * 
@@ -98,7 +73,7 @@ public class EVCompany
         }
         return null; // When not found 
     }
-
+    
     /**
      * Retrieves a {@link ChargingStation} located at the specified {@link Location}.
      * 
@@ -160,6 +135,36 @@ public class EVCompany
     {
         if(lStations != null)
             this.stations = lStations;
+    }
+    
+    // ------------------------------------------------
+    // -------------------- Others --------------------
+    // ------------------------------------------------
+    
+    /**
+     * Adds a new {@link ElectricVehicle} to the company's subscribed fleet.
+     * 
+     * @param vehicle The electric vehicle to add. 
+     *      If {@code null}, the method does nothing.
+     */
+    public void addElectricVehicle(ElectricVehicle vehicle)
+    {       
+        if (vehicle != null) {
+            this.subscribedVehicles.add(vehicle);
+        }
+    }
+
+    /**
+     * Adds a new {@link ChargingStation} to the company's managed network.
+     * 
+     * @param station The charging station to add. 
+     *      If {@code null}, the method does nothing.
+     */
+    public void addChargingStation(ChargingStation station)
+    {       
+        if (station != null) {
+            this.stations.add(station);
+        }    
     }
     
     /**
