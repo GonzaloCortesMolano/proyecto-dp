@@ -10,7 +10,7 @@ import java.util.*;
  * <li>Demo MEDIUM (demo=DemoType.MEDIUM): Five vehicles are created.</li>
  * <li>Demo ADVANCED(demo=DemoType.ADVANCED): Eight vehicles are created.</li>
  * </ul>
- * * @author DP Clasess
+ * * @author: Sergio Zambrano, Gonzalo Cortes, Ricardo Alvarez
  * @version 2025
  */
 public class EVDemo
@@ -42,9 +42,10 @@ public class EVDemo
     
         
     /**
-     * Constructor for objects of class EVDemo.
-     * Initializes the company, vehicles, and stations lists, and sets the number of 
-     * vehicles based on the {@code DEMO} constant before calling {@code reset()}.
+     * Constructs an {@code EVDemo} instance.
+     * Initializes the company, vehicles, and stations; creates all simulation
+     * components (vehicles, stations, chargers); configures their routes; and 
+     * displays the initial state.
      */
     public EVDemo()
     {
@@ -60,8 +61,16 @@ public class EVDemo
     }
 
     /**
-     * Run the demo for a fixed number of steps (50 steps).
-     * In each step, all vehicles perform their action.
+     * Runs the simulation for the fixed number of steps defined in {@link #MAXSTEPS}.
+     * During each step, every electric vehicle executes one action cycle.</p>
+     * 
+     * After completing all steps, the demo applies several final sortings:</p>
+     * 
+     *   Stations sorted by number of EVs recharged
+     *   Vehicles sorted by idle/arrival priority
+     *   Chargers sorted by speed, fee, and ID
+     * 
+     * Finally, it displays the overall summary.
      */
     public void run()
     {        
@@ -89,8 +98,10 @@ public class EVDemo
     }
 
     /**
-     * Run the demo for one step by requesting all vehicles to act.
-     * @param step The current step number of the simulation.
+     * Executes one step of the simulation.
+     * Each vehicle performs its action for the given step.
+     *
+     * @param step The current simulation step.
      */
     public void step(int step)
     {
@@ -100,9 +111,9 @@ public class EVDemo
     }
 
     /**
-     * Reset the demo to a starting point.
-     * Clears existing vehicles and stations, resets the company, and re-creates
-     * the initial setup.
+     * Resets the simulation to its initial state.
+     * Clears all vehicles and stations, resets the company configuration, recreates
+     * all simulation components, and shows the initial information again.
      */
     public void reset()
     {
@@ -120,9 +131,14 @@ public class EVDemo
 
     
     /**
-     * Creates the {@link ElectricVehicle}s based on {@code numVehiclesCreated}, assigns them
-     * starting and target {@link Location}s, and adds them to the company.
-     * The vehicles list is sorted by plate using {@link ComparatorEVPlate}.
+     * Creates the electric vehicles defined by the selected {@link DemoType}.
+     * Each vehicle is assigned:
+     *   a starting {@link Location}
+     *   a target {@link Location}
+     *   a plate and ID
+     *   a battery capacity
+     * 
+     * Vehicles are then sorted by plate and registered in the company.
      */
     private void createElectricVehicles() {
         Location [] locations = {new Location(10,13), new Location(8,4), new Location(8,4), new Location(15,10), 
@@ -140,10 +156,9 @@ public class EVDemo
         
     }
     
-
     /**
-     * Creates predefined {@link ChargingStation}s and adds them to the company.
-     * The stations list is sorted by ID using {@link ComparatorChargingStationId}.
+     * Creates all {@link ChargingStation} instances for the selected scenario.
+     * Stations are sorted by ID before being registered in the company.
      */
     private void createStations() {  
         Location [] locations = {new Location(10,5), new Location(10,11), new Location(14,16), new Location(8,4)};
@@ -156,8 +171,9 @@ public class EVDemo
     }
 
     /**
-     * Creates a fixed number of {@link Charger} units for each {@link ChargingStation}
-     * and orders the chargers within each station.
+     * Creates a fixed set of {@link Charger} units for each station.
+     * Charger speed and fee scale with their index. Chargers are then sorted
+     * using {@link ComparatorChargers}.
      */
     private void createChargers() {  
         for (ChargingStation station : stations){
@@ -171,11 +187,10 @@ public class EVDemo
         }    
     }
     
-    
-     /**
-      * Instructs each {@link ElectricVehicle} to calculate its initial route.
-      * This determines if an intermediate recharging stop is necessary.
-      */
+    /**
+     * Instructs each {@link ElectricVehicle} to compute its route,
+     * determining whether it must stop to recharge before reaching its target.
+     */
      private void configureRoutes() {
          for(ElectricVehicle vehicle: vehicles){
             vehicle.calculateRoute();
@@ -183,8 +198,8 @@ public class EVDemo
      }
 
     /**
-     * Displays the initial information for the simulation, including 
-     * the details of all {@link ElectricVehicle}s and {@link ChargingStation}s.
+     * Displays the initial state of the simulation, including all vehicles
+     * and charging stations with their associated chargers.
      */
     private void showInitialInfo() {
         System.out.println("( Compañía "+company.getName()+" )");
@@ -210,9 +225,8 @@ public class EVDemo
     }
 
     /**
-     * Displays the final information after the simulation has run.
-     * Vehicles are sorted by arrival step using {@link ComparatorEVArrivingStep}.
-     * Stations are sorted by the number of recharges using {@link ComparatorChargingStationNumerRecharged}.
+     * Displays the final summary after the simulation ends.
+     * Vehicles and stations are shown with updated statistics.
      */
     private void showFinalInfo() {
  
@@ -238,10 +252,9 @@ public class EVDemo
 
     }
     
-    
     /**
-     * The main entry point for running the EVDemo simulation.
-     * Creates an instance of {@code EVDemo} and starts the simulation.
+     * Entry point for running the EV simulation.
+     * Creates a new {@link EVDemo} instance and launches the demo.
      */
     public static void main() {
         EVDemo demo = new EVDemo();
