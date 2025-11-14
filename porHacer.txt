@@ -11,3 +11,7 @@ y empezar con la clase EVDemo. El resto creo que de momento no da fallos.
 13/11(por la tarde): En Vehicle hacer getStepInfo dentro del metodo Act()
                         Hacer los comentarios de Vehicle (NO EN PREUBAS)                 
     * Terminar la clase Demo
+
+14/11: hacer comentarios de la clase vehiculo, revisar el resto por si queda
+        algun comenatario por poner o se ha tocado algo
+        Hacer el de los comparadores
