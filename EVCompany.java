@@ -66,12 +66,13 @@ public class EVCompany
      */
     public ChargingStation getChargingStation(String id)
     {
-        for (ChargingStation station : stations) {
-            if (station.getId().equals(id)) {
-                return station;
+        ChargingStation initialStation = null;
+        for(int i=0; initialStation == null && i < stations.size();i++){
+            if(stations.get(i).getId().equals(id)){
+                initialStation = stations.get(i);
             }
-        }
-        return null; // When not found 
+        }  
+        return initialStation;
     }
     
     /**
@@ -82,12 +83,13 @@ public class EVCompany
      */
     public ChargingStation getChargingStation(Location location)
     {
-        for (ChargingStation station : stations) {
-            if (station.getLocation().equals(location)) {
-                return station;
+        ChargingStation initialStation = null;
+        for(int i=0; initialStation == null && i < stations.size();i++){
+            if(stations.get(i).getLocation().equals(location)){
+                initialStation = stations.get(i);
             }
-        }
-        return null;
+        }  
+        return initialStation;
     }
     
     /**

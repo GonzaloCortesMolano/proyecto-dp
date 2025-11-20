@@ -392,7 +392,8 @@ public class ElectricVehicle
       */
      public void act(int step)
      {   
-         if(getBatteryLevel()!=0 && ((hasRechargingLocation() && enoughBattery(location.distance(getRechargingLocation()))) || enoughBattery(location.distance(getTargetLocation())))){
+        boolean requirement = (hasRechargingLocation() && enoughBattery(location.distance(getRechargingLocation()))) || enoughBattery(location.distance(getTargetLocation()));
+         if(requirement){
              if(location.equals(targetLocation)) {
                 incrementIdleCount();
              }
