@@ -448,7 +448,7 @@ public class ElectricVehicle
             return false;
         }
         ElectricVehicle other = (ElectricVehicle) obj;
-        return this.plate.equals(other.plate);
+        return this.plate.equals(other.plate); //Añadir algun campo mas
     }
 
     /**
@@ -462,7 +462,7 @@ public class ElectricVehicle
     public int hashCode()
     {
         int result = 7; 
-        result = 3 * result + getPlate().hashCode();
+        result = 3 * result + getPlate().hashCode(); //Añadir el cmapo que añadamos arriba
         return result;
     }
 }

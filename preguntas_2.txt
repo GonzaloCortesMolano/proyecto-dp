@@ -1,1 +1,4 @@
 eliminar todo return dentro de un if?
+
+Hay doble return en un modulo, hacemos que solo haya uno? 
+hasRechargingLocation
