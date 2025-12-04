@@ -19,6 +19,8 @@ public class ElectricVehicle
     private int kwsCharged;
     private int chargesCount;
     private double chargestCost;
+    
+    private Enum tipo;
 
     /**
      * Constructor of class ElectricVehicle.

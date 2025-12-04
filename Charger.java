@@ -21,6 +21,8 @@ public class Charger
     private double amountCollected;
     private boolean free;
 
+    protected List<Enum> tipos;
+    
     /**
      * Constructs a new {@code Charger}.
      * 
@@ -246,4 +248,9 @@ public class Charger
         result = 3 * result + getId().hashCode(); 
         return result;
     }
+    
+    /**
+     * abstract method
+     */
+    abstract boolean canCharge(ElectricVehicle vehicle);
 }
