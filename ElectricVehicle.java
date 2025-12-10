@@ -20,7 +20,7 @@ public class ElectricVehicle
     private int chargesCount;
     private double chargestCost;
     
-    private Enum tipo;
+    protected Enum tipo;
 
     /**
      * Constructor of class ElectricVehicle.
@@ -152,6 +152,11 @@ public class ElectricVehicle
      */
     public double getChargestCost(){
         return this.chargestCost;
+    }
+    
+    /*TODO*/
+    public Enum getTipo(){
+        return this.tipo;
     }
 
     // -------------------------------------------------

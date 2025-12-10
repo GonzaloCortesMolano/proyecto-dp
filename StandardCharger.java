@@ -18,8 +18,20 @@ public class StandardCharger extends Charger
         tipos.add(EnumVehicles.STANDARD);
         tipos.add(EnumVehicles.VTC);
     }
-    
-    public canCharge(ElectricVehicle vehicle){
+    /*OVERRIDE*/
+    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
+        if(canCharge(vehicle)){
+            return super.recharge(vehicle, kwsRecharging);
+        }
         
+        return 0;
+    }
+    
+    public boolean equals(Charger obj){
+        if(super.equals(obj)) {
+            //revisa los tipos que admite
+            return this.tipos.equals(obj.tipos);
+        }
+        return false;
     }
 }

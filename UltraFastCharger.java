@@ -7,27 +7,30 @@
  */
 public class UltraFastCharger extends Charger
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
+    
     /**
-     * Constructor for objects of class UltraFastCharger
+     * @override
+     * Constructor for objects of class StandardCharger
      */
-    public UltraFastCharger()
+    public UltraFastCharger(String id, int speed, double fee)
     {
-        // initialise instance variables
-        x = 0;
+        super(id, speed, fee);
+        tipos.add(EnumVehicles.PREMIUM);
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    
+    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
+        if(canCharge(vehicle)){
+            return (super.recharge(vehicle, kwsRecharging))*1.1;
+        }
+        
+        return 0;
+    }
+    
+    public boolean equals(Charger obj){
+        if(super.equals(obj)) {
+            //revisa los tipos que admite
+            return this.tipos.equals(obj.tipos);
+        }
+        return false;
     }
 }

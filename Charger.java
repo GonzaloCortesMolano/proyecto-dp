@@ -250,7 +250,9 @@ public class Charger
     }
     
     /**
-     * abstract method
+     * TODO
      */
-    abstract boolean canCharge(ElectricVehicle vehicle);
+    public boolean canCharge(ElectricVehicle vehicle){
+        return tipos.contains(vehicle.getTipo());
+    }
 }

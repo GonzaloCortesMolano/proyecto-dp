@@ -13,21 +13,26 @@ public class SolarCharger extends Charger
     /**
      * Constructor for objects of class SolarCharger
      */
-    public SolarCharger()
+    public SolarCharger(String id, int speed, double fee)
     {
-        // initialise instance variables
-        x = 0;
+        super(id, speed, fee);
+        tipos.add(EnumVehicles.VTC);
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    /*OVERRIDE*/
+    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
+        if(canCharge(vehicle)){
+            return (super.recharge(vehicle, kwsRecharging))*0.9;
+        }
+        
+        return 0;
+    }
+    
+    public boolean equals(Charger obj){
+        if(super.equals(obj)) {
+            //revisa los tipos que admite
+            return this.tipos.equals(obj.tipos);
+        }
+        return false;
     }
 }
