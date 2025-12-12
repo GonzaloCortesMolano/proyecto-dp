@@ -137,6 +137,18 @@ public class ChargingStation
         }  
         return c;
     }
+    //devuelve un cargador SOLO del tipo indicado
+    public Charger getFreeCharger(Enum typeVehicle)
+    {
+        Charger c=null;
+        for(int i=0; c == null && i < chargers.size();i++){
+            Charger actual=chargers.get(i);
+            if(actual.getFree()&&actual.compareType(typeVehicle)){
+                c = chargers.get(i);
+            }
+        }  
+        return c;
+    }
 
     /**
      * Returns a detailed textual description of this charging station,
@@ -212,7 +224,7 @@ public class ChargingStation
             return false;
         }
         ChargingStation other = (ChargingStation) obj;
-        return this.id.equals(other.id);
+        return this.id.equals(other.id); //añadir mas
     }
 
     /**

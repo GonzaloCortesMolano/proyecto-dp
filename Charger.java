@@ -21,7 +21,7 @@ public class Charger
     private double amountCollected;
     private boolean free;
 
-    protected List<Enum> tipos;
+    protected List<Enum> types;
     
     /**
      * Constructs a new {@code Charger}.
@@ -38,6 +38,7 @@ public class Charger
         this.eVsRecharged = new ArrayList<ElectricVehicle>();
         this.amountCollected = 0;
         this.free = true;
+        types=new ArrayList<Enum>();
     }
 
     // -------------------------------------------------
@@ -233,7 +234,7 @@ public class Charger
             return false; 
         }
         Charger other = (Charger) obj;
-        return this.id.equals(other.id);
+        return this.id.equals(other.id); //añadir mas
     }
 
     /**
@@ -250,9 +251,13 @@ public class Charger
     }
     
     /**
-     * TODO
+     * TODO devuelve si el vehiculo puede cargar ahi
      */
     public boolean canCharge(ElectricVehicle vehicle){
-        return tipos.contains(vehicle.getTipo());
+        return compareType(vehicle.getType());
+    }
+    //mira si el tipo introducido es compatible con el mismo
+    public boolean compareType(Enum type){
+        return types.contains(type);
     }
 }

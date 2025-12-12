@@ -15,8 +15,8 @@ public class StandardCharger extends Charger
     public StandardCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        tipos.add(EnumVehicles.STANDARD);
-        tipos.add(EnumVehicles.VTC);
+        types.add(EnumVehicles.STANDARD);
+        types.add(EnumVehicles.VTC);
     }
     /*OVERRIDE*/
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
@@ -27,10 +27,18 @@ public class StandardCharger extends Charger
         return 0;
     }
     
-    public boolean equals(Charger obj){
+    @Override
+    public boolean equals(Object obj){
         if(super.equals(obj)) {
-            //revisa los tipos que admite
-            return this.tipos.equals(obj.tipos);
+                if(this == obj) {
+                return true; 
+            }
+            if(!(obj instanceof StandardCharger)) {
+                return false;
+            }
+            //revisa su tipo 
+            StandardCharger other=(StandardCharger) obj;
+            return this.types.equals(other.types);
         }
         return false;
     }

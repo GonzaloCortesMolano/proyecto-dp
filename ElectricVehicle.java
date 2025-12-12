@@ -20,7 +20,7 @@ public class ElectricVehicle
     private int chargesCount;
     private double chargestCost;
     
-    protected Enum tipo;
+    protected Enum type;
 
     /**
      * Constructor of class ElectricVehicle.
@@ -155,8 +155,8 @@ public class ElectricVehicle
     }
     
     /*TODO*/
-    public Enum getTipo(){
-        return this.tipo;
+    public Enum getType(){
+        return this.type;
     }
 
     // -------------------------------------------------
@@ -285,7 +285,7 @@ public class ElectricVehicle
             ChargingStation currentStation = it.next();
             Location currentLocation = currentStation.getLocation();
             int distToStation = this.getLocation().distance(currentLocation);
-            if (enoughBattery(distToStation) && !getLocation().equals(currentLocation)) { //Si puedo llegar a la estación:
+            if (requirements(distToStation, currentLocation)) { //Si cumplo los requisitos
                 int distance = distToStation + currentLocation.distance(this.getTargetLocation());
                 if (distance < betterDistance) { // Si es la actual la ruta más corta:
                     betterStation = currentLocation;
@@ -294,7 +294,15 @@ public class ElectricVehicle
             }
             setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
-    }  
+    } 
+    
+    boolean requirements(int distToStation, Location currentLocation){
+        if(enoughBattery(distToStation) && !getLocation().equals(currentLocation)){
+            return true;
+        }
+        return false;
+    }
+    
      
     /**
       * Checks if the vehicle has a planned recharging stop.
@@ -323,11 +331,15 @@ public class ElectricVehicle
     public void recharge(int step)
     {
 
-       ChargingStation station = company.getChargingStation(rechargingLocation);
-       Charger cargadorLibre = station.getFreeCharger();
+       Charger freeCharger = getFreeChargerFromStation();
        
-       if (cargadorLibre != null){
-           double cost = cargadorLibre.recharge(this, getBatteryCapacity() - getBatteryLevel());
+       if (freeCharger != null){
+           load(step, freeCharger);
+       }
+    } 
+    //proceso de carga
+    public void load(int step, Charger freeCharger){
+        double cost = freeCharger.recharge(this, getBatteryCapacity() - getBatteryLevel());
            
            setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
            incrementCharges();
@@ -335,8 +347,11 @@ public class ElectricVehicle
            
            setRechargingLocation(null);
            calculateRoute();
-       }
-    } 
+    }
+    //coge un cargador de su tipo
+    public Charger getFreeChargerFromStation(){
+        return company.getChargingStation(rechargingLocation).getFreeCharger();
+    }
     
     /**
      * Generates a string containing the vehicle's details prefixed with the current step number.
@@ -347,6 +362,21 @@ public class ElectricVehicle
         String info = this.toString();
         
         return "(step: " + step + " - " + info.substring(1); // quie hay un \n
+    }
+    //muestra su tipo en modo string
+    public String getTypeInfo(){
+        return "ElectricVehicle: ";
+    }
+    //muestra el texto de llegada
+    public String getArrivalInfo(int step){
+        return "(step: " + step + " - "+ getTypeInfo() + this.getPlate() + " at target destination ********)";
+    }
+    //muestra el texto al llegar a una estacion
+    public String getChargingInfo(int step){
+        ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
+        Charger charger=station.getFreeCharger();
+        return "(step: "+step+" - "+getTypeInfo()+getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at charger: "+charger.getId()+" with cost: "
+        +String.format(java.util.Locale.US, "%.1f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
     }
     
     /**
@@ -377,7 +407,7 @@ public class ElectricVehicle
         
         route += ", " + this.targetLocation.toString();
         
-        return "(ElectricVehicle: " + this.name + ", " + 
+        return "("+ getTypeInfo() + this.name + ", " + 
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
                String.format(java.util.Locale.US, "%.1f", this.chargestCost) + "€, " + 
@@ -416,18 +446,14 @@ public class ElectricVehicle
                 
                  setLocation(location.nextLocation(destination));
                  if(location.equals(targetLocation)) { //si llega a la estacion muestra mensaje
-                     System.out.println("(step: " + step + " - ElectricVehicle: " + this.getPlate() +
-                                        " at target destination ********)");
+                     System.out.println(getArrivalInfo(step));
                  }
                  reduceBatteryLevel();
                  
              }
              //si llega a una estacion recarga
              if(hasRechargingLocation() && location.equals(rechargingLocation)) {
-                 ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
-                 Charger charger=station.getFreeCharger();
-                 System.out.println("(step: "+step+" - ElectricVehicle: "+getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at charger: "+charger.getId()+" with cost: "
-                 +String.format(java.util.Locale.US, "%.1f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)");
+                System.out.println(getChargingInfo(step));
                 recharge(step); 
              }
         }

@@ -7,27 +7,15 @@
  */
 public class PriorityEV extends ElectricVehicle
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
+    
     /**
      * Constructor for objects of class PriorityEV
      */
-    public PriorityEV()
+    public PriorityEV(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity)
     {
-        // initialise instance variables
-        x = 0;
+        super(company, location, targetLocation, name, plate, batteryCapacity);
+        type=EnumVehicles.PRIORITY;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
+    
 }

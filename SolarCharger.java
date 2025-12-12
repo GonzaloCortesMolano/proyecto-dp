@@ -7,16 +7,13 @@
  */
 public class SolarCharger extends Charger
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
     /**
      * Constructor for objects of class SolarCharger
      */
     public SolarCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        tipos.add(EnumVehicles.VTC);
+        types.add(EnumVehicles.VTC);
     }
 
     /*OVERRIDE*/
@@ -31,7 +28,7 @@ public class SolarCharger extends Charger
     public boolean equals(Charger obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
-            return this.tipos.equals(obj.tipos);
+            return this.types.equals(obj.types);
         }
         return false;
     }

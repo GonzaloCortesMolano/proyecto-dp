@@ -15,7 +15,7 @@ public class UltraFastCharger extends Charger
     public UltraFastCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        tipos.add(EnumVehicles.PREMIUM);
+        types.add(EnumVehicles.PREMIUM);
     }
     
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
@@ -29,7 +29,7 @@ public class UltraFastCharger extends Charger
     public boolean equals(Charger obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
-            return this.tipos.equals(obj.tipos);
+            return this.types.equals(obj.types);
         }
         return false;
     }

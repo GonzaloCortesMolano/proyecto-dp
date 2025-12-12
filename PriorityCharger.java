@@ -13,7 +13,7 @@ public class PriorityCharger extends Charger
     public PriorityCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        tipos.add(EnumVehicles.PRIORITY);
+        types.add(EnumVehicles.PRIORITY);
     }
 
     /*OVERRIDE*/
@@ -28,7 +28,7 @@ public class PriorityCharger extends Charger
     public boolean equals(Charger obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
-            return this.tipos.equals(obj.tipos);
+            return this.types.equals(obj.types);
         }
         return false;
     }

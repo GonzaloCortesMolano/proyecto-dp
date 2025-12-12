@@ -15,45 +15,48 @@ public class StandardEV extends ElectricVehicle
     public StandardEV(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity)
     {
         super(company, location, targetLocation, name, plate, batteryCapacity);
-        tipo=EnumVehicles.STANDARD;
+        type=EnumVehicles.STANDARD;
     }
-    
-    public void calculateRechargingPosition()
-    {
-        List<ChargingStation> stations = this.getCompany().getCityStations();
-        Iterator<ChargingStation> it = stations.iterator();
-        int betterDistance = 999;
-        Location betterStation = null;
-
-        while (it.hasNext()) {
-            ChargingStation currentStation = it.next();
-            Location currentLocation = currentStation.getLocation();
-            int distToStation = this.getLocation().distance(currentLocation);
-            
-            if (enoughBattery(distToStation) && !getLocation().equals(currentLocation)) { //Si puedo llegar a la estación:
-                List<Charger> chargers=currentStation.getChargers();
-                Iterator<Charger> itCharger = chargers.iterator();
-                boolean enc=false;
-                //compruebas que tenga algun cargador compatible
-                while(itCharger.hasNext() && !enc){
-                    Charger currentCharger=itCharger.next();
-                    
-                    if(currentCharger.canCharge(this)){
-                        enc=true; //calculas la distancia si es compatible
-                        int distance = distToStation + currentLocation.distance(this.getTargetLocation());
-                        if (distance < betterDistance) { // Si es la actual la ruta más corta:
-                            betterStation = currentLocation;
-                            betterDistance = distance;
-                        }
-                    }
+    //requisitos para calcular el lugar de destino
+    @Override
+    boolean requirements(int distToStation, Location currentLocation){
+        if(super.requirements(distToStation, currentLocation)){
+            List<Charger> chargers=this.getCompany().getChargingStation(currentLocation).getChargers();
+            Iterator<Charger> itCharger = chargers.iterator();
+            boolean enc=false;
+            //compruebas que tenga algun cargador compatible
+            while(itCharger.hasNext() && !enc){
+                Charger currentCharger=itCharger.next();
+                if(currentCharger.canCharge(this)){
+                    return true;
                 }
-                enc=false;
-            }   
-            setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
+            }
+            return false;
         }
+        return false;
+    }
+    //consigue una estacion solo de su tipo
+    public Charger getFreeChargerFromStation(){
+        return getCompany().getChargingStation(getRechargingLocation()).getFreeCharger(this.type);
+    }
+    //devuelve su tipo en string
+    public String getTypeInfo(){
+        return "StandardVehicle: ";
     }
     
-    //recharge mirar tipo
-    //act el texto de cada paso
-    //equals comparar tipos
+    @Override
+    public boolean equals(Object obj){
+        if(super.equals(obj)) {
+                if(this == obj) {
+                return true; 
+            }
+            if(!(obj instanceof StandardEV)) {
+                return false;
+            }
+            //revisa su tipo 
+            StandardEV other=(StandardEV) obj;
+            return this.type.equals(other.type);
+        }
+        return false;
+    }
 }
