@@ -17,17 +17,16 @@ public class SolarCharger extends Charger
     }
 
     /*OVERRIDE*/
-    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
-        if(canCharge(vehicle)){
-            return (super.recharge(vehicle, kwsRecharging))*0.9;
-        }
-        
-        return 0;
+    public double calculateFee(int kwsRecharging){
+        //if(canCharge(vehicle)) (ya comprobamos esto dentro de recharge en Charger
+            return (super.calculateFee(kwsRecharging))*0.9;
     }
     
     public boolean equals(Charger obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
+            if(!(obj instanceof SolarCharger)) return false;
+            SolarCharger other = (SolarCharger) obj;
             return this.types.equals(obj.types);
         }
         return false;

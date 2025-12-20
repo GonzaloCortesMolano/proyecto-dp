@@ -15,8 +15,8 @@ public class PriorityCharger extends Charger
         super(id, speed, fee);
         types.add(EnumVehicles.PRIORITY);
     }
-
-    /*OVERRIDE*/
+    
+    /*
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
         if(canCharge(vehicle)){
             return super.recharge(vehicle, kwsRecharging);
@@ -24,10 +24,15 @@ public class PriorityCharger extends Charger
         
         return 0;
     }
+    */ 
+   
+    // Ocurre lo mismo que con StandardCharger.
     
     public boolean equals(Charger obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
+            if(!(obj instanceof PriorityCharger)) return false;
+            PriorityCharger other = (PriorityCharger) obj;
             return this.types.equals(obj.types);
         }
         return false;

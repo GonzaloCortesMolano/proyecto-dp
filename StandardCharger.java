@@ -18,7 +18,8 @@ public class StandardCharger extends Charger
         types.add(EnumVehicles.STANDARD);
         types.add(EnumVehicles.VTC);
     }
-    /*OVERRIDE*/
+    /*
+     * 
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
         if(canCharge(vehicle)){
             return super.recharge(vehicle, kwsRecharging);
@@ -26,6 +27,9 @@ public class StandardCharger extends Charger
         
         return 0;
     }
+    */ 
+    // NO se implementa calculateFee().
+    // Se reutiliza la lógica base del padre automáticamente por Template Method.
     
     @Override
     public boolean equals(Object obj){

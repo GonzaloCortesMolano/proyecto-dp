@@ -1,0 +1,8 @@
+Ricardo (20/12): he cambiado el método recharge de la clase Charger. He implementado en él 
+el patrón Template Method que llama a las subclases (StandardCharger, PriorityCharger...) cuando necesita
+el precio (fee). La jerarquía de Charger sigue ahora la lógica de costes que hay que modificar 
+para los descuentos. Usamos también el método canCharge y la lista de tipos para ver si son compatibles
+vehículos y cargadores.
+El resto de la clase Charger está idéntico, solo he cambiado esa lógica. El método de
+las subclases es calculateFee. Recharge ya lo hereda completo. Lo único que creo que puede faltar 
+son los override encima de esos métodos de las sublases. No sé si estará bien, creo que sí.

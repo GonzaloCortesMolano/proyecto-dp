@@ -198,15 +198,33 @@ public class Charger
      * @return The total cost of the recharge operation.
      */
     public double recharge(ElectricVehicle vehicle,int kwsRecharging){
-        setFree(false); //el cargador está siendo utilizado
         
-        double fee=kwsRecharging*getChargingFee();
+        
+        if (!canCharge(vehicle)) {
+            return 0.0;
+        }
+
+        setFree(false);
+        
+        // Delegamos en las subclases el cálculo específico del precio
+        // Template Method
+        double fee=calculateFee(kwsRecharging);
+        
         updateAmountCollected(fee);
         addEvRecharged(vehicle);
         
         setFree(true); //el cargador se termina de utilizar, lo ponemos inmediatamente despues porque la carga es inmediata 
                        //y no coinciden dos coches en el mismo cargador
         return fee;
+    }
+    
+    /**
+     * MÉTODO GANCHO (Hook Method) o Primitiva.
+     * Implementación por defecto del cálculo del coste.
+     * Las subclases (Solar, UltraFast) sobrescribirán esto.
+     */
+    protected double calculateFee(int kwsRecharging) {
+        return kwsRecharging * getChargingFee();
     }
     
     /**
