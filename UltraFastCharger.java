@@ -19,7 +19,7 @@ public class UltraFastCharger extends Charger
     }
     
     
-    public double calculateCost(int kwsRecharging) {
+    public double calculateFee(int kwsRecharging) {
         return super.calculateFee(kwsRecharging) * 1.1;
     }
     
