@@ -44,9 +44,9 @@ public class ChargerTest
     public void setUp()
     {
         //Chargers
-        charger1 = new Charger("CH1", 40, 0.25);
-        charger2 = new Charger("CH2", 50, 0.30);
-        charger3 = new Charger("CH3", 30, 0.20);
+        charger1 = new StandardCharger("CH1", 40, 0.25);
+        charger2 = new StandardCharger("CH2", 50, 0.30);
+        charger3 = new StandardCharger("CH3", 30, 0.20);
         
         //Company
         Vectalia = new EVCompany("Vectalia");
@@ -60,9 +60,9 @@ public class ChargerTest
         Location locEV3 = new Location(2,14);
         
         //Vehicles
-        eVehicle1 = new ElectricVehicle(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
-        eVehicle2 = new ElectricVehicle(Vectalia, locEV2,loc2, "Tesla", "CC15", 60);
-        eVehicle3 = new ElectricVehicle(Vectalia, locEV3,loc3, "Tesla", "CC20", 50);
+        eVehicle1 = new StandardEV(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
+        eVehicle2 = new StandardEV(Vectalia, locEV2, loc2, "Tesla", "CC15", 60);
+        eVehicle3 = new StandardEV(Vectalia, locEV3, loc3, "Tesla", "CC20", 50);
         
         //Add one recharged vehicle manually
         charger1.addEvRecharged(eVehicle1);
@@ -95,7 +95,7 @@ public class ChargerTest
      */
     public void testCharger()
     {
-        Charger chargerTest = new Charger("CHTest", 50, 0.50);
+        Charger chargerTest = new StandardCharger("CHTest", 50, 0.50);
         assertEquals("CHTest", chargerTest.getId());
         assertEquals(50, chargerTest.getChargingSpeed());
         assertEquals(0 ,chargerTest.getEVsRecharged().size());
