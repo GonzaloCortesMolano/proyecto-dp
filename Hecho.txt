@@ -21,3 +21,6 @@ y le queda batería suficiente (>= 5), se mueve una segunda vez.
 Corrección importante: He controlado que NO dé el segundo salto si el primero le sirvió para
 llegar a una estación de carga (cumpliendo la regla del enunciado).
 He actualizado los test de EV igual que con ChargerTest para que no de error.
+
+He corregido varios errores que me he encontrado, por ejemplo, los override de las subclases
+de cargadores y algunos fallitos que había en los equals. 

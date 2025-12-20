@@ -22,12 +22,13 @@ public class SolarCharger extends Charger
             return (super.calculateFee(kwsRecharging))*0.9;
     }
     
-    public boolean equals(Charger obj){
+    @Override
+    public boolean equals(Object obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
             if(!(obj instanceof SolarCharger)) return false;
             SolarCharger other = (SolarCharger) obj;
-            return this.types.equals(obj.types);
+            return this.types.equals(other.types);
         }
         return false;
     }

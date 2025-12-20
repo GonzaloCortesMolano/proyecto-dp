@@ -27,9 +27,12 @@ public class PriorityEV extends ElectricVehicle
             if (getLocation().equals(getTargetLocation())) {
                 incrementIdleCount();
             } else {
+                //Cambiar esto a sintaxis más simple
+                Location immediateDest = hasRechargingLocation() ? getRechargingLocation() : getTargetLocation();
+                
                 move(step);
 
-                boolean arrived = getLocation().equals(getTargetLocation());
+                boolean arrived = getLocation().equals(immediateDest);
 
                 if (!arrived && getBatteryLevel() >= 5) {
                      Location dest = hasRechargingLocation() ? getRechargingLocation() : getTargetLocation();

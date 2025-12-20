@@ -83,7 +83,7 @@ public class ElectricVehicleTest
         assertEquals(v1.getIdleCount(), 0);
         assertEquals(v1.getKwsCharged(), 0);
         assertEquals(v1.getChargesCount(), 0);
-        assertEquals(v1.getChargestCost(), 0);
+        assertEquals(v1.getChargesCost(), 0);
     }
     
     /**
@@ -130,7 +130,7 @@ public class ElectricVehicleTest
         v1.recharge(0);
         assertEquals(200, v1.getBatteryLevel());
         assertEquals(1, v1.getChargesCount());
-        assertEquals(20, v1.getChargestCost());
+        assertEquals(20, v1.getChargesCost());
         assertFalse(v1.hasRechargingLocation());
     }
 }

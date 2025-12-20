@@ -18,7 +18,7 @@ public class ElectricVehicle
     private int batteryLevel;
     private int kwsCharged;
     private int chargesCount;
-    private double chargestCost;
+    private double chargesCost;
     
     protected Enum type;
 
@@ -45,7 +45,7 @@ public class ElectricVehicle
         this.batteryLevel=batteryCapacity; //battery level is maxed
         this.kwsCharged=0;
         this.chargesCount=0;
-        this.chargestCost=0;
+        this.chargesCost=0;
     }
 
     // -------------------------------------------------
@@ -150,8 +150,8 @@ public class ElectricVehicle
      * Gets the total cost of all recharges.
      * @return The total cost in euros.
      */
-    public double getChargestCost(){
-        return this.chargestCost;
+    public double getChargesCost(){
+        return this.chargesCost;
     }
     
     /*TODO*/
@@ -219,7 +219,7 @@ public class ElectricVehicle
      */
     public void incrementChargesCost(double cost)
     {
-         this.chargestCost+=cost;
+         this.chargesCost+=cost;
     } 
     
     /**
@@ -410,7 +410,7 @@ public class ElectricVehicle
         return "("+ getTypeInfo() + this.name + ", " + 
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
-               String.format(java.util.Locale.US, "%.1f", this.chargestCost) + "€, " + 
+               String.format(java.util.Locale.US, "%.1f", this.chargesCost) + "€, " + 
                this.idleCount + ", " + route + ")";
     }
     

@@ -27,13 +27,13 @@ public class PriorityCharger extends Charger
     */ 
    
     // Ocurre lo mismo que con StandardCharger.
-    
-    public boolean equals(Charger obj){
+    @Override
+    public boolean equals(Object obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
             if(!(obj instanceof PriorityCharger)) return false;
             PriorityCharger other = (PriorityCharger) obj;
-            return this.types.equals(obj.types);
+            return this.types.equals(other.types);
         }
         return false;
     }

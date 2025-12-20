@@ -22,13 +22,13 @@ public class UltraFastCharger extends Charger
     public double calculateFee(int kwsRecharging) {
         return super.calculateFee(kwsRecharging) * 1.1;
     }
-    
-    public boolean equals(Charger obj){
+    @Override
+    public boolean equals(Object obj){
         if(super.equals(obj)) {
             //revisa los tipos que admite
             if(!(obj instanceof UltraFastCharger)) return false;
             UltraFastCharger other = (UltraFastCharger) obj;
-            return this.types.equals(obj.types);
+            return this.types.equals(other.types);
         }
         return false;
     }
