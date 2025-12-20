@@ -6,3 +6,5 @@ vehículos y cargadores.
 El resto de la clase Charger está idéntico, solo he cambiado esa lógica. El método de
 las subclases es calculateFee. Recharge ya lo hereda completo. Lo único que creo que puede faltar 
 son los override encima de esos métodos de las sublases. No sé si estará bien, creo que sí.
+He cambiado las pruebas de Charger para que que cuando comapre cargadores vea la compatibilidad con vehículos
+(he cambiado la creación de objetos, en lugar de clases, subclases).
