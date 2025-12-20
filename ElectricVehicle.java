@@ -429,14 +429,28 @@ public class ElectricVehicle
       */
      public void act(int step)
      {   
-        boolean requirement = (hasRechargingLocation() && enoughBattery(location.distance(getRechargingLocation()))) || enoughBattery(location.distance(getTargetLocation()));
+        boolean requirement = (hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()))) || enoughBattery(getLocation().distance(getTargetLocation()));
          if(requirement){
-             if(location.equals(targetLocation)) {
-                incrementIdleCount();
+             if(location.equals(targetLocation)) { //estamos en el destino, contamos tiempo parado
+               incrementIdleCount();
              }
-             else {
-                
-                 Location destination;
+             else { //nos movemos 
+                move(step); 
+            }
+        }
+            else{
+                incrementIdleCount();
+            }
+             //Añadir info del paso (step)
+             System.out.println(getStepInfo(step));
+         
+    }
+    
+    /*
+     * Refactorizamos para permitir que las subclases reutilicen la lógica de movimiento
+     */
+    protected void move(int step){
+            Location destination;
     
                 if (hasRechargingLocation()) {
                     destination = rechargingLocation;
@@ -444,26 +458,20 @@ public class ElectricVehicle
                     destination = targetLocation;
                 }
                 
-                 setLocation(location.nextLocation(destination));
-                 if(location.equals(targetLocation)) { //si llega a la estacion muestra mensaje
-                     System.out.println(getArrivalInfo(step));
-                 }
-                 reduceBatteryLevel();
+            setLocation(location.nextLocation(destination));
+            if(location.equals(targetLocation)) { //si llega a la estacion muestra mensaje
+                 System.out.println(getArrivalInfo(step));
+            }
+            reduceBatteryLevel();
                  
-             }
-             //si llega a una estacion recarga
-             if(hasRechargingLocation() && location.equals(rechargingLocation)) {
-                System.out.println(getChargingInfo(step));
-                recharge(step); 
-             }
-        }
-        else{
-            incrementIdleCount();
-        }
-         //Añdir info del paso (step)
-         System.out.println(getStepInfo(step));
-         
+            //si llega a una estacion recarga
+            if(hasRechargingLocation() && location.equals(rechargingLocation)) {
+               System.out.println(getChargingInfo(step));
+               recharge(step); 
+            }    
     }
+    
+    
     
     /**
      * Compares this vehicle to another object for equality.

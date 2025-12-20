@@ -39,11 +39,11 @@ public class ElectricVehicleTest
     {
         c = new EVCompany("nueva");
         l = new Location(5, 8);
-        v1 = new ElectricVehicle(c, l, new Location(20, 20), "name", "plate", 200);
+        v1 = new StandardEV(c, l, new Location(20, 20), "name", "plate", 200);
         target = new Location(20, 20);
         ChargingStation station = new ChargingStation("Cáceres", "1", target);
         c.addChargingStation(station);
-        ch=new Charger("id", 60, 0.1);
+        ch=new StandardCharger("id", 60, 0.1);
         station.addCharger(ch);
     }
 
@@ -67,7 +67,7 @@ public class ElectricVehicleTest
      */
     @Test
     public void testCreation(){
-        v1=new ElectricVehicle(new EVCompany("nueva"), new Location(5, 8), new Location(20, 20), "name", "plate", 200);
+        v1=new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(20, 20), "name", "plate", 200);
         EVCompany otra=new EVCompany("nueva");
         otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
         

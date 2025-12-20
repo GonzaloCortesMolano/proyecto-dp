@@ -16,6 +16,33 @@ public class PriorityEV extends ElectricVehicle
         super(company, location, targetLocation, name, plate, batteryCapacity);
         type=EnumVehicles.PRIORITY;
     }
-
     
+    
+    @Override
+    public void act(int step) {
+        // Lógica copiada del padre para verificar si puede empezar a moverse
+       boolean requirement = (hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()))) || enoughBattery(getLocation().distance(getTargetLocation()));
+
+        if (requirement) {
+            if (getLocation().equals(getTargetLocation())) {
+                incrementIdleCount();
+            } else {
+                move(step);
+
+                boolean arrived = getLocation().equals(getTargetLocation());
+
+                if (!arrived && getBatteryLevel() >= 5) {
+                     Location dest = hasRechargingLocation() ? getRechargingLocation() : getTargetLocation();
+                     if (!getLocation().equals(dest)) {
+                         move(step);
+                     }
+                }
+            }
+        } else {
+            incrementIdleCount();
+        }
+
+        System.out.println(getStepInfo(step));
+    }
 }
+    

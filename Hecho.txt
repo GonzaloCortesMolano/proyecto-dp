@@ -8,3 +8,16 @@ las subclases es calculateFee. Recharge ya lo hereda completo. Lo único que cre
 son los override encima de esos métodos de las sublases. No sé si estará bien, creo que sí.
 He cambiado las pruebas de Charger para que que cuando comapre cargadores vea la compatibilidad con vehículos
 (he cambiado la creación de objetos, en lugar de clases, subclases).
+
+Ricardo: también he creado las subclases de ElectricVehicle para aplicar polimorfismo (Premium, Vtc...). 
+Primero, he refactorizado el método act de la clase ElectricVehicle para que las subclases puedan 
+llamar al método move().
+Implementación de PriorityEV (Emergencias)
+He sobrescrito el método act() para implementar el movimiento doble.
+Lógica implementada:
+Intenta moverse una vez.
+Si NO ha llegado a su destino inmediato (sea el final o una estación de carga) 
+y le queda batería suficiente (>= 5), se mueve una segunda vez.
+Corrección importante: He controlado que NO dé el segundo salto si el primero le sirvió para
+llegar a una estación de carga (cumpliendo la regla del enunciado).
+He actualizado los test de EV igual que con ChargerTest para que no de error.
