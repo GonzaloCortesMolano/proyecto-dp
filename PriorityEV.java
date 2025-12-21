@@ -17,6 +17,13 @@ public class PriorityEV extends ElectricVehicle
         type=EnumVehicles.PRIORITY;
     }
     
+    /**
+     * Sobrescribe la notificación para no avisar a la compañía
+     */
+    @Override
+    protected void notifyCompany(Charger charger) {
+        // No hacemos nada. PriorityEV no se registra.
+    }
     
     @Override
     public void act(int step) {
@@ -27,15 +34,25 @@ public class PriorityEV extends ElectricVehicle
             if (getLocation().equals(getTargetLocation())) {
                 incrementIdleCount();
             } else {
-                //Cambiar esto a sintaxis más simple
-                Location immediateDest = hasRechargingLocation() ? getRechargingLocation() : getTargetLocation();
                 
+                Location actual;
+                if (hasRechargingLocation()) {
+                    actual = getRechargingLocation();
+                } else {
+                    actual = getTargetLocation();
+                }
                 move(step);
 
-                boolean arrived = getLocation().equals(immediateDest);
+                boolean arrived = getLocation().equals(actual);
 
                 if (!arrived && getBatteryLevel() >= 5) {
-                     Location dest = hasRechargingLocation() ? getRechargingLocation() : getTargetLocation();
+                     Location dest;
+                     if (hasRechargingLocation()) {
+                         dest = getRechargingLocation();
+                     } else {
+                         dest = getTargetLocation();
+                     }
+                     
                      if (!getLocation().equals(dest)) {
                          move(step);
                      }

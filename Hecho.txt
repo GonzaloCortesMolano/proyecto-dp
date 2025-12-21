@@ -24,3 +24,17 @@ He actualizado los test de EV igual que con ChargerTest para que no de error.
 
 He corregido varios errores que me he encontrado, por ejemplo, los override de las subclases
 de cargadores y algunos fallitos que había en los equals. 
+
+
+
+
+RICARDO(21/12): he añadido el sistema de registro de las compañías. He creado un atributo nuevo que
+guarda en una colección los registros de las cargas usando como clave el ID del cargador y de valor
+la lista de vehículos que cargan en la compañía. Luego he creado un método registerRecharge en el que
+si la lista del cargador no existe en el mapa, la crea, y luego añade el vehículo. Y, después, para acabar,
+he creado dentro de ElectricVehicle un método que llama al registro de la compañía que se llama en load, 
+qque lo que hace es que justo después de completar la recarga lo guarda en la estructura de datos.
+Importante, porque me daba fallo, he sobreescrito ese método de notificar dentro de PriorityEV, pero 
+dejándolo vacío para que sea el único vehículo que no notifica cargas, el resto sí.
+Creo que ya queda pulir algunas cosas del código, las pruebas de todas las clases
+y solamente modificar el EVDemo para acabar. Si veis algo que queráis cambiar o algo, perfecto.

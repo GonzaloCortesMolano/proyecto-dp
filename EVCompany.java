@@ -26,6 +26,10 @@ public class EVCompany
     private List<ChargingStation> stations;
     
     /**
+     * Registro de cargas (ID Cargador -> Lista de vehículos)
+     */
+    private Map<String, List<ElectricVehicle>> chargesRegistry;
+    /**
      * Constructs a new {@code EVCompany} with the specified name.
      * 
      * @param name The name of the company.
@@ -35,6 +39,7 @@ public class EVCompany
         this.name = name; 
         this.subscribedVehicles = new ArrayList<>(); 
         this.stations = new ArrayList<>();
+        this.chargesRegistry = new HashMap<>(); //mapa para guardar los registros de las cargas de cada vehículo
     }
 
     // -------------------------------------------------
@@ -107,6 +112,15 @@ public class EVCompany
         return this.stations.size();
     }
     
+    /**
+     * Devuelve el mapa de registros de carga.
+     * @return El mapa.
+     */
+    public Map<String, List<ElectricVehicle>> getChargesRegistry() {
+        return this.chargesRegistry;
+    }
+    
+    
     // -------------------------------------------------
     // -------------------- Setters --------------------
     // -------------------------------------------------
@@ -176,7 +190,33 @@ public class EVCompany
     public void reset(){
         this.subscribedVehicles.clear();
         this.stations.clear();
+        this.chargesRegistry.clear(); //nuevo
     }
+    
+    
+    /**
+     * Registra una carga realizada por un vehículo en un cargador específico.
+     */
+    public void registerRecharge(Charger charger, ElectricVehicle vehicle)
+    {
+        if (charger != null && vehicle != null) {         
+
+            String chargerId = charger.getId(); //obtenemos el identificador del cargador que se pasa
+                                                // como parámetro
+                                                
+            //obtenemos la lista de vehículos para este cargador
+            List<ElectricVehicle> listaVehiculos = chargesRegistry.get(chargerId);
+            
+            //si está vacía y se crea por primera vez:
+            if (listaVehiculos == null) {
+                listaVehiculos = new ArrayList<>();
+                chargesRegistry.put(chargerId, listaVehiculos);
+            }
+            //añadimos el vehículo a la lista por orden
+            listaVehiculos.add(vehicle);
+        }
+    }
+    
     
     /**
      * Compares this company to another object for equality.

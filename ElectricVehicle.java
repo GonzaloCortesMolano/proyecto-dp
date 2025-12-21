@@ -345,9 +345,22 @@ public class ElectricVehicle
            incrementCharges();
            incrementChargesCost(cost);
            
+           notifyCompany(freeCharger); //NOTIFICAMOS A EVCOMPANY (NUEVO)
+           
            setRechargingLocation(null);
            calculateRoute();
     }
+    
+    
+    /**
+     * Notifica a la compañía que se ha realizado una carga.
+     */
+    protected void notifyCompany(Charger charger) { //este método lo llaman las compañías que necesiten 
+                                                    //notificar; PriorityEV, no.
+        getCompany().registerRecharge(charger, this);
+    }
+    
+    
     //coge un cargador de su tipo
     public Charger getFreeChargerFromStation(){
         return company.getChargingStation(rechargingLocation).getFreeCharger();
@@ -422,7 +435,7 @@ public class ElectricVehicle
          return this.toString();
     }
     
-         /**
+    /**
       * Carries out a single step of the vehicle's actions.
       * Moves one step towards the target (recharging or final) or stays idle.
       * @param step The current step of the simulation.
@@ -470,6 +483,8 @@ public class ElectricVehicle
                recharge(step); 
             }    
     }
+    
+    
     
     
     
