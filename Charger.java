@@ -145,7 +145,13 @@ public class Charger
     
     //No hacemos setEVsRecharged porque rompe la encapsulación y no hace falta,
     //ya que tenemos el método addEvRecharged
-
+    
+    public void addType(Enum type) {
+        if (!this.types.contains(type)) {
+            this.types.add(type);
+        }
+    }
+    
     // ------------------------------------------------
     // -------------------- Others --------------------
     // ------------------------------------------------
@@ -275,6 +281,11 @@ public class Charger
         if (vehicle == null) {
             return false; 
         }
+        
+        if (this.types.isEmpty()) {
+            return true;
+        }
+        
         return compareType(vehicle.getType()); 
     }
     //mira si el tipo introducido es compatible con el mismo

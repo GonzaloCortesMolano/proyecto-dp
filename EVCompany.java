@@ -200,20 +200,16 @@ public class EVCompany
     public void registerRecharge(Charger charger, ElectricVehicle vehicle)
     {
         if (charger != null && vehicle != null) {         
-
-            String chargerId = charger.getId(); //obtenemos el identificador del cargador que se pasa
-                                                // como parámetro
-                                                
-            //obtenemos la lista de vehículos para este cargador
-            List<ElectricVehicle> listaVehiculos = chargesRegistry.get(chargerId);
-            
-            //si está vacía y se crea por primera vez:
-            if (listaVehiculos == null) {
-                listaVehiculos = new ArrayList<>();
-                chargesRegistry.put(chargerId, listaVehiculos);
-            }
-            //añadimos el vehículo a la lista por orden
-            listaVehiculos.add(vehicle);
+        // 1. Obtener el ID del cargador como CLAVE
+        String chargerId = charger.getId();
+    
+        // 2. Si la clave no existe en el mapa, creamos la lista
+        if (!chargesRegistry.containsKey(chargerId)) {
+            chargesRegistry.put(chargerId, new ArrayList<>());
+        }
+        
+        // 3. AÑADIR EL VEHÍCULO A LA LISTA (Esto es lo que suele faltar)
+        chargesRegistry.get(chargerId).add(vehicle);
         }
     }
     

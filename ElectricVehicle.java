@@ -46,6 +46,7 @@ public class ElectricVehicle
         this.kwsCharged=0;
         this.chargesCount=0;
         this.chargesCost=0;
+        this.type = null;
     }
 
     // -------------------------------------------------
@@ -374,7 +375,9 @@ public class ElectricVehicle
      */
     protected void notifyCompany(Charger charger) { //este método lo llaman las compañías que necesiten 
                                                     //notificar; PriorityEV, no.
-        getCompany().registerRecharge(charger, this);
+        if (getCompany() != null) {
+            getCompany().registerRecharge(charger, this);
+        }
     }
     
     
@@ -469,6 +472,9 @@ public class ElectricVehicle
             }
         }
             else{
+                if (!hasRechargingLocation()) {
+                calculateRechargingPosition();
+                }
                 incrementIdleCount();
             }
              //Añadir info del paso (step)
