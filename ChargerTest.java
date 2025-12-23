@@ -170,11 +170,11 @@ public class ChargerTest
     @Test
     public void testGetCompleteInfo()
     {
-        assertEquals("(Charger: "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
+        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
         +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n", charger2.getCompleteInfo());
         charger2.recharge(eVehicle2, 20);
         charger2.recharge(eVehicle3, 30);
-        assertEquals("(Charger: "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
+        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
         +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n"
         +eVehicle2.toString()+"\n"+eVehicle3.toString()+"\n", charger2.getCompleteInfo());
     }

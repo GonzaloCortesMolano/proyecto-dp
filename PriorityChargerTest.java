@@ -143,11 +143,11 @@ public class PriorityChargerTest
     @Test
     public void testGetCompleteInfo()
     {
-        assertEquals("(Charger: "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
+        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
         +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n", charger2.getCompleteInfo());
         charger2.recharge(eVehicle1, 20);
         charger2.recharge(eVehicle2, 30);
-        assertEquals("(Charger: "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
+        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
         +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n"
         +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
     }
