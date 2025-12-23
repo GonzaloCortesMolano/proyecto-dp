@@ -72,7 +72,7 @@ public class ChargingStationTest
         //Recharge the vehicles
         charger1.recharge(eVehicle1, 20); 
         charger2.recharge(eVehicle2, 15); 
-    
+        
     }
 
     /**

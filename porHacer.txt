@@ -10,3 +10,6 @@ el getFreeChargerFromStation, es el mismo que en el standard pero no se como hac
 el requeriments pasa lo mismo
 
 las pruebas funcionan por ahora
+
+los can charge los he tenido que desplazar a todos los tipos, 
+para que asi un cargador sin tipo devuelva siempre true al cargar

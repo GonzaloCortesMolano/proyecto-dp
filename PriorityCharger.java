@@ -37,4 +37,12 @@ public class PriorityCharger extends Charger
         }
         return false;
     }
+    
+    /**
+     * TODO devuelve si el vehiculo puede cargar ahi
+     */
+    @Override
+    public boolean canCharge(ElectricVehicle vehicle){
+        return compareType(vehicle.getType());
+    }
 }
