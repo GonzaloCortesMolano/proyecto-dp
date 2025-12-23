@@ -6,25 +6,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class StandardEVTest.
+ * The test class PriorityEVTest.
  *
  * @author  (your name)
  * @version (a version number or a date)
  */
-public class StandardEVTest
+public class PriorityEVTest
 {
     private ElectricVehicle v1;
     private EVCompany c;
     private Location l;
     private Location target;
     private Charger ch;
-    
     /**
-     * Default constructor for test class StandardEVTest
+     * Default constructor for test class PriorityEVTest
      */
-    public StandardEVTest()
+    public PriorityEVTest()
     {
-        
     }
 
     /**
@@ -37,7 +35,7 @@ public class StandardEVTest
     {
         c = new EVCompany("nueva");
         l = new Location(0, 0);
-        v1 = new StandardEV(c, l, new Location(15, 15), "name", "plate", 200);
+        v1 = new PriorityEV(c, l, new Location(15, 15), "name", "plate", 200);
         target = new Location(15, 15);
         ChargingStation stationBad = new ChargingStation("Cáceres", "1", target);
         
@@ -48,8 +46,18 @@ public class StandardEVTest
         stationBad.addCharger(ch);
         ch=new SolarCharger("id3", 60, 0.1);
         stationGood.addCharger(ch);
-        ch=new StandardCharger("id2", 60, 0.1);
+        ch=new PriorityCharger("id2", 60, 0.1);
         stationGood.addCharger(ch);
+    }
+
+    /**
+     * Tears down the test fixture.
+     *
+     * Called after every test case method.
+     */
+    @AfterEach
+    public void tearDown()
+    {
     }
     
     @Test
@@ -63,7 +71,7 @@ public class StandardEVTest
     
     @Test
     public void testCreation(){
-        v1=new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200);
+        v1=new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200);
         EVCompany otra=new EVCompany("nueva");
         otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
         
@@ -81,30 +89,41 @@ public class StandardEVTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargesCost(), 0);
         
-        assertEquals(v1.getType(), EnumVehicles.STANDARD);
+        assertEquals(v1.getType(), EnumVehicles.PRIORITY);
     }
     
     @Test
     public void testGetFreeChargerFromStation(){
         v1.calculateRechargingPosition();
-        Charger ch=new StandardCharger("id2", 60, 0.1);
+        Charger ch=new PriorityCharger("id2", 60, 0.1);
         assertEquals(v1.getFreeChargerFromStation(), ch);
     }
     
     @Test
     public void testEquals(){
-        assertEquals(v1, new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
+        assertEquals(v1, new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
     }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
+    
+    @Test
+    public void testAct(){
+        v1.act(0);
+        assertEquals(v1.getLocation(), new Location(2, 2));
+        assertEquals(v1.getBatteryLevel(), 190);
+        
+        v1.setTargetLocation(new Location(3, 3));
+        v1.act(1);
+        assertEquals(v1.getLocation(), new Location(3, 3));
+        assertEquals(0, v1.getIdleCount());
+        assertEquals(v1.getBatteryLevel(), 185);
+        
+        v1.setTargetLocation(new Location(200, 200));
+        v1.setRechargingLocation(new Location(21, 21));
+        v1.setLocation(new Location(20, 20));
+        v1.act(2);
+        assertEquals(v1.getLocation(), new Location(21, 21));
+        assertEquals(0, v1.getIdleCount());
+        assertEquals(v1.getBatteryLevel(), 200);
     }
 }

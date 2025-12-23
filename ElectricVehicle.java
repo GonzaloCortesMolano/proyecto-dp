@@ -295,7 +295,7 @@ public class ElectricVehicle
             setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
     } 
-    
+    //requisitos necesarios para tomar la estacion como correcta
     boolean requirements(int distToStation, Location currentLocation){
         if(enoughBattery(distToStation) && !getLocation().equals(currentLocation)){
             return true;
@@ -313,6 +313,23 @@ public class ElectricVehicle
             return false;
         return true;
      }
+     
+     //devuelve si puede llegar a la estacion, o false si ni siquiera tiene
+     public boolean canArriveStation(){
+        return hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()));    
+    }
+    
+    public boolean canArriveTarget(){
+        return enoughBattery(distanceToTheTargetLocation());
+    }
+    
+    public boolean isInTarget(){
+        return location.equals(targetLocation);
+    }
+    
+    public boolean isInStation(){
+        return hasRechargingLocation() && location.equals(rechargingLocation);
+    }
 
     /**
       * Get the Manhattan-like distance to the final target location from the current location.
@@ -442,9 +459,9 @@ public class ElectricVehicle
       */
      public void act(int step)
      {   
-        boolean requirement = (hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()))) || enoughBattery(getLocation().distance(getTargetLocation()));
+        boolean requirement = (canArriveStation() || canArriveTarget());
          if(requirement){
-             if(location.equals(targetLocation)) { //estamos en el destino, contamos tiempo parado
+             if(isInTarget()) { //estamos en el destino, contamos tiempo parado
                incrementIdleCount();
              }
              else { //nos movemos 
@@ -472,13 +489,13 @@ public class ElectricVehicle
                 }
                 
             setLocation(location.nextLocation(destination));
-            if(location.equals(targetLocation)) { //si llega a la estacion muestra mensaje
+            if(isInTarget()) { //si llega a la estacion muestra mensaje
                  System.out.println(getArrivalInfo(step));
             }
             reduceBatteryLevel();
                  
             //si llega a una estacion recarga
-            if(hasRechargingLocation() && location.equals(rechargingLocation)) {
+            if(isInStation()) {
                System.out.println(getChargingInfo(step));
                recharge(step); 
             }    
