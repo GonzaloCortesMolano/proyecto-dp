@@ -272,7 +272,10 @@ public class Charger
      * TODO devuelve si el vehiculo puede cargar ahi
      */
     public boolean canCharge(ElectricVehicle vehicle){
-        return true;
+        if (vehicle == null) {
+            return false; 
+        }
+        return compareType(vehicle.getType()); 
     }
     //mira si el tipo introducido es compatible con el mismo
     public boolean compareType(Enum type){

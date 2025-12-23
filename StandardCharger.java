@@ -49,9 +49,10 @@ public class StandardCharger extends Charger
     
     /**
      * TODO devuelve si el vehiculo puede cargar ahi
-     */
+
     @Override
     public boolean canCharge(ElectricVehicle vehicle){
         return compareType(vehicle.getType());
     }
+    */
 }

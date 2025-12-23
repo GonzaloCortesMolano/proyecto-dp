@@ -53,10 +53,10 @@ public class ChargingStationTest
         station2 = new ChargingStation("Caceres", "CC2", loc2);
         
         //Chargers for the ChargingStation
-        charger1 = new Charger("CH1", 40, 0.25);
-        charger2 = new Charger("CH2", 50, 0.30);
-        charger3 = new Charger("CH3", 30, 0.20);
-        charger4 = new Charger("CH4", 60, 0.40);
+        charger1 = new StandardCharger("CH1", 40, 0.25);
+        charger2 = new StandardCharger("CH2", 50, 0.30);
+        charger3 = new StandardCharger("CH3", 30, 0.20);
+        charger4 = new StandardCharger("CH4", 60, 0.40);
         
         //Add the chargers to the station
         station1.addCharger(charger1);
@@ -66,8 +66,8 @@ public class ChargingStationTest
         //Company
         Vectalia = new EVCompany("Vectalia");
         //Vehicles
-        eVehicle1 = new ElectricVehicle(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
-        eVehicle1 = new ElectricVehicle(Vectalia, locEV2,loc2, "Tesla", "CC15", 60);
+        eVehicle1 = new StandardEV(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
+        eVehicle1 = new StandardEV(Vectalia, locEV2,loc2, "Tesla", "CC15", 60);
         
         //Recharge the vehicles
         charger1.recharge(eVehicle1, 20); 
@@ -116,7 +116,7 @@ public class ChargingStationTest
     @Test
     public void testGetNumerEVRecharged()
     {
-        assertEquals(2, station1.getNumberEVRecharged());
+        assertEquals(1, station1.getNumberEVRecharged());
         assertEquals(0, station2.getNumberEVRecharged());
     }
     
@@ -144,10 +144,10 @@ public class ChargingStationTest
     public void testAddCharger()
     {
         assertEquals(0, station2.getChargers().size());
-        Charger charger5 = new Charger("CH5", 60, 0.40f);
+        Charger charger5 = new StandardCharger("CH5", 60, 0.40f);
         station2.addCharger(charger5);
         assertEquals(1, station2.getChargers().size());
-        Charger charger6 = new Charger("CH6", 60, 0.40f);
+        Charger charger6 = new StandardCharger("CH6", 60, 0.40f);
         station2.addCharger(charger5);
         assertEquals(2, station2.getChargers().size());
     }
@@ -160,10 +160,10 @@ public class ChargingStationTest
     public void testGetCompleteInfo()
     {
         ChargingStation otra=new ChargingStation("Cáceres","CC01", new Location(10, 11));
-        otra.addCharger(new Charger("CC01_003", 80, 0.8));
-        otra.addCharger(new Charger("CC01_002", 60, 0.6));
-        otra.addCharger(new Charger("CC01_001", 40, 0.4));
-        otra.addCharger(new Charger("CC01_000", 20, 0.2));
+        otra.addCharger(new StandardCharger("CC01_003", 80, 0.8));
+        otra.addCharger(new StandardCharger("CC01_002", 60, 0.6));
+        otra.addCharger(new StandardCharger("CC01_001", 40, 0.4));
+        otra.addCharger(new StandardCharger("CC01_000", 20, 0.2));
         assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(Charger: CC01_003, 80kwh, 0.8€, 0, 0.0€)\n(Charger: CC01_002, 60kwh, 0.6€, 0, 0.0€)\n(Charger: CC01_001, 40kwh, 0.4€, 0, 0.0€)\n(Charger: CC01_000, 20kwh, 0.2€, 0, 0.0€)", otra.getCompleteInfo());
     }
 }

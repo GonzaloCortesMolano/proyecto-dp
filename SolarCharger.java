@@ -18,7 +18,7 @@ public class SolarCharger extends Charger
 
     /*OVERRIDE*/
     public double calculateFee(int kwsRecharging){
-        //if(canCharge(vehicle)) (ya comprobamos esto dentro de recharge en Charger
+        //if(canCharge(vehicle)) (ya comprobamos esto dentro de recharge en Charger)
             return (super.calculateFee(kwsRecharging))*0.9;
     }
     
@@ -35,9 +35,11 @@ public class SolarCharger extends Charger
     
     /**
      * TODO devuelve si el vehiculo puede cargar ahi
-     */
+ 
     @Override
     public boolean canCharge(ElectricVehicle vehicle){
         return compareType(vehicle.getType());
     }
+    */
+    
 }
