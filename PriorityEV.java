@@ -27,58 +27,12 @@ public class PriorityEV extends ElectricVehicle
         // No hacemos nada. PriorityEV no se registra.
     }
     
-    /*
     @Override
-    public void act(int step) {
-        // Lógica copiada del padre para verificar si puede empezar a moverse
-       boolean requirement = (hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()))) || enoughBattery(getLocation().distance(getTargetLocation()));
-
-        if (requirement) {
-            if (getLocation().equals(getTargetLocation())) {
-                incrementIdleCount();
-            } else {
-                
-                Location actual;
-                if (hasRechargingLocation()) {
-                    actual = getRechargingLocation();
-                } else {
-                    actual = getTargetLocation();
-                }
-                move(step);
-
-                boolean arrived = getLocation().equals(actual);
-
-                if (!arrived && getBatteryLevel() >= 5) {
-                     Location dest;
-                     if (hasRechargingLocation()) {
-                         dest = getRechargingLocation();
-                     } else {
-                         dest = getTargetLocation();
-                     }
-                     
-                     if (!getLocation().equals(dest)) {
-                         move(step);
-                     }
-                }
-            }
-        } else {
-            incrementIdleCount();
-        }
-
-        System.out.println(getStepInfo(step));
-    }*/
-    
-    @Override
-    public void act(int step) {
-        super.act(step);
+    public void possibilities(int step) {
+        super.possibilities(step);
         if(!hasRecharged() && !isInTarget() && getBatteryLevel()!=0){ //si ha recargado o ha llegado al destino, termina el turno
-            super.act(step);
+            super.possibilities(step);
         }
-    }
-    
-    //devuelve su tipo en string
-    public String getTypeInfo(){
-        return "PriorityVehicle: ";
     }
     
     @Override
@@ -115,4 +69,3 @@ public class PriorityEV extends ElectricVehicle
         return false;
     }
 }
-    

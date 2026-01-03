@@ -36,11 +36,6 @@ public class StandardEV extends ElectricVehicle
         return false;
     }
     
-    //devuelve su tipo en string
-    public String getTypeInfo(){
-        return "StandardVehicle: ";
-    }
-    
     @Override
     public boolean equals(Object obj){
         if(super.equals(obj)) {

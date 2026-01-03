@@ -88,9 +88,7 @@ public class EVDemo
         company.setSubscribedVehicles(vehicles);*/
         //ordena finalmente los cargadores
         for (ChargingStation station : stations){
-            List<Charger> copia=new ArrayList<>(station.getChargers());
-            Collections.sort(copia, new ComparatorChargers());
-            station.setChargers(copia);
+            station.orderList();
         } 
         
         showFinalInfo();
@@ -162,8 +160,9 @@ public class EVDemo
         Location [] locations = {new Location(5,5), new Location(15,15), new Location(5,15), new Location(15,5), new Location(10,10)};
                                 
         for (int i=0;i<DEMO.getNumStationsToCreate();i++){
-            company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
-            stations.add(new ChargingStation("Cáceres","CC0" + i,locations[i]));
+            ChargingStation station=new ChargingStation("Cáceres","CC0" + i,locations[i]);
+            company.addChargingStation(station);
+            stations.add(station);
         }
         
         // TODO: Complete code here if needed
@@ -199,9 +198,8 @@ public class EVDemo
                 station.addCharger(ch);
             }
             j++;
-            List<Charger> copia=new ArrayList<>(station.getChargers());
-            Collections.sort(copia, new ComparatorChargers());
-            station.setChargers(copia);
+            
+            station.orderList();
         }    
     }
     

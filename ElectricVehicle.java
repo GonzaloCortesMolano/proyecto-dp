@@ -405,20 +405,17 @@ public class ElectricVehicle
         
         return "(step: " + step + " - " + info.substring(1); // quie hay un \n
     }
-    //muestra su tipo en modo string
-    public String getTypeInfo(){
-        return "ElectricVehicle: ";
-    }
+
     //muestra el texto de llegada
     public String getArrivalInfo(int step){
-        return "(step: " + step + " - "+ getTypeInfo() + this.getPlate() + " at target destination ********)";
+        return "(step: " + step + " - "+ this.getClass().getSimpleName()+ ": " + this.getPlate() + " at target destination ********)";
     }
     //muestra el texto al llegar a una estacion
     public String getChargingInfo(int step){
         ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
         Charger charger=station.getFreeCharger();
-        return "(step: "+step+" - "+getTypeInfo()+getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at charger: "+charger.getId()+" with cost: "
-        +String.format(java.util.Locale.US, "%.1f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
+        return "(step: "+step+" - "+this.getClass().getSimpleName() + ": " + getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at " + charger.getClass().getSimpleName() + ": " + charger.getId()+" with cost: "
+        +String.format(java.util.Locale.US, "%.2f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
     }
     
     /**
@@ -449,10 +446,10 @@ public class ElectricVehicle
         
         route += ", " + this.targetLocation.toString();
         
-        return "("+ getTypeInfo() + this.name + ", " + 
+        return "("+ getClass().getSimpleName() + ": " + this.name + ", " + 
                this.plate + ", " + this.batteryCapacity + "kwh, " + 
                this.batteryLevel + "kwh, " + this.chargesCount + ", " + 
-               String.format(java.util.Locale.US, "%.1f", this.chargesCost) + "€, " + 
+               String.format(java.util.Locale.US, "%.2f", this.chargesCost) + "€, " + 
                this.idleCount + ", " + route + ")";
     }
     
@@ -471,8 +468,14 @@ public class ElectricVehicle
       */
      public void act(int step)
      {   
-        boolean requirement = (canArriveStation() || canArriveTarget());
-         if(requirement){
+        possibilities(step);
+        //Añadir info del paso (step)
+        System.out.println(getStepInfo(step));
+         
+    }
+    
+    public void possibilities(int step){
+         if(canArriveStation() || canArriveTarget()){
              if(isInTarget()) { //estamos en el destino, contamos tiempo parado
                incrementIdleCount();
              }
@@ -480,15 +483,12 @@ public class ElectricVehicle
                 move(step); 
             }
         }
-            else{
-                if (!hasRechargingLocation()) {
+        else{
+            if (!hasRechargingLocation()) {
                 calculateRechargingPosition();
-                }
-                incrementIdleCount();
             }
-             //Añadir info del paso (step)
-             System.out.println(getStepInfo(step));
-         
+            incrementIdleCount();
+        }
     }
     
     /*
