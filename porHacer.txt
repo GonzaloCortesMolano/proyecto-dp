@@ -1,15 +1,7 @@
 pruebas de standardCharger
 el resto de vehiculos y chargers
 
-priorityEV - 23/12
-he cambiado el act para que actua una vez y, si no ha llegado ni a la estacion ni al destino, 
-se mueva por segunda vez (habria que comprobar si por cada paso debe mostrar texto o solo al final)
-(IMPORTANTE: aqui el isInStation, no funciona, porque el act al recargar cambia la estacion a null)
-
 el getFreeChargerFromStation, es el mismo que en el standard pero no se como hacerlo, capaz habria que subirlo al padra
 el requeriments pasa lo mismo
 
-las pruebas funcionan por ahora
-
-los can charge los he tenido que desplazar a todos los tipos, 
-para que asi un cargador sin tipo devuelva siempre true al cargar
+funcionan las pruebas excepto las de mostrar info (os complicais mucho la vida -_-)

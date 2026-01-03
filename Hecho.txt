@@ -38,3 +38,15 @@ Importante, porque me daba fallo, he sobreescrito ese método de notificar dentr
 dejándolo vacío para que sea el único vehículo que no notifica cargas, el resto sí.
 Creo que ya queda pulir algunas cosas del código, las pruebas de todas las clases
 y solamente modificar el EVDemo para acabar. Si veis algo que queráis cambiar o algo, perfecto.
+
+priorityEV - 23/12
+he cambiado el act para que actua una vez y, si no ha llegado ni a la estacion ni al destino, 
+se mueva por segunda vez (habria que comprobar si por cada paso debe mostrar texto o solo al final)
+(IMPORTANTE: aqui el isInStation, no funciona, porque el act al recargar cambia la estacion a null)
+
+3-1 gonza
+he hecho las pruebas de los vehiculos y ya ajustando los formatos de salida para que correspondan a los del objetivo.
+ademas he cambiado las listas de la compañia por sets porque querian que estuviesen ordenadas constantemente (no con sort).
+he separado el act en dos, possibilities y el mostrar, porque el priority solo queria que se mostrase una vez.
+he eliminado lo de setcargadores de las estaciones ya que eliminaba la encapsulacion, ademas que solo se usaba
+para ordenar la lista, por lo que sustituido por orderList().
