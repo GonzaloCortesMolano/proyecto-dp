@@ -323,13 +323,17 @@ public class ElectricVehicle
     public boolean canArriveTarget(){
         return enoughBattery(distanceToTheTargetLocation());
     }
-    
+    //devuelve si esta en el objetivo
     public boolean isInTarget(){
         return location.equals(targetLocation);
     }
     
     public boolean isInStation(){
         return hasRechargingLocation() && location.equals(rechargingLocation);
+    }
+    // devuelve si acaba de recargar
+    public boolean hasRecharged(){
+        return getBatteryLevel()==getBatteryCapacity();
     }
 
     /**
@@ -383,7 +387,12 @@ public class ElectricVehicle
     
     //coge un cargador de su tipo
     public Charger getFreeChargerFromStation(){
-        return company.getChargingStation(rechargingLocation).getFreeCharger();
+        if(type==null){
+            return company.getChargingStation(rechargingLocation).getFreeCharger();
+        }
+        else{
+            return company.getChargingStation(rechargingLocation).getFreeCharger(this.type);
+        }
     }
     
     /**
@@ -506,10 +515,6 @@ public class ElectricVehicle
                recharge(step); 
             }    
     }
-    
-    
-    
-    
     
     /**
      * Compares this vehicle to another object for equality.

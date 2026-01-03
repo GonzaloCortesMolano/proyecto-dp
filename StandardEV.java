@@ -35,10 +35,7 @@ public class StandardEV extends ElectricVehicle
         }
         return false;
     }
-    //consigue una estacion solo de su tipo
-    public Charger getFreeChargerFromStation(){
-        return getCompany().getChargingStation(getRechargingLocation()).getFreeCharger(this.type);
-    }
+    
     //devuelve su tipo en string
     public String getTypeInfo(){
         return "StandardVehicle: ";

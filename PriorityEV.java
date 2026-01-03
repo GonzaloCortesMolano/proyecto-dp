@@ -71,14 +71,9 @@ public class PriorityEV extends ElectricVehicle
     @Override
     public void act(int step) {
         super.act(step);
-        if(!(getBatteryLevel()==getBatteryCapacity()) && !isInTarget()){ //si ha recargado o ha llegado al destino, termina el turno
+        if(!hasRecharged() && !isInTarget() && getBatteryLevel()!=0){ //si ha recargado o ha llegado al destino, termina el turno
             super.act(step);
         }
-    }
-    
-    //consigue una estacion solo de su tipo
-    public Charger getFreeChargerFromStation(){
-        return getCompany().getChargingStation(getRechargingLocation()).getFreeCharger(this.type);
     }
     
     //devuelve su tipo en string

@@ -37,4 +37,20 @@ public class VtcEV extends ElectricVehicle {
         }
         setRechargingLocation(mejorEstacion);
     }
+    
+    @Override
+    public Charger getFreeChargerFromStation(){
+        List<Charger> list=getCompany().getChargingStation(getRechargingLocation()).getChargers();
+        double lowestPrice=Double.MAX_VALUE;
+        Charger bestCharger = null;
+        for(Charger c:list){
+            if(c.canCharge(this)){
+                if(c.getChargingFee()<lowestPrice){
+                    lowestPrice=c.getChargingFee();
+                    bestCharger=c;
+                }
+            }
+        }
+        return bestCharger;
+    }
 }
