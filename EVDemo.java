@@ -38,7 +38,7 @@ public class EVDemo
     private List<ChargingStation> stations;
     
     /** Constant for selecting the demo scenario, using the {@link DemoType} enumeration. */
-    private static final DemoType DEMO=DemoType.ADVANCED;
+    private static final DemoType DEMO=DemoType.NANO;
     
         
     /**
@@ -81,11 +81,11 @@ public class EVDemo
             step(step);
         }
         //ordena finalmente las estaciones
-        Collections.sort(stations, new ComparatorChargingStationNumberRecharged());
+        /*Collections.sort(stations, new ComparatorChargingStationNumberRecharged());
         company.setChargingStations(stations);
         //ordena finalmente los vehiculos
         Collections.sort(vehicles, new ComparatorElectricVehicleIdleCount());
-        company.setSubscribedVehicles(vehicles);
+        company.setSubscribedVehicles(vehicles);*/
         //ordena finalmente los cargadores
         for (ChargingStation station : stations){
             List<Charger> copia=new ArrayList<>(station.getChargers());
@@ -150,21 +150,8 @@ public class EVDemo
             else if (VehicleTier.values()[module] == VehicleTier.PREMIUM) ev = new PremiumEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             else ev = new StandardEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             company.addElectricVehicle(ev);
+            vehicles.add(ev);
         }
-    }
-    
-    /**
-     * Creates all {@link ChargingStation} instances for the selected scenario.
-     * Stations are sorted by ID before being registered in the company.
-     */
-    private void createStations() {  
-        Location [] locations = {new Location(10,5), new Location(10,11), new Location(14,16), new Location(8,4)};
-                                
-        for (int i=0;i<DEMO.getNumStationsToCreate();i++){
-            stations.add(new ChargingStation("Cáceres","CC0" + i,locations[i]));
-        }
-        Collections.sort(stations, new ComparatorChargingStationId());
-        company.setChargingStations(stations);
     }
     
     /**
@@ -176,28 +163,46 @@ public class EVDemo
                                 
         for (int i=0;i<DEMO.getNumStationsToCreate();i++){
             company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
+            stations.add(new ChargingStation("Cáceres","CC0" + i,locations[i]));
         }
         
         // TODO: Complete code here if needed
     }
-
+    
     /**
-     * Creates a fixed set of {@link Charger} units for each station.
-     * Charger speed and fee scale with their index. Chargers are then sorted
-     * using {@link ComparatorChargers}.
+     * Creates a fixed number of {@link Charger} units for each {@link ChargingStation}
+     * and orders the chargers within each station.
      */
     private void createChargers() {  
-        Iterator<ChargingStation> it = stations.iterator();
-        while(it.hasNext()){
-            ChargingStation station=it.next();
+        Set<ChargingStation> stations = company.getCityStations();
+        int j=0;
+        for (ChargingStation station : stations){
             for (int i=0;i<DEMO.getNumChargersToCreate();i++){
-                // Creates chargers with varying speed and fee based on index 'i'.
-                station.addCharger(new Charger(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
+                // Creates chargers with varying speed and fee based on index 'i' and 'j'.
+                Charger ch;
+                if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate()-1)) {
+                    ch = new SolarCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())) {
+                    ch = new UltraFastCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                } 
+                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())+1) {
+                    ch = new PriorityCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                else {
+                    ch = new StandardCharger(station.getId() + "_00" + i, ((i+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                station.addCharger(ch);
             }
+            j++;
             List<Charger> copia=new ArrayList<>(station.getChargers());
             Collections.sort(copia, new ComparatorChargers());
             station.setChargers(copia);
-        } 
+        }    
     }
     
     /**
@@ -274,56 +279,4 @@ public class EVDemo
         EVDemo demo = new EVDemo();
         demo.run();
     }
-}
-    
-
-    /**
-     * Creates predefined {@link ChargingStation}s and adds them to the company.
-     * The stations list is sorted by ID using {@link ComparatorChargingStationId}.
-     */
-    private void createStations() {  
-        Location [] locations = {new Location(5,5), new Location(15,15), new Location(5,15), new Location(15,5), new Location(10,10)};
-                                
-        for (int i=0;i<DEMO.getNumStationsToCreate();i++){
-            company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
-        }
-        
-        // TODO: Complete code here if needed
-    }
-
-    /**
-     * Creates a fixed number of {@link Charger} units for each {@link ChargingStation}
-     * and orders the chargers within each station.
-     */
-    private void createChargers() {  
-        List<ChargingStation> stations = company.getCityStations();
-        int j=0;
-        for (ChargingStation station : stations){
-            for (int i=0;i<DEMO.getNumChargersToCreate();i++){
-                // Creates chargers with varying speed and fee based on index 'i' and 'j'.
-                Charger ch;
-                if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate()-1)) {
-                    ch = new SolarCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
-                }    
-                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())) {
-                    ch = new UltraFastCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
-                } 
-                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())+1) {
-                    ch = new PriorityCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
-                }    
-                else {
-                    ch = new StandardCharger(station.getId() + "_00" + i, ((i+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
-                }    
-                station.addCharger(ch);
-            }
-            j++;
-            
-        }    
-    }
-    
-    
 }
