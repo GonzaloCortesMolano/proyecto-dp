@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Iterator;
+import java.util.*;
 
 /**
  * Write a description of class VtcEV here.
@@ -10,13 +11,13 @@ import java.util.Iterator;
 public class VtcEV extends ElectricVehicle {
     public VtcEV(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity) {
         super(company, location, targetLocation, name, plate, batteryCapacity);
-        type = EnumVehicles.VTC;
+        type = VehicleTier.VTC;
     }
     
     @Override
     public void calculateRechargingPosition() {
         //Buscar cargador compatible (Standard/Solar) más barato
-        List<ChargingStation> stations = getCompany().getCityStations();
+        Set<ChargingStation> stations = getCompany().getCityStations();
         Location mejorEstacion = null;
         double minFee = Double.MAX_VALUE;
 

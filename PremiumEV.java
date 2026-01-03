@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Iterator;
+import java.util.*;
 
 /**
  * Write a description of class PremiumEV here.
@@ -10,14 +11,14 @@ import java.util.Iterator;
 public class PremiumEV extends ElectricVehicle {
     public PremiumEV(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity) {
         super(company, location, targetLocation, name, plate, batteryCapacity);
-        type = EnumVehicles.PREMIUM;
+        type = VehicleTier.PREMIUM;
     }
 
 
     @Override
     public void calculateRechargingPosition() {
         //Buscar cargador con mayor velocidad
-        List<ChargingStation> stations = getCompany().getCityStations();
+        Set<ChargingStation> stations = getCompany().getCityStations();
         Location mejorEstacion = null;
         int maxSpeed = -1;
 
@@ -39,5 +40,21 @@ public class PremiumEV extends ElectricVehicle {
             }
         }
         setRechargingLocation(mejorEstacion);
+    }
+    
+    @Override
+    public Charger getFreeChargerFromStation(){
+        List<Charger> list=getCompany().getChargingStation(getRechargingLocation()).getChargers();
+        int maxSpeed=-1;
+        Charger bestCharger = null;
+        for(Charger c:list){
+            if(c.canCharge(this)){
+                if(c.getChargingSpeed()>maxSpeed){
+                    maxSpeed=c.getChargingSpeed();
+                    bestCharger=c;
+                }
+            }
+        }
+        return bestCharger;
     }
 }

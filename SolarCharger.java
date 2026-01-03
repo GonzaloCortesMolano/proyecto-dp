@@ -13,7 +13,7 @@ public class SolarCharger extends Charger
     public SolarCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(EnumVehicles.VTC);
+        types.add(VehicleTier.VTC);
     }
 
     /*OVERRIDE*/

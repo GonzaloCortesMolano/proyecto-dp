@@ -81,7 +81,7 @@ public class StandardEVTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargesCost(), 0);
         
-        assertEquals(v1.getType(), EnumVehicles.STANDARD);
+        assertEquals(v1.getType(), VehicleTier.STANDARD);
     }
     
     @Test

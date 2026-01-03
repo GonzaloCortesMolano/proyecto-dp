@@ -15,7 +15,7 @@ public class UltraFastCharger extends Charger
     public UltraFastCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(EnumVehicles.PREMIUM);
+        types.add(VehicleTier.PREMIUM);
     }
     
     

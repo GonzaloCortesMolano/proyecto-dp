@@ -89,7 +89,7 @@ public class PriorityEVTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargesCost(), 0);
         
-        assertEquals(v1.getType(), EnumVehicles.PRIORITY);
+        assertEquals(v1.getType(), VehicleTier.PRIORITY);
     }
     
     @Test

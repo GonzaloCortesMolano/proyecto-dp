@@ -13,7 +13,7 @@ public class PriorityCharger extends Charger
     public PriorityCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(EnumVehicles.PRIORITY);
+        types.add(VehicleTier.PRIORITY);
     }
     
     /*

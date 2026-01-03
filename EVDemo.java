@@ -126,32 +126,31 @@ public class EVDemo
         configureRoutes();
         showInitialInfo();
     }
-
     
     /**
-     * Creates the electric vehicles defined by the selected {@link DemoType}.
-     * Each vehicle is assigned:
-     *   a starting {@link Location}
-     *   a target {@link Location}
-     *   a plate and ID
-     *   a battery capacity
-     * 
-     * Vehicles are then sorted by plate and registered in the company.
+     * Creates the {@link ElectricVehicle}s based on {@code numVehiclesCreated}, assigns them
+     * starting and target {@link Location}s, and adds them to the company.
+     * The vehicles list is sorted by plate using {@link ComparatorEVPlate}.
      */
     private void createElectricVehicles() {
-        Location [] locations = {new Location(10,13), new Location(8,4), new Location(8,4), new Location(15,10), 
-                                new Location(1,1), new Location(2,2), new Location(11,13), new Location(14,16)};
-        Location [] targetLocations = {new Location(1,1), new Location(19,19), new Location(12,17), new Location(4,4), 
-                                        new Location(1,10), new Location(5,5), new Location(8,7), new Location(19,19)};
+        Location [] locations = {new Location(1,1), new Location(1,1), new Location(1,19), new Location(1,19), 
+                                new Location(19,1), new Location(19,1), new Location(10,19), new Location(19,10),
+                                new Location(10,10), new Location(10,10)};
+
+        Location [] targetLocations = {new Location(20,20), new Location(20,20), new Location(19,1), new Location(19,1), 
+                                       new Location(1,19), new Location(1,19), new Location(19,10), new Location(10,19),
+                                       new Location(10,20), new Location(20,10)};
                                         
         //createLocations(locations,targetLocations);
         for (int i=0;i < DEMO.getNumVehiclesToCreate();i++){
-            ElectricVehicle ev = new ElectricVehicle(company, locations[i],targetLocations[i],("EV"+i),(i+"CCC"),(i+1)*15);
-            vehicles.add(ev);
+            ElectricVehicle ev;
+            int module = i % VehicleTier.numTiers();
+            if (VehicleTier.values()[module] == VehicleTier.PRIORITY) ev = new PriorityEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+            else if (VehicleTier.values()[module] == VehicleTier.VTC) ev = new VtcEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+            else if (VehicleTier.values()[module] == VehicleTier.PREMIUM) ev = new PremiumEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+            else ev = new StandardEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+            company.addElectricVehicle(ev);
         }
-        Collections.sort(vehicles, new ComparatorElectricVehiclePlate());
-        company.setSubscribedVehicles(vehicles);
-        
     }
     
     /**
@@ -166,6 +165,20 @@ public class EVDemo
         }
         Collections.sort(stations, new ComparatorChargingStationId());
         company.setChargingStations(stations);
+    }
+    
+    /**
+     * Creates predefined {@link ChargingStation}s and adds them to the company.
+     * The stations list is sorted by ID using {@link ComparatorChargingStationId}.
+     */
+    private void createStations() {  
+        Location [] locations = {new Location(5,5), new Location(15,15), new Location(5,15), new Location(15,5), new Location(10,10)};
+                                
+        for (int i=0;i<DEMO.getNumStationsToCreate();i++){
+            company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
+        }
+        
+        // TODO: Complete code here if needed
     }
 
     /**
@@ -261,4 +274,56 @@ public class EVDemo
         EVDemo demo = new EVDemo();
         demo.run();
     }
+}
+    
+
+    /**
+     * Creates predefined {@link ChargingStation}s and adds them to the company.
+     * The stations list is sorted by ID using {@link ComparatorChargingStationId}.
+     */
+    private void createStations() {  
+        Location [] locations = {new Location(5,5), new Location(15,15), new Location(5,15), new Location(15,5), new Location(10,10)};
+                                
+        for (int i=0;i<DEMO.getNumStationsToCreate();i++){
+            company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
+        }
+        
+        // TODO: Complete code here if needed
+    }
+
+    /**
+     * Creates a fixed number of {@link Charger} units for each {@link ChargingStation}
+     * and orders the chargers within each station.
+     */
+    private void createChargers() {  
+        List<ChargingStation> stations = company.getCityStations();
+        int j=0;
+        for (ChargingStation station : stations){
+            for (int i=0;i<DEMO.getNumChargersToCreate();i++){
+                // Creates chargers with varying speed and fee based on index 'i' and 'j'.
+                Charger ch;
+                if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate()-1)) {
+                    ch = new SolarCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())) {
+                    ch = new UltraFastCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                } 
+                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())+1) {
+                    ch = new PriorityCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                else {
+                    ch = new StandardCharger(station.getId() + "_00" + i, ((i+1)*20), ((i+1)*0.20f));
+                    // TODO: Complete code here if needed
+                }    
+                station.addCharger(ch);
+            }
+            j++;
+            
+        }    
+    }
+    
+    
 }

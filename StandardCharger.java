@@ -15,8 +15,8 @@ public class StandardCharger extends Charger
     public StandardCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(EnumVehicles.STANDARD);
-        types.add(EnumVehicles.VTC);
+        types.add(VehicleTier.STANDARD);
+        types.add(VehicleTier.VTC);
     }
     /*
      * 

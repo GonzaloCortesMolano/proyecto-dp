@@ -6,14 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class VtcEVTest.
+ * The test class PremiumEVTest.
  *
  * @author  (your name)
  * @version (a version number or a date)
  */
-public class VtcEVTest
+public class PremiumEVTest
 {
-    
     private ElectricVehicle v1;
     private EVCompany c;
     private Location l;
@@ -21,11 +20,10 @@ public class VtcEVTest
     private Charger ch;
     private ChargingStation stationBad;
     private ChargingStation stationGood;
-    
     /**
-     * Default constructor for test class VtcEVTest
+     * Default constructor for test class PremiumEVTest
      */
-    public VtcEVTest()
+    public PremiumEVTest()
     {
     }
 
@@ -39,18 +37,18 @@ public class VtcEVTest
     {
         c = new EVCompany("nueva");
         l = new Location(0, 15);
-        v1 = new VtcEV(c, l, new Location(200, 15), "name", "plate", 200);
+        v1 = new PremiumEV(c, l, new Location(200, 15), "name", "plate", 200);
         target = new Location(200, 15);
         stationBad = new ChargingStation("Cáceres", "1", new Location(14,16));
         
         stationGood = new ChargingStation("Cáceres", "2", new Location(13,16));
         c.addChargingStation(stationBad);
         c.addChargingStation(stationGood);
-        ch=new UltraFastCharger("id", 60, 0.1);
+        ch=new StandardCharger("id", 60, 0.1);
         stationBad.addCharger(ch);
-        ch=new UltraFastCharger("id3", 60, 0.1);
+        ch=new StandardCharger("id3", 60, 0.1);
         stationGood.addCharger(ch);
-        ch=new SolarCharger("id2", 60, 0.1);
+        ch=new UltraFastCharger("id2", 60, 0.1);
         stationGood.addCharger(ch);
     }
 
@@ -66,7 +64,7 @@ public class VtcEVTest
     
     @Test
     public void testCreation(){
-        v1=new VtcEV(new EVCompany("nueva"), new Location(5, 8), new Location(200, 15), "name", "plate", 200);
+        v1=new PremiumEV(new EVCompany("nueva"), new Location(5, 8), new Location(200, 15), "name", "plate", 200);
         EVCompany otra=new EVCompany("nueva");
         otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
         
@@ -84,7 +82,7 @@ public class VtcEVTest
         assertEquals(v1.getChargesCount(), 0);
         assertEquals(v1.getChargesCost(), 0);
         
-        assertEquals(v1.getType(), VehicleTier.VTC);
+        assertEquals(v1.getType(), VehicleTier.PREMIUM);
     }
     
     @Test
@@ -92,7 +90,7 @@ public class VtcEVTest
         v1.calculateRechargingPosition();
         assertEquals(v1.getRechargingLocation(), stationGood.getLocation());
         
-        ch=new StandardCharger("id3", 10, 0.0); 
+        ch=new UltraFastCharger("id3", 300, 0.3); 
         stationBad.addCharger(ch);
         v1.calculateRechargingPosition();
         assertEquals(v1.getRechargingLocation(), stationBad.getLocation());
@@ -102,13 +100,13 @@ public class VtcEVTest
     public void testGetFreeChargerFromStation(){
         v1.setRechargingLocation(stationGood.getLocation());
         Charger c=v1.getFreeChargerFromStation();
-        assertEquals(c, new SolarCharger("id2", 60, 0.1));
+        assertEquals(c, new UltraFastCharger("id2", 60, 0.1));
         
-        ch=new StandardCharger("id3", 60, 0.0);
+        ch=new UltraFastCharger("id3", 500, 0.0);
         stationGood.addCharger(ch);
-        ch=new SolarCharger("id4", 60, 0.1);
+        ch=new UltraFastCharger("id4", 400, 0.1);
         stationGood.addCharger(ch);
         c=v1.getFreeChargerFromStation();
-        assertEquals(c, new StandardCharger("id3", 60, 0.0));
+        assertEquals(c, new UltraFastCharger("id3", 500, 0.0));
     }
 }
