@@ -64,7 +64,8 @@ public class ChargingStationTest
         station1.addCharger(charger3);
         station1.addCharger(charger4);
         //Company
-        Vectalia = new EVCompany("Vectalia");
+        EVCompany.resetInstance();
+        Vectalia = EVCompany.getInstance();
         //Vehicles
         eVehicle1 = new StandardEV(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
         eVehicle1 = new StandardEV(Vectalia, locEV2,loc2, "Tesla", "CC15", 60);

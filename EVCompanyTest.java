@@ -45,8 +45,8 @@ public class EVCompanyTest
     public void setUp()
     {
         //Company
-        company = new EVCompany("EVCharging Cáceres");
-        
+        EVCompany.resetInstance();
+        company = EVCompany.getInstance();
         //Locations
         loc1 = new Location(10, 5);
         loc2 = new Location(1, 1);
@@ -59,8 +59,8 @@ public class EVCompanyTest
         Location evStart = new Location(0, 0);
         Location evTarget = new Location(19, 19);
         //Vehicles
-        ev1 = new ElectricVehicle(company, evStart, evTarget, "EV1", "01-CCC", 60);
-        ev2 = new ElectricVehicle(company, evStart, evTarget, "EV2", "02-CCC", 80);
+        ev1 = new StandardEV(company, evStart, evTarget, "EV1", "01-CCC", 60);
+        ev2 = new StandardEV(company, evStart, evTarget, "EV2", "02-CCC", 80);
     }
 
      /**

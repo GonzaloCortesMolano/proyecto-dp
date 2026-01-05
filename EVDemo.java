@@ -49,7 +49,8 @@ public class EVDemo
      */
     public EVDemo()
     {
-        company=new EVCompany("EVCharging Cáceres");
+        EVCompany.resetInstance();
+        company= EVCompany.getInstance();
         vehicles=new ArrayList<ElectricVehicle>();
         stations=new ArrayList<ChargingStation>();
         //TODO: Complete this code

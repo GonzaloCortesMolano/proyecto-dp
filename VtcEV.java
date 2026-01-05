@@ -14,6 +14,7 @@ public class VtcEV extends ElectricVehicle {
         type = VehicleTier.VTC;
     }
     
+    /**
     @Override
     public void calculateRechargingPosition() {
         //Buscar cargador compatible (Standard/Solar) más barato
@@ -38,7 +39,17 @@ public class VtcEV extends ElectricVehicle {
         }
         setRechargingLocation(mejorEstacion);
     }
-    
+    */
+   @Override
+    protected boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
+        if (currentBest == null){
+            return true;
+        }
+
+        // busca el de menor fee
+        return newCharger.getChargingFee() < currentBest.getChargingFee();
+    }
+   
     @Override
     public Charger getFreeChargerFromStation(){
         List<Charger> list=getCompany().getChargingStation(getRechargingLocation()).getChargers();

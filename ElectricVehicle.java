@@ -5,7 +5,7 @@ import java.util.*;
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano  
  * @version 2024.10.07
  */
-public class ElectricVehicle 
+public abstract class ElectricVehicle 
 {
     private String plate;
     private String name;
@@ -279,23 +279,36 @@ public class ElectricVehicle
     {
         Set<ChargingStation> stations = this.getCompany().getCityStations();
         Iterator<ChargingStation> it = stations.iterator();
-        int betterDistance = 999;
+        
+        //int betterDistance = 999;
+        Charger bestCharger = null;
         Location betterStation = null;
 
-        while (it.hasNext()) {
+        while (it.hasNext()) { //recorremos el conjunto de estaciones
             ChargingStation currentStation = it.next();
             Location currentLocation = currentStation.getLocation();
             int distToStation = this.getLocation().distance(currentLocation);
-            if (requirements(distToStation, currentLocation)) { //Si cumplo los requisitos
-                int distance = distToStation + currentLocation.distance(this.getTargetLocation());
-                if (distance < betterDistance) { // Si es la actual la ruta más corta:
-                    betterStation = currentLocation;
-                    betterDistance = distance;
+            
+            if (requirements(distToStation, currentLocation)) { //Si cumplo los requisitos: Batería suficiente y no estar ya en ella
+                List<Charger> chargers = currentStation.getChargers();
+                Iterator<Charger> itChargers = chargers.iterator();
+                //int distance = distToStation + currentLocation.distance(this.getTargetLocation());
+                while (itChargers.hasNext()) { //Recorremos ahora la lista de cargadores
+                    Charger c = itChargers.next();
+                    if(c.canCharge(this)){
+                        if(isBetterCharger(c, bestCharger, currentLocation, betterStation)){
+                            bestCharger = c;
+                            betterStation = currentLocation;
+                        }
+                    }
                 }
             }
             setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
     } 
+    //Compara dos cargadores según el criterio del vehículo. Cada subclase tendrá su propia implementación
+    protected abstract boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc);
+    
     //requisitos necesarios para tomar la estacion como correcta
     boolean requirements(int distToStation, Location currentLocation){
         if(enoughBattery(distToStation) && !getLocation().equals(currentLocation)){

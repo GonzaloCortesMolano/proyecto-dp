@@ -50,3 +50,8 @@ ademas he cambiado las listas de la compañia por sets porque querian que estuvi
 he separado el act en dos, possibilities y el mostrar, porque el priority solo queria que se mostrase una vez.
 he eliminado lo de setcargadores de las estaciones ya que eliminaba la encapsulacion, ademas que solo se usaba
 para ordenar la lista, por lo que sustituido por orderList().
+
+5/01/2026: Ricardo: He cambiado detalles del paso 1 que os mandé (clase abstracta) y he implementado el patrón template method
+también en ElectricVehicle, haciendo la clase abstracta y delegar la decisión de tomar el mejor cargador en 
+cada una de las subclases. (isBetterCharge). También he implementado el patrón Singleton en la clase EVCompany, cambiando los setUp
+de todas las pruebas de la misma forma. Se garantiza que solamente existe una única instancia de la clase.

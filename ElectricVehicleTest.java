@@ -37,7 +37,8 @@ public class ElectricVehicleTest
     @BeforeEach
     public void setUp()
     {
-        c = new EVCompany("nueva");
+        EVCompany.resetInstance();
+        c = EVCompany.getInstance();
         l = new Location(5, 8);
         v1 = new StandardEV(c, l, new Location(20, 20), "name", "plate", 200);
         target = new Location(20, 20);
@@ -67,11 +68,13 @@ public class ElectricVehicleTest
      */
     @Test
     public void testCreation(){
-        v1=new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(20, 20), "name", "plate", 200);
-        EVCompany otra=new EVCompany("nueva");
-        otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
+        EVCompany.resetInstance();
+        EVCompany company = EVCompany.getInstance();
+        v1=new StandardEV(company , new Location(5, 8), new Location(20, 20), "name", "plate", 200);
+
+        company.addChargingStation(new ChargingStation("Cáceres", "1", target));
         
-        assertEquals(v1.getCompany(), otra);
+        assertEquals(v1.getCompany(), company);
         assertEquals(v1.getLocation(), new Location(5, 8));
         assertFalse(v1.hasRechargingLocation());
         assertEquals(v1.getTargetLocation(), target);

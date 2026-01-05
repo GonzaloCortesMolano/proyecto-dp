@@ -18,7 +18,7 @@ public class StandardEV extends ElectricVehicle
         type=VehicleTier.STANDARD;
     }
     //requisitos para calcular el lugar de destino
-    @Override
+    /**@Override
     boolean requirements(int distToStation, Location currentLocation){
         if(super.requirements(distToStation, currentLocation)){
             List<Charger> chargers=this.getCompany().getChargingStation(currentLocation).getChargers();
@@ -35,7 +35,21 @@ public class StandardEV extends ElectricVehicle
         }
         return false;
     }
-    
+    */
+   
+    @Override 
+    protected boolean isBetterCharger (Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
+    if (currentBest == null){
+        return true;
+    }
+    // Calculamos distancias totales
+    int newTotalDist = this.getLocation().distance(newLoc) + newLoc.distance(this.getTargetLocation());
+    int currentTotalDist = this.getLocation().distance(bestLoc) + bestLoc.distance(this.getTargetLocation());
+
+    // Es mejor si la distancia total es MENOR (es decir, la mejor de las dos)
+    return newTotalDist < currentTotalDist;
+    }    
+   
     @Override
     public boolean equals(Object obj){
         if(super.equals(obj)) {

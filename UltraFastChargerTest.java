@@ -43,7 +43,8 @@ public class UltraFastChargerTest
         charger3 = new UltraFastCharger("CH3", 30, 0.20);
         
         //Company
-        Vectalia = new EVCompany("Vectalia");
+       EVCompany.resetInstance();
+        Vectalia = EVCompany.getInstance();
         
         //Locations need it for the Electric Vehicles
         Location loc1 = new Location(5, 7);

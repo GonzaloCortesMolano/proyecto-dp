@@ -28,18 +28,32 @@ public class EVCompany
     /**
      * Registro de cargas (ID Cargador -> Lista de vehículos)
      */
-    private Map<String, List<ElectricVehicle>> chargesRegistry;
+    private Map<Charger, List<ElectricVehicle>> chargesRegistry;
+    
+    private static EVCompany instance; //PATRON SINGLETON
+    
     /**
      * Constructs a new {@code EVCompany} with the specified name.
      * 
      * @param name The name of the company.
      */
-    public EVCompany(String name)
+    private EVCompany(String name)
     {
         this.name = name; 
         this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehiclePlate()); 
         this.stations = new TreeSet<>(new ComparatorChargingStationId());
         this.chargesRegistry = new HashMap<>(); //mapa para guardar los registros de las cargas de cada vehículo
+    }
+    
+    public static EVCompany getInstance() { //SINGLETON
+        if (instance == null) {
+            instance = new EVCompany("EVCharging Cáceres");
+        }
+        return instance;
+    }
+    
+    public static void resetInstance() {
+        instance = null;
     }
 
     // -------------------------------------------------
@@ -123,8 +137,8 @@ public class EVCompany
      * Devuelve el mapa de registros de carga.
      * @return El mapa.
      */
-    public Map<String, List<ElectricVehicle>> getChargesRegistry() {
-        return this.chargesRegistry;
+    public Map<Charger, List<ElectricVehicle>> getChargesRegistry() {
+        return Collections.unmodifiableMap(chargesRegistry);
     }
     
     
@@ -206,18 +220,19 @@ public class EVCompany
      */
     public void registerRecharge(Charger charger, ElectricVehicle vehicle)
     {
-        if (charger != null && vehicle != null) {         
-        // 1. Obtener el ID del cargador como CLAVE
-        String chargerId = charger.getId();
-    
-        // 2. Si la clave no existe en el mapa, creamos la lista
-        if (!chargesRegistry.containsKey(chargerId)) {
-            chargesRegistry.put(chargerId, new ArrayList<>());
+        if (charger != null && vehicle != null) {
+                
+        List<ElectricVehicle> list = chargesRegistry.get(charger);
+        
+        if (list == null) {
+            list = new ArrayList<>();
+            chargesRegistry.put(charger, list);
         }
         
-        // 3. AÑADIR EL VEHÍCULO A LA LISTA (Esto es lo que suele faltar)
-        chargesRegistry.get(chargerId).add(vehicle);
+        if (!list.contains(vehicle)) {
+            list.add(vehicle);
         }
+    }
     }
     
     

@@ -33,7 +33,8 @@ public class PriorityEVTest
     @BeforeEach
     public void setUp()
     {
-        c = new EVCompany("nueva");
+        EVCompany.resetInstance();
+        c = EVCompany.getInstance();
         l = new Location(0, 0);
         v1 = new PriorityEV(c, l, new Location(15, 15), "name", "plate", 200);
         target = new Location(15, 15);
@@ -71,8 +72,10 @@ public class PriorityEVTest
     
     @Test
     public void testCreation(){
-        v1=new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200);
-        EVCompany otra=new EVCompany("nueva");
+        EVCompany.resetInstance();
+        EVCompany otra = EVCompany.getInstance();
+        v1=new PriorityEV(otra, new Location(5, 8), new Location(15, 15), "name", "plate", 200);
+    
         otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
         
         assertEquals(v1.getCompany(), otra);
@@ -101,9 +104,9 @@ public class PriorityEVTest
     
     @Test
     public void testEquals(){
-        assertEquals(v1, new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new StandardEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new PriorityEV(new EVCompany("nueva"), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
+        assertEquals(v1, new PriorityEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new PriorityEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
     }
     
     @Test

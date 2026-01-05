@@ -12,7 +12,7 @@ import java.util.Collections;
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano 
  * @version 12-11-2025
  */
-public class Charger
+public abstract class Charger
 {
     private String id; 
     private int chargingSpeed;
@@ -164,7 +164,7 @@ public class Charger
     @Override
     public String toString()
     {
-        return "(" + this.getClass().getSimpleName() + ": "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+String.format(java.util.Locale.US,"%.2f", getAmountCollected())+"€)";
+        return "(" + this.getClass().getSimpleName() + ": "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+String.format(java.util.Locale.US,"%.1f", getAmountCollected())+"€)";
     }
 
     /**
@@ -203,7 +203,7 @@ public class Charger
      * @param kwsRecharging The number of kWh to recharge.
      * @return The total cost of the recharge operation.
      */
-    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
+    public final double recharge(ElectricVehicle vehicle,int kwsRecharging){
         
         
         if (!canCharge(vehicle)) {

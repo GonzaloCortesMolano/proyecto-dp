@@ -34,7 +34,7 @@ public class PriorityEV extends ElectricVehicle
             super.possibilities(step);
         }
     }
-    
+    /**
     @Override
     boolean requirements(int distToStation, Location currentLocation){
         if(super.requirements(distToStation, currentLocation)){
@@ -52,7 +52,21 @@ public class PriorityEV extends ElectricVehicle
         }
         return false;
     }
-    
+    */
+   @Override
+   protected boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
+        if (currentBest == null) {
+            return true;   
+        }
+
+        // priority solo tiene en cuenta si llega antes al destino final
+        int newDistToTarget = newLoc.distance(this.getTargetLocation());
+        int currentDistToTarget = bestLoc.distance(this.getTargetLocation());
+
+        // Es mejor si está más cerca del destino
+        return newDistToTarget < currentDistToTarget;
+    } 
+   
     @Override
     public boolean equals(Object obj){
         if(super.equals(obj)) {

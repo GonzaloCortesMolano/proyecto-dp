@@ -14,7 +14,7 @@ public class PremiumEV extends ElectricVehicle {
         type = VehicleTier.PREMIUM;
     }
 
-
+    /**
     @Override
     public void calculateRechargingPosition() {
         //Buscar cargador con mayor velocidad
@@ -40,6 +40,16 @@ public class PremiumEV extends ElectricVehicle {
             }
         }
         setRechargingLocation(mejorEstacion);
+    }
+    */
+   @Override
+    protected boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
+        if (currentBest == null){
+            return true;    
+        }
+
+        // se busca el cargador con mayor velocidad
+        return newCharger.getChargingSpeed() > currentBest.getChargingSpeed();
     }
     
     @Override
