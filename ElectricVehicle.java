@@ -277,7 +277,7 @@ public abstract class ElectricVehicle
      */
     public void calculateRechargingPosition()
     {
-        Set<ChargingStation> stations = this.getCompany().getCityStations();
+        List<ChargingStation> stations = this.getCompany().getCityStations();
         Iterator<ChargingStation> it = stations.iterator();
         
         //int betterDistance = 999;

@@ -19,11 +19,11 @@ public class EVCompany
     /**
      * The list of {@link ElectricVehicle}s subscribed to this company.
      */
-    private Set<ElectricVehicle> subscribedVehicles;
+    private List<ElectricVehicle> subscribedVehicles;
     /**
      * The list of {@link ChargingStation}s managed by this company.
      */
-    private Set<ChargingStation> stations;
+    private List<ChargingStation> stations;
     
     /**
      * Registro de cargas (ID Cargador -> Lista de vehículos)
@@ -40,9 +40,9 @@ public class EVCompany
     private EVCompany(String name)
     {
         this.name = name; 
-        this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehiclePlate()); 
-        this.stations = new TreeSet<>(new ComparatorChargingStationId());
-        this.chargesRegistry = new HashMap<>(); //mapa para guardar los registros de las cargas de cada vehículo
+        this.subscribedVehicles = new ArrayList<>(); 
+        this.stations = new ArrayList<>();
+        this.chargesRegistry = new TreeMap<>((c1, c2) -> c1.getId().compareTo(c2.getId())); //mapa para guardar los registros de las cargas de cada vehículo
     }
     
     public static EVCompany getInstance() { //SINGLETON
@@ -71,9 +71,9 @@ public class EVCompany
     /**
      * @return An unmodifiable list of all {@link ElectricVehicle}s subscribed to the company.
      */
-    public Set<ElectricVehicle> getVehicles()
+    public List<ElectricVehicle> getVehicles()
     {       
-        return Collections.unmodifiableSet(subscribedVehicles);
+        return Collections.unmodifiableList(subscribedVehicles);
     }
     
     // ESTE NO SE USA PERO VENIA INCLUIDO YA EN LA PLANTILLA
@@ -121,9 +121,9 @@ public class EVCompany
     /**
      * @return An unmodifiable list of all managed {@link ChargingStation}s.
      */
-    public Set<ChargingStation> getCityStations()
+    public List<ChargingStation> getCityStations()
     {
-       return Collections.unmodifiableSet(stations);
+       return Collections.unmodifiableList(stations);
     }
     
     /**
@@ -154,7 +154,7 @@ public class EVCompany
      * @param subsVehicles The new list of {@link ElectricVehicle}s to assign.
      *      If {@code null}, the operation is ignored.
      */
-    public void setSubscribedVehicles(Set<ElectricVehicle> subsVehicles)
+    public void setSubscribedVehicles(List<ElectricVehicle> subsVehicles)
     {
         if(subsVehicles != null)
             this.subscribedVehicles = subsVehicles;
@@ -168,7 +168,7 @@ public class EVCompany
      * @param lStations The new list of {@link ChargingStation}s to assign. 
      *      If {@code null}, the operation is ignored.
      */
-    public void setChargingStations(Set<ChargingStation> lStations)
+    public void setChargingStations(List<ChargingStation> lStations)
     {
         if(lStations != null)
             this.stations = lStations;

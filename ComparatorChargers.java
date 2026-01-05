@@ -37,19 +37,21 @@ public class ComparatorChargers implements Comparator<Charger>
      * @return A negative integer, zero, or a positive integer depending on
      *         the order of the two chargers following the described criteria.
      */
-    public int compare(Charger c1, Charger c2){ 
+    
+     
+     public int compare(Charger c1, Charger c2){ 
         int comparation;
         if(c1.getChargingSpeed()>c2.getChargingSpeed()){
             comparation=-1;
         }
-        else if (c1.getChargingSpeed()<c2.getChargingSpeed()){
+        else if (c1.getChargingSpeed() < c2.getChargingSpeed()){
             comparation=1;
         }
         else{
-            if(c1.getChargingFee()<c2.getChargingFee()){
+            if(c1.getChargingFee() < c2.getChargingFee()){
                 comparation=-1;
             }
-            else if (c1.getChargingFee()>c2.getChargingFee()){
+            else if (c1.getChargingFee() > c2.getChargingFee()){
                 comparation=1;
             }
             else{
@@ -58,4 +60,6 @@ public class ComparatorChargers implements Comparator<Charger>
         }
        return comparation;
     } 
+    
+   
 }
