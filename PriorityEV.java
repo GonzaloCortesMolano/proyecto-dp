@@ -29,10 +29,16 @@ public class PriorityEV extends ElectricVehicle
     
     @Override
     public void possibilities(int step) {
-        super.possibilities(step);
-        if(!hasRecharged() && !isInTarget() && getBatteryLevel()!=0){ //si ha recargado o ha llegado al destino, termina el turno
-            super.possibilities(step);
-        }
+    // Si ya ha recargado o ha llegado al destino, no hace nada más este turno
+    if (hasRecharged() || isInTarget()) {
+        return;
+    }
+    // Si se ha quedado sin batería, tampoco hace nada
+    if (getBatteryLevel() == 0) {
+        return;
+    }
+    // Comportamiento normal
+    super.possibilities(step);
     }
     /**
     @Override

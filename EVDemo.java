@@ -169,7 +169,7 @@ public class EVDemo
      */
     private void showInitialInfo() {
         
-        System.out.println("Company: " + company.getName());
+        System.out.println("( Compañía " + company.getName() + " )");
         
         //Vehículos ordenados por matrícula
         System.out.println("(-------------------)");
@@ -189,7 +189,7 @@ public class EVDemo
             List<Charger> cargadoresOrdenados = new ArrayList<>(station.getChargers());
             Collections.sort(cargadoresOrdenados, new ComparatorChargers());
             
-            for(Charger charger : station.getChargers()) {
+            for(Charger charger : cargadoresOrdenados) {
                 System.out.println(charger.toString());
             }
         }
@@ -260,7 +260,7 @@ public class EVDemo
             List<Charger> cargadoresOrdenados = new ArrayList<>(cs.getChargers());
             Collections.sort(cargadoresOrdenados, new ComparatorChargers());
 
-            for(Charger ch : cs.getChargers()) {
+            for(Charger ch : cargadoresOrdenados) {
                 System.out.println(ch.toString());
                 
                 if (registry.containsKey(ch)) {
