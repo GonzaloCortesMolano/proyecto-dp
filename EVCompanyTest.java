@@ -91,7 +91,7 @@ public class EVCompanyTest
     @Test
     public void testConstructor()
     {
-        assertEquals("EVCharging Cáceres", company.getName());
+        assertEquals("Compañía EVCharging Cáceres", company.getName());
         
         assertNotNull(company.getVehicles());
         assertTrue(company.getVehicles().isEmpty());

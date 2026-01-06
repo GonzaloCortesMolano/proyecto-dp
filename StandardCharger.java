@@ -47,6 +47,7 @@ public class StandardCharger extends Charger
         return false;
     }
     
+    
     /**
      * TODO devuelve si el vehiculo puede cargar ahi
 

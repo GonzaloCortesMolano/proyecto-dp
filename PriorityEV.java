@@ -21,24 +21,22 @@ public class PriorityEV extends ElectricVehicle
     
     /**
      * Sobrescribe la notificación para no avisar a la compañía
-     */
+     
     @Override
     protected void notifyCompany(Charger charger) {
         // No hacemos nada. PriorityEV no se registra.
     }
-    
+    */
+   
     @Override
-    public void possibilities(int step) {
-    // Si ya ha recargado o ha llegado al destino, no hace nada más este turno
-    if (hasRecharged() || isInTarget()) {
-        return;
-    }
-    // Si se ha quedado sin batería, tampoco hace nada
-    if (getBatteryLevel() == 0) {
-        return;
-    }
-    // Comportamiento normal
-    super.possibilities(step);
+    protected void move(int step) {
+        // Mueve una vez
+        super.move(step);
+        
+        // Si no ha llegado y tiene batería, mueve otra vez (Doble velocidad)
+        if (!isInTarget() && !isInStation() && getBatteryLevel() > 0) {
+            super.move(step);
+        }
     }
     /**
     @Override

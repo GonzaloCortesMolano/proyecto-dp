@@ -47,7 +47,7 @@ public class EVCompany
     
     public static EVCompany getInstance() { //SINGLETON
         if (instance == null) {
-            instance = new EVCompany("EVCharging Cáceres");
+            instance = new EVCompany("Compañía EVCharging Cáceres");
         }
         return instance;
     }

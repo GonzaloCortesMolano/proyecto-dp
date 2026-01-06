@@ -153,7 +153,7 @@ public class ChargingStation
             texto+=c.getCompleteInfo();
 
         }
-        texto=texto.substring(0, texto.length()-1); //para quitar el ultimo enter
+        texto+="\n";
         return texto;
 
     }
@@ -180,7 +180,7 @@ public class ChargingStation
     @Override
     public String toString()
     {
-        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")"+ "\n";
+        return "(ChargingStation: " + getId() + ", " + getCity() +", " + getNumberEVRecharged() + ", " + getLocation().toString() + ")\n";
     }
     
     /**

@@ -63,6 +63,7 @@ public class EVDemo
             else if (VehicleTier.values()[module] == VehicleTier.VTC) ev = new VtcEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             else if (VehicleTier.values()[module] == VehicleTier.PREMIUM) ev = new PremiumEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             else ev = new StandardEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+            ev.calculateRoute();
             company.addElectricVehicle(ev);
         }
         // TODO: Complete code here if needed
@@ -116,6 +117,7 @@ public class EVDemo
                 }    
                 station.addCharger(ch);
             }
+            station.orderList();
             j++;            
         }    
     }
@@ -169,7 +171,7 @@ public class EVDemo
      */
     private void showInitialInfo() {
         
-        System.out.println("( Compañía " + company.getName() + " )");
+        System.out.println("( " + company.getName() + " )");
         
         //Vehículos ordenados por matrícula
         System.out.println("(-------------------)");

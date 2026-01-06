@@ -125,8 +125,8 @@ public class PriorityEVTest
         v1.setRechargingLocation(new Location(21, 21));
         v1.setLocation(new Location(20, 20));
         v1.act(2);
-        assertEquals(v1.getLocation(), new Location(21, 21));
+        assertEquals(v1.getLocation(), new Location(22, 22));
         assertEquals(0, v1.getIdleCount());
-        assertEquals(v1.getBatteryLevel(), 200);
+        assertEquals(v1.getBatteryLevel(), 195);
     }
 }

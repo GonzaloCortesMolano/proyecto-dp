@@ -143,12 +143,19 @@ public class UltraFastChargerTest
     @Test
     public void testGetCompleteInfo()
     {
+        String fee = String.format(java.util.Locale.US, "%.2f", charger2.getChargingFee());
+        String amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
+
         assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-        +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n", charger2.getCompleteInfo());
+        + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n", charger2.getCompleteInfo());
+    
         charger2.recharge(eVehicle1, 20);
         charger2.recharge(eVehicle2, 30);
+    
+        amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
+
         assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-        +charger2.getChargingFee()+"€, "+charger2.getNumberEVRecharged()+", "+charger2.getAmountCollected()+"€)\n"
-        +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
+    + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n"
+    +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
     }
 }
