@@ -165,6 +165,6 @@ public class ChargingStationTest
         otra.addCharger(new StandardCharger("CC01_002", 60, 0.6));
         otra.addCharger(new StandardCharger("CC01_001", 40, 0.4));
         otra.addCharger(new StandardCharger("CC01_000", 20, 0.2));
-        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(StandardCharger: CC01_003, 80kwh, 0.80€, 0, 0.0€)\n(StandardCharger: CC01_002, 60kwh, 0.60€, 0, 0.00€)\n(StandardCharger: CC01_001, 40kwh, 0.40€, 0, 0.00€)\n(StandardCharger: CC01_000, 20kwh, 0.20€, 0, 0.00€)", otra.getCompleteInfo());
+        assertEquals("(ChargingStation: CC01, Cáceres, 0, 10-11)\n(StandardCharger: CC01_003, 80kwh, 0.80€, 0, 0.00€)\n(StandardCharger: CC01_002, 60kwh, 0.60€, 0, 0.00€)\n(StandardCharger: CC01_001, 40kwh, 0.40€, 0, 0.00€)\n(StandardCharger: CC01_000, 20kwh, 0.20€, 0, 0.00€)", otra.getCompleteInfo());
     }
 }

@@ -150,10 +150,11 @@ public class ChargingStation
 
         for(Charger c: chargers){
 
-            texto+=c.getCompleteInfo();
+            texto+= c.getCompleteInfo();
 
         }
         texto+="\n";
+        texto = texto.trim();
         return texto;
 
     }
