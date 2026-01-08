@@ -23,7 +23,7 @@ public class ElectricVehicleTest
     private Charger ch;
     
     /**
-     * Default constructor for test class ElectricVehicleTest
+     * Default constructor for test class ElectricVehicleTest.
      */
     public ElectricVehicleTest()
     {
