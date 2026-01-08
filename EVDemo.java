@@ -38,7 +38,7 @@ public class EVDemo
     private List<ChargingStation> stations;
     
     /** Constant for selecting the demo scenario, using the {@link DemoType} enumeration. */
-    private static final DemoType DEMO=DemoType.MEDIUM;
+    private static final DemoType DEMO=DemoType.NANO;
     
     
     /**
@@ -243,28 +243,11 @@ public class EVDemo
         
         List<ChargingStation> finalStations = new ArrayList<>(stations);
         Collections.sort(finalStations, new ComparatorChargingStationNumberRecharged()); 
-            /**
-            @Override
-            public int compare(ChargingStation s1, ChargingStation s2) {
-                // Decreciente por número total de recargas 
-                int total1 = 0;
-                for(Charger c : s1.getChargers()) total1 += c.getNumberEVRecharged();
-                
-                int total2 = 0;
-                for(Charger c : s2.getChargers()) total2 += c.getNumberEVRecharged();
-                
-                // Decreciente por recargas
-                int comp = Integer.compare(total2, total1);
-                if(comp != 0) return comp;
-                // Creciente por ID
-                return s1.getId().compareTo(s2.getId());
-            }
-        });
-        */
+        
         // Registro de notificaciones por cargadores
         Map<Charger, List<ElectricVehicle>> registry = company.getChargesRegistry();
         
-        for(ChargingStation cs : stations) {
+        for(ChargingStation cs : finalStations) {
             System.out.println(cs.getCompleteInfo());
             /*
             List<Charger> cargadoresOrdenados = new ArrayList<>(cs.getChargers());
