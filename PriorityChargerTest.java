@@ -159,4 +159,22 @@ public class PriorityChargerTest
     + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n"
     +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
     }
+    
+    @Test
+    public void testEquals(){
+        Charger sameRef = charger1;
+        Charger differentRef = new PriorityCharger("CH1", 40, 0.25);
+        Charger difType = new SolarCharger("CH1", 40, 0.25);
+        
+        //Caso el mismo objeto creo, pq apunta a la misma direccion de memoria
+        assertEquals(true, charger1.equals(sameRef));
+        //Mismo tipo distinto id
+        assertEquals(false, charger2.equals(sameRef));
+        //Distintas direcciones de memoria
+        assertEquals(true, charger1.equals(differentRef));
+        //Mismos datos, distintas direcciones de memoria, y distinto tipo
+        assertEquals(false, charger1.equals(difType));
+        //Con null
+        assertFalse(charger1.equals(null));
+    }
 }
