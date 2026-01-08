@@ -147,9 +147,9 @@ public class EVDemo
      * 
      */
     public void run() { //ejecuta la simulación
-        System.out.println("(-------------------)");
-        System.out.println(" Simulation start ");
-        System.out.println("(-------------------)");
+        System.out.println("(------------------)");
+        System.out.println("( Simulation start )");
+        System.out.println("(------------------)");
         for (int i = 0; i < MAXSTEPS; i++) {
             step(i); 
         }
@@ -239,6 +239,7 @@ public class EVDemo
         System.out.println("(-------------------)");
         
         //cambiar por set
+        /**
         List<ChargingStation> finalStations = new ArrayList<>(stations);
         Collections.sort(finalStations, new Comparator<ChargingStation>() {
             @Override
@@ -257,27 +258,27 @@ public class EVDemo
                 return s1.getId().compareTo(s2.getId());
             }
         });
-
+        */
         // Registro de notificaciones por cargadores
         Map<Charger, List<ElectricVehicle>> registry = company.getChargesRegistry();
         
-        for(ChargingStation cs : finalStations) {
-            System.out.println(cs.toString());
-            
+        for(ChargingStation cs : stations) {
+            System.out.println(cs.getCompleteInfo());
+            /*
             List<Charger> cargadoresOrdenados = new ArrayList<>(cs.getChargers());
+            /*
             Collections.sort(cargadoresOrdenados, new ComparatorChargers());
-
+            
             for(Charger ch : cargadoresOrdenados) {
-                System.out.println(ch.toString());
-                
+                System.out.println(ch.getCompleteInfo());
+                /*
                 if (registry.containsKey(ch)) {
                     for(ElectricVehicle ev : registry.get(ch)) {
                         System.out.println(ev.getInitialFinalInfo());
                     }
                 }
-            }
+                */
         }
-        
         System.out.println("(--------------)");
         System.out.println("( Company Info )");
         System.out.println("(--------------)");
