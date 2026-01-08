@@ -164,7 +164,7 @@ public abstract class Charger
     @Override
     public String toString()
     {
-        return "(" + this.getClass().getSimpleName() + ": "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.1f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+String.format(java.util.Locale.US,"%.2f", getAmountCollected())+"€)";
+        return "(" + this.getClass().getSimpleName() + ": "+getId()+", "+getChargingSpeed()+"kwh, "+String.format(java.util.Locale.US,"%.2f", getChargingFee())+"€, "+getNumberEVRecharged()+", "+String.format(java.util.Locale.US,"%.2f", getAmountCollected())+"€)";
     }
 
     /**
