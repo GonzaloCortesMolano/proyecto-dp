@@ -41,7 +41,7 @@ public class EVCompany
     {
         this.name = name; 
         this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
-        this.stations = new TreeSet<>(new ComparatorChargingStationId());
+        this.stations = new TreeSet<>(new ComparatorChargingStationNumberRecharged());
         this.chargesRegistry = new TreeMap<>((c1, c2) -> c1.getId().compareTo(c2.getId())); //mapa para guardar los registros de las cargas de cada vehículo
     }
     
