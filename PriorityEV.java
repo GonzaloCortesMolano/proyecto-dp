@@ -19,14 +19,14 @@ public class PriorityEV extends ElectricVehicle
         type=VehicleTier.PRIORITY;
     }
     
-    /**
+    /*
      * Sobrescribe la notificación para no avisar a la compañía
-     
+     */
     @Override
     protected void notifyCompany(Charger charger) {
         // No hacemos nada. PriorityEV no se registra.
     }
-    */
+    
    
     @Override
     protected void move(int step) {

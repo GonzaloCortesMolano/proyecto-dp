@@ -213,7 +213,7 @@ public class EVDemo
         
 
 
-        
+        //usar um set
         List<ElectricVehicle> finalVehicles = new ArrayList<>(vehicles);
         Collections.sort(finalVehicles, new Comparator<ElectricVehicle>() {
             @Override
@@ -234,6 +234,7 @@ public class EVDemo
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
         
+        //cambiar por set
         List<ChargingStation> finalStations = new ArrayList<>(stations);
         Collections.sort(finalStations, new Comparator<ChargingStation>() {
             @Override
@@ -272,11 +273,27 @@ public class EVDemo
                 }
             }
         }
-        System.out.println("(------------------)");
+        
+        System.out.println("(--------------)");
         System.out.println("( Company Info )");
-        System.out.println("(------------------)");
-        System.out.println("(EVCompany: " + company.getName() + ")");    
-    
+        System.out.println("(--------------)");
+        System.out.println("(EVCompany: " + company.getName() + ")");  
+        
+        if (registry != null){
+            for (Map.Entry<Charger, List<ElectricVehicle>> mapa : registry.entrySet()){
+                
+                Charger charger = mapa.getKey(); 
+                List<ElectricVehicle> evs = mapa.getValue();
+                
+                System.out.println(charger.toString());
+                
+                for(ElectricVehicle ev : evs){
+                    System.out.println(ev.toString());
+                }
+            }
+        }
+        
+        
     }
 
     public static void main(String[] args) {
