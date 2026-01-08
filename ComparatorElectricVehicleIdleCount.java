@@ -37,6 +37,7 @@ public class ComparatorElectricVehicleIdleCount implements Comparator<ElectricVe
      */
     @Override
     public int compare(ElectricVehicle v1, ElectricVehicle v2){ 
+        
         boolean ev1AtTarget = v1.getLocation().equals(v1.getTargetLocation());
         boolean ev2AtTarget = v2.getLocation().equals(v2.getTargetLocation());
         if(ev1AtTarget && !ev2AtTarget) return -1;

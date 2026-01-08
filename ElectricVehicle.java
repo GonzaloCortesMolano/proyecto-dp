@@ -428,7 +428,7 @@ public abstract class ElectricVehicle
         ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
         Charger charger=getFreeChargerFromStation();
         return "(step: "+step+" - "+this.getClass().getSimpleName() + ": " + getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at " + charger.getClass().getSimpleName() + ": " + charger.getId()+" with cost: "
-        +String.format(java.util.Locale.US, "%.2f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
+        +String.format(java.util.Locale.US, "%.2f", charger.calculateFee(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
     }
     
     /**
