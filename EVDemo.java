@@ -186,14 +186,18 @@ public class EVDemo
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
         for(ChargingStation station : stations) {
-            System.out.println(station.toString()); 
             
+            System.out.println(station.getCompleteInfo()); 
+            
+            
+            /*
             List<Charger> cargadoresOrdenados = new ArrayList<>(station.getChargers());
             Collections.sort(cargadoresOrdenados, new ComparatorChargers());
             
             for(Charger charger : cargadoresOrdenados) {
                 System.out.println(charger.toString());
             }
+            */
         }
        
     }
