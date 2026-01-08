@@ -426,7 +426,7 @@ public abstract class ElectricVehicle
     //muestra el texto al llegar a una estacion
     public String getChargingInfo(int step){
         ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
-        Charger charger=station.getFreeCharger();
+        Charger charger=getFreeChargerFromStation();
         return "(step: "+step+" - "+this.getClass().getSimpleName() + ": " + getPlate()+ " recharges: "+(getBatteryCapacity() - getBatteryLevel())+"kwh at " + charger.getClass().getSimpleName() + ": " + charger.getId()+" with cost: "
         +String.format(java.util.Locale.US, "%.2f", charger.getChargingFee()*(getBatteryCapacity() - getBatteryLevel()))+"€ ********)";
     }
