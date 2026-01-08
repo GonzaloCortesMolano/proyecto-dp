@@ -1,7 +1,5 @@
-pruebas de standardCharger
-el resto de vehiculos y chargers
-
 el getFreeChargerFromStation, es el mismo que en el standard pero no se como hacerlo, capaz habria que subirlo al padra
 el requeriments pasa lo mismo
 
 funcionan las pruebas excepto las de mostrar info (os complicais mucho la vida -_-)
+lo que faltaría es ver que los EV toman el cargador correcto, que de momento falla.

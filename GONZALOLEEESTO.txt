@@ -1,7 +1,0 @@
-Soy Ricardo jajajaj, a ver, que estaba un rato revisando la teoría y me he dado cuenta
-de una cosa que hice mal ayer, es que cambié en EVCompany los dos Set de subscrivedEV y
-stations por listas para probar la ordenación, que sale bien en pantalla porque los ordeno
-en el EVDemo pero no puede ser así. Cámbialo de nuevo por Set en lugar de List en los 
-campos y cambia los constructores para que se ordenen según el criterio de los comparadores.
-Lo haría yo ahora pero no quiero tocar nada a ver si la voy a seguir cagando. Perdón.
-Luego, lo que faltaría es ver que los EV toman el cargador correcto, que de momento falla.
