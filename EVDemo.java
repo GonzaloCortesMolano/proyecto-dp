@@ -219,7 +219,8 @@ public class EVDemo
 
         //usar um set
         List<ElectricVehicle> finalVehicles = new ArrayList<>(vehicles);
-        Collections.sort(finalVehicles, new Comparator<ElectricVehicle>() {
+        Collections.sort(finalVehicles, new ComparatorElectricVehicleIdleCount());
+        /*{
             @Override
             public int compare(ElectricVehicle v1, ElectricVehicle v2) {
                 int idleCompare = Integer.compare(v2.getIdleCount(), v1.getIdleCount());
@@ -228,7 +229,7 @@ public class EVDemo
                 }
                 return v1.getPlate().compareTo(v2.getPlate());
             }
-        });
+        });*/
 
         for(ElectricVehicle ev : finalVehicles) {
             System.out.println(ev.getInitialFinalInfo());
