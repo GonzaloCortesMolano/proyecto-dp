@@ -240,9 +240,10 @@ public class EVDemo
         System.out.println("(-------------------)");
         
         //cambiar por set
-        /**
+        
         List<ChargingStation> finalStations = new ArrayList<>(stations);
-        Collections.sort(finalStations, new Comparator<ChargingStation>() {
+        Collections.sort(finalStations, new ComparatorChargingStationNumberRecharged()); 
+            /**
             @Override
             public int compare(ChargingStation s1, ChargingStation s2) {
                 // Decreciente por número total de recargas 
