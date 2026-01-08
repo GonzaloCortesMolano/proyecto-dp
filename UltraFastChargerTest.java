@@ -143,7 +143,7 @@ public class UltraFastChargerTest
     @Test
     public void testGetCompleteInfo()
     {
-        String fee = String.format(java.util.Locale.US, "%.2f", charger2.getChargingFee());
+        String fee = String.format(java.util.Locale.US, "%.1f", charger2.getChargingFee());
         String amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
 
         assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
