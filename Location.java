@@ -8,7 +8,7 @@ import java.util.*;
 public class Location
 {
     private int x;
-    private int y; //AAA
+    private int y; 
 
     /**
      * Model a location in the city.
