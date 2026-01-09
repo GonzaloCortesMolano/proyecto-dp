@@ -65,4 +65,15 @@ public class VtcEV extends ElectricVehicle {
         }
         return bestCharger;
     }
+    
+    @Override
+    public boolean equals(Object obj){
+        if(super.equals(obj)){  //Comprueba si es null, Vehiculo y la placa
+            if(!(obj instanceof VtcEV)){    //Comprueba si no es de su tipo
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }

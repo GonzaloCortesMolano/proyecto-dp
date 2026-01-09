@@ -61,6 +61,13 @@ public class PremiumEVTest
     @AfterEach
     public void tearDown()
     {
+        v1 = null;
+        c = null;
+        l = null;
+        target = null;
+        ch = null;
+        stationBad = null;
+        stationGood = null;
     }
     
     @Test
@@ -110,5 +117,22 @@ public class PremiumEVTest
         stationGood.addCharger(ch);
         c=v1.getFreeChargerFromStation();
         assertEquals(c, new UltraFastCharger("id3", 500, 0.0));
+    }
+    
+    @Test
+    public void testIsBetterCharger(){
+        //Caso cargador null
+        assertEquals(true, v1.isBetterCharger(ch, null, l, null));
+        //Caso 2 cargadores
+        Location badLocation = new Location(30, 30);
+        Charger badCharger = new UltraFastCharger("C001", 50, 1.0);
+        assertEquals(true, v1.isBetterCharger(ch, badCharger, l, badLocation));
+    }
+    
+    @Test
+    public void testEquals(){
+        assertEquals(v1, new PremiumEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
+        assertNotEquals(v1, new PremiumEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
     }
 }

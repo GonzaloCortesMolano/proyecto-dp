@@ -52,16 +52,17 @@ public class StandardEV extends ElectricVehicle
    
     @Override
     public boolean equals(Object obj){
-        if(super.equals(obj)) {
-                if(this == obj) {
+        if(super.equals(obj)) { //Comprueba si es null, Vehiculo y la placa
+            /*    if(this == obj) {
                 return true; 
-            }
-            if(!(obj instanceof StandardEV)) {
+            }*/
+            if(!(obj instanceof StandardEV)) {  //Comprueba si no es su tipo
                 return false;
             }
-            //revisa su tipo 
-            StandardEV other=(StandardEV) obj;
-            return this.type.equals(other.type);
+            return true;
+            //revisa su tipo            Para que revisar su tipo si ya comprobamos si es instancia arriba
+            /*StandardEV other=(StandardEV) obj;
+            return this.type.equals(other.type);*/
         }
         return false;
     }

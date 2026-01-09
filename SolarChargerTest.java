@@ -99,6 +99,7 @@ public class SolarChargerTest
         charger2.recharge(eVehicle1, 20);
         charger2.recharge(eVehicle2, 25);
         charger3.recharge(eVehicle3, 10);
+        charger3.recharge(eVehicle4, 20);
         charger3.recharge(eVehicle5, 25);
         assertEquals(0, charger3.getNumberEVRecharged());
         assertEquals(2, charger2.getNumberEVRecharged());

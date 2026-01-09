@@ -23,6 +23,7 @@ public class UltraFastCharger extends Charger
         double fee = super.calculateFee(kwsRecharging) * 1.1;
         return Math.round(fee * 100.0)/100.0;
     }
+    
     @Override
     public boolean equals(Object obj){
         if(super.equals(obj)) {

@@ -73,16 +73,17 @@ public class PriorityEV extends ElectricVehicle
    
     @Override
     public boolean equals(Object obj){
-        if(super.equals(obj)) {
-                if(this == obj) {
+        if(super.equals(obj)) { //Comprueba si es null, Vehiculo y la placa
+            /*   if(this == obj) {
                 return true; 
-            }
-            if(!(obj instanceof PriorityEV)) {
+            }*/
+            if(!(obj instanceof PriorityEV)) {  //Comprueba si no es su tipo
                 return false;
             }
+            return true;
             //revisa su tipo 
-            PriorityEV other=(PriorityEV) obj;
-            return this.type.equals(other.type);
+            /*PriorityEV other=(PriorityEV) obj;
+            return this.type.equals(other.type);*/
         }
         return false;
     }

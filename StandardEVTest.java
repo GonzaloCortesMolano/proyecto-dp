@@ -53,6 +53,21 @@ public class StandardEVTest
         stationGood.addCharger(ch);
     }
     
+    /**
+     * Tears down the test fixture.
+     *
+     * Called after every test case method.
+     */
+    @AfterEach
+    public void tearDown()
+    {
+        v1 = null;
+        c = null;
+        l = null;
+        target = null;
+        ch = null;
+    }
+    
     @Test
     public void testCalculateRoute(){
         v1.calculateRoute();
@@ -102,13 +117,14 @@ public class StandardEVTest
         assertNotEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
     }
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
+    @Test
+    public void testIsBetterCharger(){
+        //Caso cargador null
+        assertEquals(true, v1.isBetterCharger(ch, null, l, null));
+        //Caso 2 cargadores
+        Location badLocation = new Location(30, 30);
+        Charger badCharger = new StandardCharger("C001", 50, 1.0);
+        assertEquals(true, v1.isBetterCharger(ch, badCharger, l, badLocation));
     }
+    
 }

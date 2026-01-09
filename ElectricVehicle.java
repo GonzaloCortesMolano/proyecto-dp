@@ -397,7 +397,6 @@ public abstract class ElectricVehicle
         }
     }
     
-    
     //coge un cargador de su tipo
     public Charger getFreeChargerFromStation(){
         if(type==null){

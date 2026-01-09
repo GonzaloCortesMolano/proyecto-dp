@@ -57,6 +57,11 @@ public class ElectricVehicleTest
     @AfterEach
     public void tearDown()
     {
+        v1 = null;
+        c = null;
+        l = null;
+        target = null;
+        ch = null;
     }
     
     /**

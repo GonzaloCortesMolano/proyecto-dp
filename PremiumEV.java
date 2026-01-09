@@ -43,7 +43,7 @@ public class PremiumEV extends ElectricVehicle {
     }
     */
    @Override
-    protected boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
+protected boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
         if (currentBest == null){
             return true;    
         }
@@ -66,5 +66,15 @@ public class PremiumEV extends ElectricVehicle {
             }
         }
         return bestCharger;
+    }
+    @Override
+    public boolean equals(Object obj){
+        if(super.equals(obj)){  //Comprueba si es null, si un Vehiculo y la placa
+            if(!(obj instanceof PremiumEV)){    //Comprueba si no es su tipo
+                return false;
+            }
+            return true;    
+        }
+        return false;
     }
 }

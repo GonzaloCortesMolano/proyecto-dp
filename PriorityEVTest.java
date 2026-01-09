@@ -1,5 +1,3 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +57,11 @@ public class PriorityEVTest
     @AfterEach
     public void tearDown()
     {
+        v1 = null;
+        c = null;
+        l = null;
+        target = null;
+        ch = null;
     }
     
     @Test
@@ -128,5 +131,15 @@ public class PriorityEVTest
         assertEquals(v1.getLocation(), new Location(22, 22));
         assertEquals(0, v1.getIdleCount());
         assertEquals(v1.getBatteryLevel(), 195);
+    }
+    
+    @Test
+    public void testIsBetterCharger(){
+        //Caso cargador null
+        assertEquals(true, v1.isBetterCharger(ch, null, l, null));
+        //Caso 2 cargadores
+        Location badLocation = new Location(31, 31);
+        Charger badCharger = new SolarCharger("C001", 50, 1.0);
+        assertEquals(true, v1.isBetterCharger(ch, badCharger, l, badLocation));
     }
 }
