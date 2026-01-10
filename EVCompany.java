@@ -39,6 +39,9 @@ public class EVCompany
      */
     private EVCompany(String name)
     {
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("The company need a name");
+        }
         this.name = name; 
         this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
         this.stations = new TreeSet<>(new ComparatorChargingStationNumberRecharged());

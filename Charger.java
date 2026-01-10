@@ -31,7 +31,16 @@ public abstract class Charger
      * @param fee The cost per kWh for charging.
      */
     public Charger(String id, int speed, double fee)
-    {
+    {   
+        if(id == null || id.isEmpty()){
+            throw new IllegalArgumentException("Charger need a valid Id (Not null or empty)");
+        }
+        if(speed <= 0){
+            throw new IllegalArgumentException("Charging speed of Charger must be positive");
+        }
+        if(fee <= 0) {
+            throw new IllegalArgumentException("Charging fee of Charger must be positive");
+        }        
         this.id=id;
         this.chargingSpeed=speed;
         this.chargingFee = fee;

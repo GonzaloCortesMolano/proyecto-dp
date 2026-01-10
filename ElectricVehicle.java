@@ -33,7 +33,25 @@ public abstract class ElectricVehicle
      * @throws NullPointerException If company, location, or targetLocation is null.
      */
     public ElectricVehicle(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity)
-    {
+    {   
+        if(company == null){
+            throw new IllegalArgumentException("The vehicle need a owner");
+        }
+        if(location == null){
+            throw new IllegalArgumentException("The vehicle need to stay in a valid Location");
+        }
+        if(targetLocation == null) {
+            throw new IllegalArgumentException("The vehicle have to go to a valid Location");
+        }
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("The vehicle need a valid name (Not null or empty)");
+        }
+        if(plate == null || plate.isEmpty()){
+            throw new IllegalArgumentException("Vehicle need a valid plate (Not null or empty)");
+        }
+        if(batteryCapacity <= 0) {
+            throw new IllegalArgumentException("The battery capacity of the vehicle must be positive");
+        }  
         this.company=company;
         this.location=location;
         this.targetLocation=targetLocation;

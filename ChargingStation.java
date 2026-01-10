@@ -30,11 +30,20 @@ public class ChargingStation
      * @param location The {@link Location} of the station.
      */
     public ChargingStation(String city, String id, Location location)
-    {
-       this.id = id;
-       this.city = city;
-       this.location = location;
-       chargers = new ArrayList<Charger>();
+    {   
+        if(id == null || id.isEmpty()){
+            throw new IllegalArgumentException("ChargingStation need a valid id (Not null or empty)");
+        }
+        if(city == null || city.isEmpty()) {
+            throw new IllegalArgumentException("ChargingStation need a valid city (Not null or empty)");
+        }
+        if(location == null) {
+            throw new IllegalArgumentException("ChargingStation need a valid Location");
+        }        
+        this.id = id;
+        this.city = city;
+        this.location = location;
+        chargers = new ArrayList<Charger>();
     }
     
     // -------------------------------------------------
