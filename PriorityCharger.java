@@ -1,14 +1,26 @@
 
 /**
- * Write a description of class PriorityCharger here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Represents a charging unit reserved for priority electric vehicles.
+ * <p>
+ * This charger can only recharge {@link ElectricVehicle} instances
+ * of tier {@link VehicleTier#PRIORITY}. It follows the standard charging
+ * behavior defined in {@link Charger}, without modifying the fee
+ * calculation or recharge process.
+ * </p>
+ *
+ * @author Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 2026.13.1
  */
 public class PriorityCharger extends Charger
 {
     /**
-     * Constructor for objects of class PriorityCharger
+     * Constructs a {@code PriorityCharger} with the given identifier,
+     * charging speed and charging fee.
+     *
+     * @param id    The unique identifier of the charger.
+     * @param speed The charging speed in kWh. Must be positive.
+     * @param fee   The price per kWh. Must be non-negative.
+     * @throws IllegalArgumentException if speed is not positive or fee is negative.
      */
     public PriorityCharger(String id, int speed, double fee)
     {
@@ -27,6 +39,17 @@ public class PriorityCharger extends Charger
     */ 
    
     // Ocurre lo mismo que con StandardCharger.
+    
+    /**
+     * Indicates whether this charger is equal to another object.
+     * Two {@code PriorityCharger} objects are considered equal if they
+     * are equal according to {@link Charger#equals(Object)} and are
+     * instances of the same class with identical supported vehicle types.
+     *
+     * @param obj The object to compare with.
+     * @return {@code true} if the given object represents an equivalent
+     *         {@code PriorityCharger}, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object obj){
         if(super.equals(obj)) {
@@ -37,12 +60,4 @@ public class PriorityCharger extends Charger
         }
         return false;
     }
-    
-    /**
-     * TODO devuelve si el vehiculo puede cargar ahi
-    @Override
-    public boolean canCharge(ElectricVehicle vehicle){
-        return compareType(vehicle.getType());
-    }
-    */
 }
