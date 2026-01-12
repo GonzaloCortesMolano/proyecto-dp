@@ -214,7 +214,6 @@ public abstract class Charger
      */
     public final double recharge(ElectricVehicle vehicle,int kwsRecharging){
         
-        
         if (!canCharge(vehicle)) {
             return 0.0;
         }

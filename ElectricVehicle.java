@@ -392,16 +392,23 @@ public abstract class ElectricVehicle
     } 
     //proceso de carga
     public void load(int step, Charger freeCharger){
-        double cost = freeCharger.recharge(this, getBatteryCapacity() - getBatteryLevel());
-           
-           setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
-           incrementCharges();
-           incrementChargesCost(cost);
-           
-           notifyCompany(freeCharger); //NOTIFICAMOS A EVCOMPANY (NUEVO)
-           
-           setRechargingLocation(null);
-           calculateRoute();
+        try{
+            if(freeCharger == null){
+                throw new IllegalArgumentException("No free charger available");
+            }
+            double cost = freeCharger.recharge(this, getBatteryCapacity() - getBatteryLevel());
+               
+            setBatteryLevel(getBatteryCapacity()); //Ponemos la batería al máximo
+            incrementCharges();
+            incrementChargesCost(cost);
+               
+            notifyCompany(freeCharger); //NOTIFICAMOS A EVCOMPANY (NUEVO)
+               
+            setRechargingLocation(null);
+            calculateRoute();
+        } catch (IllegalArgumentException e){
+            System.err.println("Error while loading vehicle " + getPlate() + ": " + e.getMessage());
+        }
     }
     
     
