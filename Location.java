@@ -1,9 +1,15 @@
 import java.util.*;
 
 /**
- * Model a location in a two-dimensional grid city using (x, y) coordinates.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano 
- * @version 2024.10.07
+ * Represents an immutable position in a two-dimensional grid-based city,
+ * defined by non-negative (x, y) coordinates.
+ * <p>
+ * Locations are used to model positions of vehicles, charging stations,
+ * and destinations within the simulation.
+ * </p>
+ *
+ * @author Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 2026.13.1
  */
 public class Location
 {
@@ -31,11 +37,16 @@ public class Location
     }
     
     /**
-     * Generates the next location to visit in a direct line (Manhattan-style diagonal/straight move) 
-     * from this location to the destination.
-     * @param destination The {@link Location} we want to get to.
-     * @return The next {@link Location} one step closer to the destination. Returns the destination
-     * if this location is already the destination.
+     * Computes the next intermediate location when moving from this location
+     * towards a destination.
+     * <p>
+     * Movement follows a Chebyshev-style step, allowing diagonal or straight
+     * movement of one unit per axis.
+     * </p>
+     *
+     * @param destination The destination location.
+     * @return A new {@link Location} one step closer to the destination,
+     *         or the destination itself if it has already been reached.
      */
     public Location nextLocation(Location destination)
     {
@@ -50,10 +61,16 @@ public class Location
     }
     
     /**
-     * Determines the number of movements required to get from here to the destination, 
-     * using the Chebyshev distance (maximum of the absolute differences of the coordinates).
-     * @param destination The required destination {@link Location}.
-     * @return The number of movement steps.
+     * Calculates the distance from this location to another one using
+     * Chebyshev distance.
+     * <p>
+     * This distance corresponds to the maximum difference between
+     * the x or y coordinates and represents the number of movement steps
+     * required to reach the destination.
+     * </p>
+     *
+     * @param destination The destination location.
+     * @return The number of movement steps required.
      */
     public int distance(Location destination)
     {
@@ -61,9 +78,14 @@ public class Location
     }
     
     /**
-     * Implement content equality for locations.
+     * Compares this location with another object for equality.
+     * <p>
+     * Two locations are considered equal if they have the same x and y coordinates.
+     * </p>
+     *
      * @param other The object to compare with.
-     * @return {@code true} if the other object is a {@link Location} and has the same x and y coordinates, {@code false} otherwise.
+     * @return {@code true} if the object is a {@link Location} with the same
+     *         coordinates, {@code false} otherwise.
      */
     @Override
     public boolean equals(Object other)
@@ -79,7 +101,9 @@ public class Location
     }
     
     /**
-     * @return A string representation of the location in the format "x-y".
+     * Returns a string representation of this location.
+     *
+     * @return A string in the format {@code "x-y"}.
      */
     @Override
     public String toString()
@@ -88,9 +112,12 @@ public class Location
     }
 
     /**
-     * Generates a hash code for this location.
-     * It uses the top 16 bits for the y value and the bottom 16 bits for the x value
-     * to ensure a unique hash code for most grid sizes. This method is consistent with {@link #equals(Object)}.
+     * Returns a hash code for this location.
+     * <p>
+     * The hash code is built using the x and y coordinates and is consistent
+     * with the {@link #equals(Object)} method.
+     * </p>
+     *
      * @return A hash code value for this location.
      */
     @Override
