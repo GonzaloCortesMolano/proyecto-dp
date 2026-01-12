@@ -39,13 +39,17 @@ public class EVCompany
      */
     private EVCompany(String name)
     {
-        if(name == null || name.isEmpty()){
-            throw new IllegalArgumentException("The company need a name");
+        try{
+            if(name == null || name.isEmpty()){
+                throw new IllegalArgumentException("The company need a name");
+            }
+            this.name = name; 
+            this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
+            this.stations = new TreeSet<>(new ComparatorChargingStationNumberRecharged());
+            this.chargesRegistry = new TreeMap<>((c1, c2) -> c1.getId().compareTo(c2.getId())); //mapa para guardar los registros de las cargas de cada vehículo
+        } catch(IllegalArgumentException e){
+            System.err.println("Error in the creation of the company: " + e.getMessage());
         }
-        this.name = name; 
-        this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
-        this.stations = new TreeSet<>(new ComparatorChargingStationNumberRecharged());
-        this.chargesRegistry = new TreeMap<>((c1, c2) -> c1.getId().compareTo(c2.getId())); //mapa para guardar los registros de las cargas de cada vehículo
     }
     
     public static EVCompany getInstance() { //SINGLETON
