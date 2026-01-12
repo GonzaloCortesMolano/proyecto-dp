@@ -68,6 +68,7 @@ public class EVDemo
         }
         // TODO: Complete code here if needed
         this.vehicles = new ArrayList<>(company.getVehicles());
+
     }
     
 

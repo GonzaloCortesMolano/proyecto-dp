@@ -9,19 +9,5 @@ codigo mas que otra cosa, pq basicamente no tiene nada que ver con su tipo
 de Charger, como UpdateAMountColllected, y hay otras que se comprueban ya de 
 por si en otras que ya hay hechas.
 
-
-
-Las pruebas de la Clase Location no hay que tocarlas CREO, si acaso los comentarios. A menos que haya que testear que salte error de las excepciones
-del constructor.
-
-Las pruebas de Charger igual que Location.
-
-No la he revisado)
-Las pruebas de ChargingStation hay que añadirles cosas, hay que probar con los distintos tipos de coche los distintos cargadores, y hay que probar modulos.
-
-Las de Company no pone en ningun lado que haya que hacer pruebas, pero haria las de registrar, y tocaria las de getEstacion, no se si falta alguna de buscar
-y ademas hay como 2 pruebas para un mismo modulo que es por si existe el id, y luego otra prueba en la que no existe, eso parece muy ChatGPT y habria
-que cambiarlo creo yo,
-
 Las de ElectricVehicle no se, no me he puesto a verlas con detalle.
 Pero estan todos los equal de la subclases y sus pequeños modulos
