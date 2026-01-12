@@ -2,67 +2,97 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * Write a description of class StandardEV here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Represents a standard-tier electric vehicle within the simulation.
+ * <p>
+ * A {@code StandardEV} follows a simple routing strategy when selecting
+ * a charging station: it prioritizes the option that minimizes the total
+ * distance from its current location to the charging station and then
+ * to the final target destination.
+ * </p>
+ *
+ * This class specializes the charger selection logic defined in
+ * {@link ElectricVehicle}.
+ *
+ * @author Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 2024.10.07
  */
 public class StandardEV extends ElectricVehicle
 {
     /**
-     * Constructor for objects of class StandardEV
+     * Constructs a standard electric vehicle.
+     * <p>
+     * The vehicle is initialized with its company, initial location,
+     * target destination, identifying information, and battery capacity.
+     * Its vehicle tier is set to {@link VehicleTier#STANDARD}.
+     * </p>
+     *
+     * @param company The operating {@link EVCompany}.
+     * @param location The initial {@link Location}.
+     * @param targetLocation The destination {@link Location}.
+     * @param name The name of the vehicle.
+     * @param plate The license plate identifier.
+     * @param batteryCapacity The maximum battery capacity in kWh.
      */
-    public StandardEV(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity)
+    public StandardEV(EVCompany company, Location location, Location targetLocation,
+                      String name, String plate, int batteryCapacity)
     {
         super(company, location, targetLocation, name, plate, batteryCapacity);
-        type=VehicleTier.STANDARD;
+        type = VehicleTier.STANDARD;
     }
-    //requisitos para calcular el lugar de destino
-    /**@Override
-    boolean requirements(int distToStation, Location currentLocation){
-        if(super.requirements(distToStation, currentLocation)){
-            List<Charger> chargers=this.getCompany().getChargingStation(currentLocation).getChargers();
-            Iterator<Charger> itCharger = chargers.iterator();
-            boolean enc=false;
-            //compruebas que tenga algun cargador compatible
-            while(itCharger.hasNext() && !enc){
-                Charger currentCharger=itCharger.next();
-                if(currentCharger.canCharge(this)){
-                    return true;
-                }
-            }
-            return false;
-        }
-        return false;
-    }
-    */
-   
-    @Override 
-    protected boolean isBetterCharger (Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc) {
-    if (currentBest == null){
-        return true;
-    }
-    // Calculamos distancias totales
-    int newTotalDist = this.getLocation().distance(newLoc) + newLoc.distance(this.getTargetLocation());
-    int currentTotalDist = this.getLocation().distance(bestLoc) + bestLoc.distance(this.getTargetLocation());
 
-    // Es mejor si la distancia total es MENOR (es decir, la mejor de las dos)
-    return newTotalDist < currentTotalDist;
+    /**
+     * Determines whether a candidate charger is better than the current best one
+     * according to the standard vehicle strategy.
+     * <p>
+     * The comparison is based on the total distance required to travel from
+     * the vehicle's current location to the charging station and then from
+     * the station to the final target destination.
+     * </p>
+     *
+     * @param newCharger The candidate {@link Charger}.
+     * @param currentBest The currently selected best charger, or {@code null}.
+     * @param newLoc The {@link Location} of the candidate charger.
+     * @param bestLoc The {@link Location} of the current best charger.
+     * @return {@code true} if the candidate charger yields a shorter total
+     *         distance, {@code false} otherwise.
+     */
+    @Override 
+    protected boolean isBetterCharger(Charger newCharger, Charger currentBest,
+                                      Location newLoc, Location bestLoc)
+    {
+        if (currentBest == null){
+            return true;
+        }
+
+        int newTotalDist = this.getLocation().distance(newLoc)
+                         + newLoc.distance(this.getTargetLocation());
+        int currentTotalDist = this.getLocation().distance(bestLoc)
+                             + bestLoc.distance(this.getTargetLocation());
+
+        return newTotalDist < currentTotalDist;
     }    
    
+    /**
+     * Compares this standard electric vehicle with another object for equality.
+     * <p>
+     * Two {@code StandardEV} objects are considered equal if they represent
+     * the same electric vehicle (as defined by
+     * {@link ElectricVehicle#equals(Object)}) and are instances of
+     * {@code StandardEV}.
+     * </p>
+     *
+     * @param obj The object to compare with.
+     * @return {@code true} if both objects represent the same standard
+     *         electric vehicle, {@code false} otherwise.
+     */
     @Override
-    public boolean equals(Object obj){
-        if(super.equals(obj)) { //Comprueba si es null, Vehiculo y la placa
-            /*    if(this == obj) {
-                return true; 
-            }*/
-            if(!(obj instanceof StandardEV)) {  //Comprueba si no es su tipo
+    public boolean equals(Object obj)
+    {
+        if (super.equals(obj)) {
+            if (!(obj instanceof StandardEV)) {
                 return false;
             }
             return true;
-            //revisa su tipo            Para que revisar su tipo si ya comprobamos si es instancia arriba
-            /*StandardEV other=(StandardEV) obj;
-            return this.type.equals(other.type);*/
         }
         return false;
     }
