@@ -68,7 +68,6 @@ public class EVDemo
         }
         // TODO: Complete code here if needed
         this.vehicles = new ArrayList<>(company.getVehicles());
-        Collections.sort(this.vehicles, new ComparatorElectricVehiclePlate());
     }
     
 
@@ -85,7 +84,6 @@ public class EVDemo
         
         // TODO: Complete code here if needed
         this.stations = new ArrayList<>(company.getCityStations());
-        Collections.sort(this.stations, new ComparatorChargingStationId());
     }
 
     /**
@@ -228,21 +226,8 @@ public class EVDemo
         
         for(ChargingStation cs : finalStations) {
             System.out.println(cs.getCompleteInfo());
-            /*
-            List<Charger> cargadoresOrdenados = new ArrayList<>(cs.getChargers());
-            /*
-            Collections.sort(cargadoresOrdenados, new ComparatorChargers());
-            
-            for(Charger ch : cargadoresOrdenados) {
-                System.out.println(ch.getCompleteInfo());
-                /*
-                if (registry.containsKey(ch)) {
-                    for(ElectricVehicle ev : registry.get(ch)) {
-                        System.out.println(ev.getInitialFinalInfo());
-                    }
-                }
-                */
         }
+        
         System.out.println("(--------------)");
         System.out.println("( Company Info )");
         System.out.println("(--------------)");
@@ -261,8 +246,6 @@ public class EVDemo
                 }
             }
         }
-        
-        
     }
 
     public static void main(String[] args) {
