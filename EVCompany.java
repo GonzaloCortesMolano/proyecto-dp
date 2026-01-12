@@ -1,14 +1,16 @@
 import java.util.*;
 
 /**
- * Represents an Electric Vehicle (EV) company that manages a fleet of 
+ * Represents an Electric Vehicle (EV) company that manages a fleet of
  * {@link ElectricVehicle}s and a network of {@link ChargingStation}s.
- * The {@code EVCompany} class provides operations to register electric vehicles, 
- * manage charging stations, and retrieve them by ID or {@link Location}. 
+ * The {@code EVCompany} class provides operations to register electric vehicles,
+ * manage charging stations, and retrieve them by ID or {@link Location}.
  * It also supports resetting and replacing the subscribed vehicle list.
- * 
+ *
+ * This class follows the Singleton design pattern.
+ *
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
+ * @version 13-1-2026
  */
 public class EVCompany  
 {
@@ -17,25 +19,32 @@ public class EVCompany
      */
     private String name;
     /**
-     * The list of {@link ElectricVehicle}s subscribed to this company.
+     * The set of {@link ElectricVehicle}s subscribed to this company.
      */
     private Set<ElectricVehicle> subscribedVehicles;
     /**
-     * The list of {@link ChargingStation}s managed by this company.
+     * The set of {@link ChargingStation}s managed by this company.
      */
     private Set<ChargingStation> stations;
     
     /**
-     * Registro de cargas (ID Cargador -> Lista de vehículos)
+     * Registry of charging operations.
+     * Maps each {@link Charger} to the list of {@link ElectricVehicle}s
+     * that have been recharged using it.
      */
     private Map<Charger, List<ElectricVehicle>> chargesRegistry;
-    
-    private static EVCompany instance; //PATRON SINGLETON
+
+    /**
+     * Singleton instance of the company.
+     */
+    private static EVCompany instance; 
     
     /**
      * Constructs a new {@code EVCompany} with the specified name.
-     * 
-     * @param name The name of the company.
+     * This constructor is private to enforce the Singleton pattern.
+     *
+     * @param name The name of the company. Must not be {@code null} or empty.
+     * @throws IllegalArgumentException if the name is {@code null} or empty.
      */
     private EVCompany(String name)
     {
@@ -52,6 +61,12 @@ public class EVCompany
         }
     }
     
+    /**
+     * Returns the unique instance of the {@code EVCompany}.
+     * If the instance does not exist, it is created with a default name.
+     *
+     * @return The singleton instance of {@code EVCompany}.
+     */
     public static EVCompany getInstance() { //SINGLETON
         if (instance == null) {
             instance = new EVCompany("Compañía EVCharging Cáceres");
@@ -59,6 +74,10 @@ public class EVCompany
         return instance;
     }
     
+    /**
+     * Resets the singleton instance.
+     * This method is mainly intended for testing purposes.
+     */
     public static void resetInstance() {
         instance = null;
     }
@@ -76,7 +95,9 @@ public class EVCompany
     }
     
     /**
-     * @return An unmodifiable list of all {@link ElectricVehicle}s subscribed to the company.
+     * Returns an unmodifiable view of the subscribed electric vehicles.
+     *
+     * @return An unmodifiable set of {@link ElectricVehicle}s.
      */
     public Set<ElectricVehicle> getVehicles()
     {       
@@ -86,9 +107,9 @@ public class EVCompany
     // ESTE NO SE USA PERO VENIA INCLUIDO YA EN LA PLANTILLA
     /**
      * Retrieves a {@link ChargingStation} by its unique identifier.
-     * 
-     * @param id The ID of the charging station to find.
-     * @return The matching {@link ChargingStation}, or {@code null} if no station matches the given ID.
+     *
+     * @param id The identifier of the charging station.
+     * @return The matching {@link ChargingStation}, or {@code null} if not found.
      */
     public ChargingStation getChargingStation(String id)
     {
@@ -107,7 +128,7 @@ public class EVCompany
     
     /**
      * Retrieves a {@link ChargingStation} located at the specified {@link Location}.
-     * 
+     *
      * @param location The {@link Location} of the station to find.
      * @return The {@link ChargingStation} at that location, or {@code null} if not found.
      */
@@ -141,8 +162,10 @@ public class EVCompany
     }
     
     /**
-     * Devuelve el mapa de registros de carga.
-     * @return El mapa.
+     * Returns an unmodifiable view of the charging registry.
+     *
+     * @return A map that associates each {@link Charger} with the list of
+     *         {@link ElectricVehicle}s recharged using it.
      */
     public Map<Charger, List<ElectricVehicle>> getChargesRegistry() {
         return Collections.unmodifiableMap(chargesRegistry);
@@ -154,12 +177,10 @@ public class EVCompany
     // -------------------------------------------------
     
     /**
-     * Replaces the list of subscribed {@link ElectricVehicle}s with a new list.
-     * This method overwrites the current list of vehicles. 
-     * Use with caution, as it can remove existing vehicle registrations.
-     * 
-     * @param subsVehicles The new list of {@link ElectricVehicle}s to assign.
-     *      If {@code null}, the operation is ignored.
+     * Replaces the set of subscribed {@link ElectricVehicle}s.
+     *
+     * @param subsVehicles The new set of vehicles.
+     *                     If {@code null}, the operation is ignored.
      */
     public void setSubscribedVehicles(Set<ElectricVehicle> subsVehicles)
     {
@@ -168,12 +189,10 @@ public class EVCompany
     }
     
     /**
-     * Replaces the list of managed {@link ChargingStation}s with a new list.
-     * This method overwrites the current collection of charging stations. 
-     * Use with caution, as it will remove any previously managed stations.
-     * 
-     * @param lStations The new list of {@link ChargingStation}s to assign. 
-     *      If {@code null}, the operation is ignored.
+     * Replaces the set of managed {@link ChargingStation}s.
+     *
+     * @param sStations The new set of charging stations.
+     *                  If {@code null}, the operation is ignored.
      */
     public void setChargingStations(Set<ChargingStation> sStations)
     {
@@ -186,10 +205,9 @@ public class EVCompany
     // ------------------------------------------------
     
     /**
-     * Adds a new {@link ElectricVehicle} to the company's subscribed fleet.
-     * 
-     * @param vehicle The electric vehicle to add. 
-     *      If {@code null}, the method does nothing.
+     * Adds a new {@link ElectricVehicle} to the subscribed fleet.
+     *
+     * @param vehicle The electric vehicle to add.
      */
     public void addElectricVehicle(ElectricVehicle vehicle)
     {       
@@ -199,10 +217,9 @@ public class EVCompany
     }
 
     /**
-     * Adds a new {@link ChargingStation} to the company's managed network.
-     * 
-     * @param station The charging station to add. 
-     *      If {@code null}, the method does nothing.
+     * Adds a new {@link ChargingStation} to the managed network.
+     *
+     * @param station The charging station to add.
      */
     public void addChargingStation(ChargingStation station)
     {       
@@ -212,8 +229,8 @@ public class EVCompany
     }
     
     /**
-     * Removes all subscribed vehicles and managed stations, 
-     * resetting the company to an empty state.
+     * Removes all subscribed vehicles, charging stations and charging records,
+     * leaving the company in an empty state.
      */
     public void reset(){
         this.subscribedVehicles.clear();
@@ -223,7 +240,11 @@ public class EVCompany
     
     
     /**
-     * Registra una carga realizada por un vehículo en un cargador específico.
+     * Registers a charging operation performed by a vehicle using a specific charger.
+     * Each vehicle is recorded only once per charger.
+     *
+     * @param charger The charger used for the recharge.
+     * @param vehicle The electric vehicle that was recharged.
      */
     public void registerRecharge(Charger charger, ElectricVehicle vehicle)
     {
@@ -245,11 +266,12 @@ public class EVCompany
     
     /**
      * Compares this company to another object for equality.
-     * Two {@code EVCompany} instances are considered equal 
+     * Two {@code EVCompany} instances are considered equal
      * if they have the same company name.
-     * 
+     *
      * @param obj The object to compare with.
-     * @return {@code true} if both objects represent the same company; {@code false} otherwise.
+     * @return {@code true} if both objects represent the same company;
+     *         {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -267,11 +289,11 @@ public class EVCompany
         return this.name.equals(other.name);
     }
 
-     /**
+    /**
      * Generates a hash code for this company.
-     * The hash code is derived from the company name, 
-     * consistent with the {@link #equals(Object)} method.
-     * 
+     * The hash code is derived from the company name,
+     * consistent with {@link #equals(Object)}.
+     *
      * @return The hash code of this company.
      */
     @Override
