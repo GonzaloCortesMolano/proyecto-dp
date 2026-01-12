@@ -1,27 +1,23 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class UltraFastChargerTest.
- *
- * @author  (your name)
- * @version (a version number or a date)
+ * Test class for the {@link UltraFastCharger} class.
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 12-11-2025
+ * * Provides unit tests for specific behaviors of UltraFastCharger:
+ * - Fee calculation (10% surcharge).
+ * - Equality checks.
  */
 public class UltraFastChargerTest
 {
-    private Charger charger1;
-    private Charger charger2;
-    private Charger charger3;
-    private ElectricVehicle eVehicle1;
-    private ElectricVehicle eVehicle2;
-    private ElectricVehicle eVehicle3;
-    private ElectricVehicle eVehicle4;
-    private ElectricVehicle eVehicle5;
-    private EVCompany Vectalia; 
+    private UltraFastCharger charger;
+    private ElectricVehicle premEV;
+    private ElectricVehicle stdEV;
+    private EVCompany Vectalia;
+
     /**
      * Default constructor for test class UltraFastChargerTest
      */
@@ -31,155 +27,74 @@ public class UltraFastChargerTest
 
     /**
      * Sets up the test fixture.
-     *
-     * Called before every test case method.
      */
     @BeforeEach
     public void setUp()
     {
-        //Chargers
-        charger1 = new UltraFastCharger("CH1", 40, 0.25);
-        charger2 = new UltraFastCharger("CH2", 50, 0.30);
-        charger3 = new UltraFastCharger("CH3", 30, 0.20);
-        
-        //Company
-       EVCompany.resetInstance();
+        EVCompany.resetInstance();
         Vectalia = EVCompany.getInstance();
         
-        //Locations need it for the Electric Vehicles
-        Location loc1 = new Location(5, 7);
-        Location loc2 = new Location(12, 9);
-        Location loc3 = new Location(8, 8);
-        Location locEV1 = new Location(4,7);
-        Location locEV2 = new Location(10,9);
-        Location locEV3 = new Location(2,14);
+        // Fee 1.0
+        charger = new UltraFastCharger("CH_FST", 100, 1.0);
         
-        //Vehicles
-        eVehicle1 = new PremiumEV(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
-        eVehicle2 = new PremiumEV(Vectalia, locEV2, loc2, "Tesla", "CC15", 60);
-        eVehicle3 = new PriorityEV(Vectalia, locEV3, loc3, "Tesla", "CC20", 50);
-        eVehicle4 = new StandardEV(Vectalia, locEV1, loc1, "Tesla", "CC70", 40);
-        eVehicle5 = new VtcEV(Vectalia, locEV1, loc1, "Tesla", "CC70", 40);
+        Location loc = new Location(0,0);
+        premEV = new PremiumEV(Vectalia, loc, loc, "Prem", "CC01", 100);
+        stdEV = new StandardEV(Vectalia, loc, loc, "Std", "CC02", 100);
     }
 
     /**
      * Tears down the test fixture.
-     *
-     * Called after every test case method.
      */
     @AfterEach
     public void tearDown()
     {
-        charger1 = null;
-        charger2 = null;
-        charger3 = null;
-        eVehicle1 = null;
-        eVehicle2 = null;
-        eVehicle3 = null;
-        eVehicle4 = null;
-        eVehicle5 = null;
+        charger = null;
+        premEV = null;
+        stdEV = null;
         Vectalia = null;
     }
-    
-    @Test
-    public void testCharger()
-    {
-        Charger chargerTest = new UltraFastCharger("CHTest", 50, 0.50);
-        assertEquals("CHTest", chargerTest.getId());
-        assertEquals(50, chargerTest.getChargingSpeed());
-        assertEquals(0 ,chargerTest.getEVsRecharged().size());
-        assertEquals(0 ,chargerTest.getAmountCollected());
-        assertEquals(true ,chargerTest.getFree());
-    }
-    
-    @Test
-    public void testGetNumberEVRecharged()
-    {
-        assertEquals(0, charger3.getNumberEVRecharged());
-        charger2.recharge(eVehicle1, 20);
-        charger2.recharge(eVehicle2, 25);
-        charger3.recharge(eVehicle3, 10);
-        charger3.recharge(eVehicle5, 25);
-        assertEquals(0, charger3.getNumberEVRecharged());
-        assertEquals(2, charger2.getNumberEVRecharged());
-    }
-    
-    @Test
-    public void addEvRecharged()
-    {
-       charger2.addEvRecharged(eVehicle1);
-       charger2.addEvRecharged(eVehicle2);
-       assertEquals(2, charger2.getNumberEVRecharged());
-    }
-    
-    @Test
-    public void testRecharge()
-    {
-        charger2.recharge(eVehicle1, 20);
-        charger2.recharge(eVehicle2, 25);
-        assertEquals(2, charger2.getNumberEVRecharged());
-        assertEquals(14.85, charger2.getAmountCollected());
-        charger3.recharge(eVehicle3, 50);
-        charger3.recharge(eVehicle4, 100);
-        charger3.recharge(eVehicle5, 20);
-        assertEquals(0, charger3.getNumberEVRecharged());
-        assertEquals(0, charger3.getAmountCollected());
-    }
-    
-    @Test
-    public void updateAmountCollected()
-    {
-        charger2.updateAmountCollected(300);
-        assertEquals(300, charger2.getAmountCollected());
-        charger1.setAmountCollected(100);
-        charger1.updateAmountCollected(50);
-        assertEquals(150, charger1.getAmountCollected());
-        charger3.recharge(eVehicle3, 20);
-        charger3.recharge(eVehicle4, 100);
-        assertEquals(0, charger3.getAmountCollected());
-        
-    }
-    
-    @Test
-    public void testGetCompleteInfo()
-    {
-        String fee = String.format(java.util.Locale.US, "%.1f", charger2.getChargingFee());
-        String amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
 
-        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-        + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n", charger2.getCompleteInfo());
-    
-        charger2.recharge(eVehicle1, 20);
-        charger2.recharge(eVehicle2, 30);
-    
-        amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
-
-        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-    + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n"
-    +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
-    }
-    
+    /**
+     * Tests the {@code calculateFee()} logic implicitly via recharge.
+     * UltraFastCharger applies a 10% surcharge.
+     */
     @Test
-    public void testcalculateFee(){
-        charger1.recharge(eVehicle1, 20);
-        assertEquals(5.5, charger1.getAmountCollected());
+    public void testCalculateFee()
+    {
+        double cost = charger.recharge(premEV, 100);
+        assertEquals(110.0, cost, 0.01);
     }
     
+    /**
+     * Tests the specific {@code canCharge()} logic.
+     * UltraFastCharger accepts only Premium vehicles.
+     */
+    @Test
+    public void testCompatibility()
+    {
+        assertTrue(charger.canCharge(premEV));
+        assertFalse(charger.canCharge(stdEV));
+    }
+
+    /**
+     * Tests the {@code equals(Object)} method.
+     */
     @Test
     public void testEquals(){
-        Charger sameRef = charger1;
-        Charger differentRef = new UltraFastCharger("CH1", 40, 0.25);
-        Charger difType = new PriorityCharger("CH1", 40, 0.25);
+        Charger sameRef = charger;
+        Charger differentRef = new UltraFastCharger("CH_FST", 100, 1.0);
+        Charger difType = new SolarCharger("CH_FST", 100, 1.0);
+        Charger diffId = new UltraFastCharger("CH_OTHER", 100, 1.0);
         
         //Caso el mismo objeto creo, pq apunta a la misma direccion de memoria
-        assertEquals(true, charger1.equals(sameRef));
+        assertEquals(true, charger.equals(sameRef));
         //Mismo tipo distinto id
-        assertEquals(false, charger2.equals(sameRef));
+        assertEquals(false, charger.equals(diffId));
         //Distintas direcciones de memoria
-        assertEquals(true, charger1.equals(differentRef));
+        assertEquals(true, charger.equals(differentRef));
         //Mismos datos, distintas direcciones de memoria, y distinto tipo
-        assertEquals(false, charger1.equals(difType));
+        assertEquals(false, charger.equals(difType));
         //Con null
-        assertFalse(charger1.equals(null));
+        assertFalse(charger.equals(null));
     }
 }

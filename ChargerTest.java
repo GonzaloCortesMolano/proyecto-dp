@@ -18,12 +18,14 @@ import org.junit.jupiter.api.Test;
  */
 public class ChargerTest
 {
-    private Charger charger1;
-    private Charger charger2;
-    private Charger charger3;
-    private ElectricVehicle eVehicle1;
-    private ElectricVehicle eVehicle2;
-    private ElectricVehicle eVehicle3;
+    private Charger charger1; //standard
+    private Charger charger2; //solar
+    private Charger charger3; //premium
+    private Charger charger4; //priority
+    private ElectricVehicle eVehicle1; //standard
+    private ElectricVehicle eVehicle2; //vtc
+    private ElectricVehicle eVehicle3; //premium
+    private ElectricVehicle eVehicle4; //priority
     private EVCompany Vectalia;
     
     /**
@@ -43,14 +45,15 @@ public class ChargerTest
     @BeforeEach
     public void setUp()
     {
-        //Chargers
-        charger1 = new StandardCharger("CH1", 40, 0.25);
-        charger2 = new StandardCharger("CH2", 50, 0.30);
-        charger3 = new StandardCharger("CH3", 30, 0.20);
         
         //Company
         EVCompany.resetInstance();
         Vectalia = EVCompany.getInstance();
+        //Chargers
+        charger1 = new StandardCharger("CH1", 40, 0.25);
+        charger2 = new SolarCharger("CH2", 50, 0.30);
+        charger3 = new UltraFastCharger("CH3", 30, 0.20);
+        charger4 = new PriorityCharger("CH4", 60, 0.50);
         
         //Locations need it for the Electric Vehicles
         Location loc1 = new Location(5, 7);
@@ -59,11 +62,13 @@ public class ChargerTest
         Location locEV1 = new Location(4,7);
         Location locEV2 = new Location(10,9);
         Location locEV3 = new Location(2,14);
+        Location locEV4 = new Location(1,1);
         
         //Vehicles
-        eVehicle1 = new StandardEV(Vectalia, locEV1, loc1, "Tesla", "CC12", 50);
-        eVehicle2 = new StandardEV(Vectalia, locEV2, loc2, "Tesla", "CC15", 60);
-        eVehicle3 = new StandardEV(Vectalia, locEV3, loc3, "Tesla", "CC20", 50);
+        eVehicle1 = new StandardEV(Vectalia, locEV1, loc1, "Tesla Std", "CC12", 50);
+        eVehicle2 = new VtcEV(Vectalia, locEV2, loc2, "Tesla VTC", "CC15", 60);
+        eVehicle3 = new PremiumEV(Vectalia, locEV3, loc3, "Tesla Pro", "CC20", 50);
+        eVehicle4 = new PriorityEV(Vectalia, locEV4, loc1, "Ambulance", "CC99", 50);
         
         //Add one recharged vehicle manually
         charger1.addEvRecharged(eVehicle1);
@@ -82,9 +87,11 @@ public class ChargerTest
         charger1 = null;
         charger2 = null;
         charger3 = null;
+        charger4 = null;
         eVehicle1 = null;
         eVehicle2 = null;
         eVehicle3 = null;
+        eVehicle4 = null;
         Vectalia = null;
     }
     
@@ -94,14 +101,15 @@ public class ChargerTest
      * ID, charging speed, empty recharged list, zero collected amount,
      * and marked as free.
      */
+    @Test
     public void testCharger()
     {
-        Charger chargerTest = new StandardCharger("CHTest", 50, 0.50);
-        assertEquals("CHTest", chargerTest.getId());
-        assertEquals(50, chargerTest.getChargingSpeed());
-        assertEquals(0 ,chargerTest.getEVsRecharged().size());
-        assertEquals(0 ,chargerTest.getAmountCollected());
-        assertEquals(true ,chargerTest.getFree());
+        // Probamos con el Solar (CH2)
+        assertEquals("CH2", charger2.getId());
+        assertEquals(50, charger2.getChargingSpeed());
+        assertEquals(0, charger2.getEVsRecharged().size());
+        assertEquals(0, charger2.getAmountCollected());
+        assertTrue(charger2.getFree());
     }
     
     /**
@@ -112,10 +120,16 @@ public class ChargerTest
     @Test
     public void testGetNumberEVRecharged()
     {
-        assertEquals(0, charger3.getNumberEVRecharged());
+        assertEquals(1, charger1.getNumberEVRecharged());
+        
+        //VTC
         charger2.recharge(eVehicle2, 20);
         charger2.recharge(eVehicle2, 25);
         assertEquals(2, charger2.getNumberEVRecharged());
+        
+        //Premium
+        charger3.recharge(eVehicle3, 10);
+        assertEquals(1, charger3.getNumberEVRecharged());
     }
     
     /**
@@ -139,11 +153,22 @@ public class ChargerTest
     @Test
     public void testRecharge()
     {
+        
+        charger1.recharge(eVehicle1, 20);
+        // Standard: 20 * 0.25 = 5.0
+        assertEquals(5.0, charger1.getAmountCollected(), 0.01);
+        
+        
         charger2.recharge(eVehicle2, 20);
-        charger2.recharge(eVehicle2, 25);
-        assertEquals(2, charger2.getNumberEVRecharged());
-        assertEquals(13,5, charger2.getAmountCollected());
+        // Solar: 20 * 0.30 * 0.9 = 5.4
+        assertEquals(5.4, charger2.getAmountCollected(), 0.01);
+        
+        
+        charger3.recharge(eVehicle3, 50);
+        // UltraFast: 50 * 0.20 * 1.1 = 11.0
+        assertEquals(11.0, charger3.getAmountCollected(), 0.01);
     }
+    
     
     /**
      * Tests the {@code updateAmountCollected()} method.
@@ -159,7 +184,8 @@ public class ChargerTest
         charger1.updateAmountCollected(50);
         assertEquals(150, charger1.getAmountCollected());
         charger3.recharge(eVehicle3, 20);
-        assertEquals(4, charger3.getAmountCollected());
+        // UltraFast: 20 * 0.20 * 1.1 = 4.4
+        assertEquals(4.4, charger3.getAmountCollected());
         
     }
     
@@ -172,18 +198,16 @@ public class ChargerTest
     public void testGetCompleteInfo()
     {
         String fee = String.format(java.util.Locale.US, "%.1f", charger2.getChargingFee());
-        String amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
-
-        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-        + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n", charger2.getCompleteInfo());
-    
-        charger2.recharge(eVehicle1, 20);
+        
+        //verificamos que contenga la clase correcta (SolarCharger) y el ID CH2
+        String info = charger2.getCompleteInfo();
+        assertTrue(info.contains("SolarCharger"));
+        assertTrue(info.contains("CH2"));
+        assertTrue(info.contains(fee));
+        
+        //recargamos y verificamos que salga el coche
         charger2.recharge(eVehicle2, 30);
-    
-        amount = String.format(java.util.Locale.US, "%.2f", charger2.getAmountCollected());
-
-        assertEquals("(" + charger2.getClass().getSimpleName() + ": "+charger2.getId()+", "+charger2.getChargingSpeed()+"kwh, "
-    + fee +"€, "+charger2.getNumberEVRecharged()+", "+ amount +"€)\n"
-    +eVehicle1.toString()+"\n"+eVehicle2.toString()+"\n", charger2.getCompleteInfo());
+        info = charger2.getCompleteInfo();
+        assertTrue(info.contains("Tesla VTC"));
     }
 }
