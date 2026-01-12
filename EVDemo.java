@@ -186,18 +186,7 @@ public class EVDemo
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
         for(ChargingStation station : stations) {
-            
             System.out.println(station.getCompleteInfo()); 
-            
-            
-            /*
-            List<Charger> cargadoresOrdenados = new ArrayList<>(station.getChargers());
-            Collections.sort(cargadoresOrdenados, new ComparatorChargers());
-            
-            for(Charger charger : cargadoresOrdenados) {
-                System.out.println(charger.toString());
-            }
-            */
         }
        
     }
@@ -217,19 +206,9 @@ public class EVDemo
         
 
 
-        //usar um set
+        //usar un set
         List<ElectricVehicle> finalVehicles = new ArrayList<>(vehicles);
         Collections.sort(finalVehicles, new ComparatorElectricVehicleIdleCount());
-        /*{
-            @Override
-            public int compare(ElectricVehicle v1, ElectricVehicle v2) {
-                int idleCompare = Integer.compare(v2.getIdleCount(), v1.getIdleCount());
-                if (idleCompare != 0) {
-                    return idleCompare;
-                }
-                return v1.getPlate().compareTo(v2.getPlate());
-            }
-        });*/
 
         for(ElectricVehicle ev : finalVehicles) {
             System.out.println(ev.getInitialFinalInfo());

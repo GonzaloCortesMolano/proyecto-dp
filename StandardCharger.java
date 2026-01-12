@@ -18,16 +18,7 @@ public class StandardCharger extends Charger
         types.add(VehicleTier.STANDARD);
         types.add(VehicleTier.VTC);
     }
-    /*
-     * 
-    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
-        if(canCharge(vehicle)){
-            return super.recharge(vehicle, kwsRecharging);
-        }
-        
-        return 0;
-    }
-    */ 
+    
     // NO se implementa calculateFee().
     // Se reutiliza la lógica base del padre automáticamente por Template Method.
     
@@ -46,14 +37,4 @@ public class StandardCharger extends Charger
         }
         return false;
     }
-    
-    
-    /**
-     * TODO devuelve si el vehiculo puede cargar ahi
-
-    @Override
-    public boolean canCharge(ElectricVehicle vehicle){
-        return compareType(vehicle.getType());
-    }
-    */
 }

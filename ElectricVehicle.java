@@ -417,8 +417,14 @@ public abstract class ElectricVehicle
      */
     protected void notifyCompany(Charger charger) { //este método lo llaman las compañías que necesiten 
                                                     //notificar; PriorityEV, no.
-        if (getCompany() != null) {
+        try{
+            if (getCompany() == null) {
+                throw new IllegalArgumentException("No charger available");
+            }
             getCompany().registerRecharge(charger, this);
+        }
+        catch(IllegalArgumentException e){
+            System.err.println("Error while notifying vehicle " + getPlate() + ": " + e.getMessage());
         }
     }
     
