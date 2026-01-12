@@ -66,8 +66,7 @@ public abstract class ElectricVehicle
             this.chargesCount=0;
             this.chargesCost=0;
             this.type = null;
-        }
-        catch(IllegalArgumentException e){
+        } catch(IllegalArgumentException e){
             System.err.println("Error creating vehicle: " + e.getMessage());
         }
     }
