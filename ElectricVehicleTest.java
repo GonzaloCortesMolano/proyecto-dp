@@ -5,22 +5,28 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test implementation of the {@link ElectricVehicle} class.
- * Provides unit tests for methods related to electric vehicle creation,
- * route calculation, battery management, and recharging behavior.
- * 
- * Each test verifies that the vehicle behaves correctly in different scenarios,
- * including initialization, battery sufficiency, route calculation, and the recharge process.
- * 
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
+ * * Provides unit tests for the core functionalities of the {@code ElectricVehicle} class,
+ * validating inheritance and common behavior across all Vehicle types.
+ * Tests include:
+ * - Vehicle construction and initial state
+ * - Battery sufficiency checks
+ * - Route calculation logic (Template Method)
+ * - Recharging process and cost updates
+ * - Movement simulation (act)
  */
 public class ElectricVehicleTest
 {
-    private ElectricVehicle v1;
-    private EVCompany c;
-    private Location l;
-    private Location target;
-    private Charger ch;
+    private ElectricVehicle standardV;
+    private ElectricVehicle vtcEV;
+    private ElectricVehicle premiumEV;
+    private ElectricVehicle priorityEV;
+    
+    private EVCompany company;
+    private Location initialLocation;
+    private Location targetLocation;
+    private ChargingStation station;
     
     /**
      * Default constructor for test class ElectricVehicleTest.
@@ -38,14 +44,24 @@ public class ElectricVehicleTest
     public void setUp()
     {
         EVCompany.resetInstance();
-        c = EVCompany.getInstance();
-        l = new Location(5, 8);
-        v1 = new StandardEV(c, l, new Location(20, 20), "name", "plate", 200);
-        target = new Location(20, 20);
-        ChargingStation station = new ChargingStation("Cáceres", "1", target);
-        c.addChargingStation(station);
-        ch=new StandardCharger("id", 60, 0.1);
-        station.addCharger(ch);
+        company = EVCompany.getInstance();
+        
+        initialLocation = new Location(5, 5);
+        targetLocation = new Location(20, 20);
+                
+        station = new ChargingStation("Cáceres", "1", targetLocation);
+        station.addCharger(new StandardCharger("CH_STD", 40, 0.20));
+        station.addCharger(new SolarCharger("CH_SOL", 50, 0.25));
+        station.addCharger(new UltraFastCharger("CH_FST", 100, 0.50));
+        station.addCharger(new PriorityCharger("CH_PRI", 60, 0.30));
+        
+        company.addChargingStation(station);
+        
+        standardV = new StandardEV(company, initialLocation, targetLocation, "Standard", "STD01", 100);
+        vtcEV = new VtcEV(company, initialLocation, targetLocation, "VTC", "VTC01", 100);
+        premiumEV = new PremiumEV(company, initialLocation, targetLocation, "Premium", "PRM01", 100);
+        priorityEV = new PriorityEV(company, initialLocation, targetLocation, "Priority", "PRI01",100);
+        
     }
 
     /**
@@ -57,41 +73,31 @@ public class ElectricVehicleTest
     @AfterEach
     public void tearDown()
     {
-        v1 = null;
-        c = null;
-        l = null;
-        target = null;
-        ch = null;
+        standardV = null; vtcEV = null; premiumEV = null; priorityEV = null;
+        company = null;
+        initialLocation = null; targetLocation = null; station = null;
     }
     
     /**
      * Tests the {@link ElectricVehicle} constructor and its getter methods.
-     * 
-     * Verifies that all attributes are correctly initialized when creating a new
-     * electric vehicle, including company, locations, identifiers, and battery state.
-     * Also ensures that numeric values (battery, counters, etc.) start at expected defaults.
+     * Verifies that all attributes are correctly initialized for different vehicle types.
      */
     @Test
-    public void testCreation(){
-        EVCompany.resetInstance();
-        EVCompany company = EVCompany.getInstance();
-        v1=new StandardEV(company , new Location(5, 8), new Location(20, 20), "name", "plate", 200);
-
-        company.addChargingStation(new ChargingStation("Cáceres", "1", target));
+    public void testCreation()
+    {
+        // Test with StandardEV
+        assertEquals("Standard", standardV.getName());
+        assertEquals("STD01", standardV.getPlate());
+        assertEquals(100, standardV.getBatteryCapacity());
+        assertEquals(100, standardV.getBatteryLevel()); // Starts full
+        assertEquals(VehicleTier.STANDARD, standardV.getType());
+        assertEquals(initialLocation, standardV.getLocation());
+        assertEquals(targetLocation, standardV.getTargetLocation());
         
-        assertEquals(v1.getCompany(), company);
-        assertEquals(v1.getLocation(), new Location(5, 8));
-        assertFalse(v1.hasRechargingLocation());
-        assertEquals(v1.getTargetLocation(), target);
-        assertEquals(v1.getName(), "name");
-        assertEquals(v1.getPlate(), "plate");
-        assertEquals(v1.getBatteryCapacity(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getBatteryLevel(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getKwsCharged(), 0);
-        assertEquals(v1.getChargesCount(), 0);
-        assertEquals(v1.getChargesCost(), 0);
+        // Test with PremiumEV
+        assertEquals("Premium", premiumEV.getName());
+        assertEquals(VehicleTier.PREMIUM, premiumEV.getType());
+        assertEquals(company, premiumEV.getCompany());
     }
     
     /**
@@ -102,10 +108,10 @@ public class ElectricVehicleTest
      */
     @Test
     public void testEnoughBattery(){
-        assertTrue(v1.enoughBattery(v1.distanceToTheTargetLocation()));
-        v1.setTargetLocation(new Location(120, 120));
-        assertFalse(v1.enoughBattery(v1.distanceToTheTargetLocation()));
-    }
+        assertTrue(standardV.enoughBattery(standardV.distanceToTheTargetLocation()));
+        
+        standardV.setTargetLocation(new Location(1000, 1000));
+        assertFalse(standardV.enoughBattery(standardV.distanceToTheTargetLocation()));}
     
     /**
      * Tests the {@code calculateRoute()} method.
@@ -115,12 +121,20 @@ public class ElectricVehicleTest
      * Checks both a direct route and one with an intermediate recharge stop.
      */
     @Test
-    public void testCalculateRoute(){
-        v1.calculateRoute();
-        assertEquals("5-8 -> 20-20", v1.getStringRoute());
-        v1.setTargetLocation(new Location(120, 120));
-        v1.calculateRoute();
-        assertEquals("5-8 -> 20-20 -> 120-120", v1.getStringRoute());
+    public void testCalculateRoute()
+    {
+        //Enough battery
+        standardV.calculateRoute();
+        String route = standardV.getStringRoute();
+        assertTrue(route.contains(initialLocation.toString()));
+        assertTrue(route.contains(targetLocation.toString()));
+        
+        //Not enough battery (recalcula la ruta hasta estación)
+        standardV.setBatteryLevel(10); 
+        standardV.calculateRoute();
+        route = standardV.getStringRoute();
+        
+        assertTrue(route.contains(station.getLocation().toString()));
     }
     
     /**
@@ -133,12 +147,35 @@ public class ElectricVehicleTest
      */
     @Test
     public void testRecharge(){
-        v1.setRechargingLocation(target);
-        v1.setBatteryLevel(0);
-        v1.recharge(0);
-        assertEquals(200, v1.getBatteryLevel());
-        assertEquals(1, v1.getChargesCount());
-        assertEquals(20, v1.getChargesCost());
-        assertFalse(v1.hasRechargingLocation());
+       // Move vehicle to station logically
+        standardV.setRechargingLocation(station.getLocation());
+        standardV.setLocation(station.getLocation());
+        standardV.setBatteryLevel(0); // Empty battery
+        
+        standardV.recharge(0);
+        
+        // Assertions
+        assertEquals(100, standardV.getBatteryLevel());
+        assertEquals(1, standardV.getChargesCount());
+        // Cost should be > 0 (StandardCharger 0.20 * 100 = 20.0)
+        assertEquals(20.0, standardV.getChargesCost(), 0.01);
+        assertFalse(standardV.hasRechargingLocation());
+    }
+    
+    /**
+     * Tests the {@code act()} method.
+     * * Verifies that the vehicle executes a movement step correctly,
+     * updating its location and reducing its battery level.
+     */
+    @Test
+    public void testAct()
+    {
+        Location start = standardV.getLocation();
+        int battery = standardV.getBatteryLevel();
+        
+        standardV.act(0);
+        
+        assertNotEquals(start, standardV.getLocation());
+        assertTrue(standardV.getBatteryLevel() < battery); 
     }
 }

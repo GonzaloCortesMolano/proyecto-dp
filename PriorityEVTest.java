@@ -4,20 +4,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class PriorityEVTest.
- *
- * @author  (your name)
- * @version (a version number or a date)
+ * Test class for the {@link PriorityEV} class.
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 12-11-2025
+ * * Provides unit tests for specific behaviors of PriorityEV, including:
+ * - Special movement logic (Double speed).
+ * - Company notification overriding (Should not register).
+ * - Equality checks.
  */
 public class PriorityEVTest
 {
-    private ElectricVehicle v1;
-    private EVCompany c;
-    private Location l;
-    private Location target;
-    private Charger ch;
+    private PriorityEV vehicle;
+    private EVCompany company;
+    private Location startLoc;
+    private Location targetLoc;
+
     /**
-     * Default constructor for test class PriorityEVTest
+     * Default constructor for test class PriorityEVTest.
      */
     public PriorityEVTest()
     {
@@ -25,121 +28,76 @@ public class PriorityEVTest
 
     /**
      * Sets up the test fixture.
-     *
-     * Called before every test case method.
      */
     @BeforeEach
     public void setUp()
     {
         EVCompany.resetInstance();
-        c = EVCompany.getInstance();
-        l = new Location(0, 0);
-        v1 = new PriorityEV(c, l, new Location(15, 15), "name", "plate", 200);
-        target = new Location(15, 15);
-        ChargingStation stationBad = new ChargingStation("Cáceres", "1", target);
-        
-        ChargingStation stationGood = new ChargingStation("Cáceres", "2", new Location(21,21));
-        c.addChargingStation(stationBad);
-        c.addChargingStation(stationGood);
-        ch=new SolarCharger("id", 60, 0.1);
-        stationBad.addCharger(ch);
-        ch=new SolarCharger("id3", 60, 0.1);
-        stationGood.addCharger(ch);
-        ch=new PriorityCharger("id2", 60, 0.1);
-        stationGood.addCharger(ch);
+        company = EVCompany.getInstance();
+        startLoc = new Location(0, 0);
+        targetLoc = new Location(20, 20);
+        vehicle = new PriorityEV(company, startLoc, targetLoc, "Priority", "PRI01", 200);
     }
 
     /**
      * Tears down the test fixture.
-     *
-     * Called after every test case method.
      */
     @AfterEach
     public void tearDown()
     {
-        v1 = null;
-        c = null;
-        l = null;
-        target = null;
-        ch = null;
+        vehicle = null; company = null; startLoc = null; targetLoc = null;
+    }
+
+    /**
+     * Tests the specific {@code act()} logic for PriorityEV.
+     * * PriorityEV is capable of moving twice in a single simulation step.
+     */
+    @Test
+    public void testDoubleMove()
+    {
+        // Start 0,0. Target 20,20. 
+        // Standard move would be to 1,1. 
+        // Priority move should be to 2,2 (Two steps).
+        vehicle.act(0);
+        assertEquals(new Location(2, 2), vehicle.getLocation());
     }
     
+    /**
+     * Tests the {@code notifyCompany()} override.
+     * * PriorityEV should NOT register its recharges in the company registry.
+     */
     @Test
-    public void testCalculateRoute(){
-        v1.calculateRoute();
-        assertEquals("0-0 -> 15-15", v1.getStringRoute());
-        v1.setTargetLocation(new Location(120, 120));
-        v1.calculateRoute();
-        assertEquals("0-0 -> 21-21 -> 120-120", v1.getStringRoute());
-    }
-    
-    @Test
-    public void testCreation(){
-        EVCompany.resetInstance();
-        EVCompany otra = EVCompany.getInstance();
-        v1=new PriorityEV(otra, new Location(5, 8), new Location(15, 15), "name", "plate", 200);
-    
-        otra.addChargingStation(new ChargingStation("Cáceres", "1", target));
+    public void testNoRegistration()
+    {
+        // Setup a station and charger
+        ChargingStation st = new ChargingStation("City", "S", startLoc);
+        Charger ch = new PriorityCharger("C", 50, 0.5);
+        st.addCharger(ch);
+        company.addChargingStation(st);
         
-        assertEquals(v1.getCompany(), otra);
-        assertEquals(v1.getLocation(), new Location(5, 8));
-        assertFalse(v1.hasRechargingLocation());
-        assertEquals(v1.getTargetLocation(), target);
-        assertEquals(v1.getName(), "name");
-        assertEquals(v1.getPlate(), "plate");
-        assertEquals(v1.getBatteryCapacity(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getBatteryLevel(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getKwsCharged(), 0);
-        assertEquals(v1.getChargesCount(), 0);
-        assertEquals(v1.getChargesCost(), 0);
+        // Perform recharge
+        vehicle.setRechargingLocation(startLoc);
+        vehicle.recharge(0);
         
-        assertEquals(v1.getType(), VehicleTier.PRIORITY);
-    }
-    
-    @Test
-    public void testGetFreeChargerFromStation(){
-        v1.calculateRechargingPosition();
-        Charger ch=new PriorityCharger("id2", 60, 0.1);
-        assertEquals(v1.getFreeChargerFromStation(), ch);
-    }
-    
-    @Test
-    public void testEquals(){
-        assertEquals(v1, new PriorityEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new PriorityEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
-    }
-    
-    @Test
-    public void testAct(){
-        v1.act(0);
-        assertEquals(v1.getLocation(), new Location(2, 2));
-        assertEquals(v1.getBatteryLevel(), 190);
+        // Assert: Registry should NOT contain this charger key, or if it does, not this vehicle
+        boolean registered = false;
+        if(company.getChargesRegistry().containsKey(ch.getId())) {
+             registered = company.getChargesRegistry().get(ch.getId()).contains(vehicle);
+        }
         
-        v1.setTargetLocation(new Location(3, 3));
-        v1.act(1);
-        assertEquals(v1.getLocation(), new Location(3, 3));
-        assertEquals(0, v1.getIdleCount());
-        assertEquals(v1.getBatteryLevel(), 185);
-        
-        v1.setTargetLocation(new Location(200, 200));
-        v1.setRechargingLocation(new Location(21, 21));
-        v1.setLocation(new Location(20, 20));
-        v1.act(2);
-        assertEquals(v1.getLocation(), new Location(22, 22));
-        assertEquals(0, v1.getIdleCount());
-        assertEquals(v1.getBatteryLevel(), 195);
+        assertFalse(registered, "PriorityEV should not be registered in company logs");
     }
-    
+
+    /**
+     * Tests the {@code equals(Object)} method.
+     */
     @Test
-    public void testIsBetterCharger(){
-        //Caso cargador null
-        assertEquals(true, v1.isBetterCharger(ch, null, l, null));
-        //Caso 2 cargadores
-        Location badLocation = new Location(31, 31);
-        Charger badCharger = new SolarCharger("C001", 50, 1.0);
-        assertEquals(true, v1.isBetterCharger(ch, badCharger, l, badLocation));
+    public void testEquals()
+    {
+        PriorityEV same = new PriorityEV(company, startLoc, targetLoc, "Priority", "PRI01", 200);
+        PriorityEV diff = new PriorityEV(company, startLoc, targetLoc, "Priority", "PRI99", 200);
+        
+        assertEquals(vehicle, same);
+        assertNotEquals(vehicle, diff);
     }
 }

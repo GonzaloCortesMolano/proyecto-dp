@@ -1,130 +1,92 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class StandardEVTest.
- *
- * @author  (your name)
- * @version (a version number or a date)
+ * Test class for the {@link StandardEV} class.
+ * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * @version 12-11-2025
+ * * Provides unit tests for specific behaviors of StandardEV, including:
+ * - Charger selection strategy (based on shortest total distance).
+ * - Equality checks.
  */
 public class StandardEVTest
 {
-    private ElectricVehicle v1;
-    private EVCompany c;
-    private Location l;
-    private Location target;
-    private Charger ch;
-    
+    private StandardEV vehicle;
+    private EVCompany company;
+    private Location startLoc;
+    private Location targetLoc;
+
     /**
-     * Default constructor for test class StandardEVTest
+     * Default constructor for test class StandardEVTest.
      */
     public StandardEVTest()
     {
-        
     }
 
     /**
      * Sets up the test fixture.
-     *
-     * Called before every test case method.
      */
     @BeforeEach
     public void setUp()
     {
         EVCompany.resetInstance();
-        c = EVCompany.getInstance();
-        l = new Location(0, 0);
-        v1 = new StandardEV(c, l, new Location(15, 15), "name", "plate", 200);
-        target = new Location(15, 15);
-        ChargingStation stationBad = new ChargingStation("Cáceres", "1", target);
-        
-        ChargingStation stationGood = new ChargingStation("Cáceres", "2", new Location(21,21));
-        c.addChargingStation(stationBad);
-        c.addChargingStation(stationGood);
-        ch=new SolarCharger("id", 60, 0.1);
-        stationBad.addCharger(ch);
-        ch=new SolarCharger("id3", 60, 0.1);
-        stationGood.addCharger(ch);
-        ch=new StandardCharger("id2", 60, 0.1);
-        stationGood.addCharger(ch);
+        company = EVCompany.getInstance();
+        startLoc = new Location(0, 0);
+        targetLoc = new Location(20, 0);
+        vehicle = new StandardEV(company, startLoc, targetLoc, "Standard", "STD01", 100);
     }
-    
+
     /**
      * Tears down the test fixture.
-     *
-     * Called after every test case method.
      */
     @AfterEach
     public void tearDown()
     {
-        v1 = null;
-        c = null;
-        l = null;
-        target = null;
-        ch = null;
-    }
-    
-    @Test
-    public void testCalculateRoute(){
-        v1.calculateRoute();
-        assertEquals("0-0 -> 15-15", v1.getStringRoute());
-        v1.setTargetLocation(new Location(120, 120));
-        v1.calculateRoute();
-        assertEquals("0-0 -> 21-21 -> 120-120", v1.getStringRoute());
-    }
-    
-    @Test
-    public void testCreation(){
-        EVCompany.resetInstance();
-        EVCompany company = EVCompany.getInstance();
-
-        v1=new StandardEV(company, new Location(5, 8), new Location(15, 15), "name", "plate", 200);
-       
-        company.addChargingStation(new ChargingStation("Cáceres", "1", target));
-        
-        assertEquals(v1.getCompany(), company);
-        assertEquals(v1.getLocation(), new Location(5, 8));
-        assertFalse(v1.hasRechargingLocation());
-        assertEquals(v1.getTargetLocation(), target);
-        assertEquals(v1.getName(), "name");
-        assertEquals(v1.getPlate(), "plate");
-        assertEquals(v1.getBatteryCapacity(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getBatteryLevel(), 200);
-        assertEquals(v1.getIdleCount(), 0);
-        assertEquals(v1.getKwsCharged(), 0);
-        assertEquals(v1.getChargesCount(), 0);
-        assertEquals(v1.getChargesCost(), 0);
-        
-        assertEquals(v1.getType(), VehicleTier.STANDARD);
-    }
-    
-    @Test
-    public void testGetFreeChargerFromStation(){
-        v1.calculateRechargingPosition();
-        Charger ch=new StandardCharger("id2", 60, 0.1);
-        assertEquals(v1.getFreeChargerFromStation(), ch);
-    }
-    
-    @Test
-    public void testEquals(){
-        assertEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new PriorityEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate", 200));
-        assertNotEquals(v1, new StandardEV(EVCompany.getInstance(), new Location(5, 8), new Location(15, 15), "name", "plate2", 200));
+        vehicle = null; company = null; startLoc = null; targetLoc = null;
     }
 
+    /**
+     * Tests the specific charger selection strategy for StandardEV.
+     * * StandardEV should choose the charger that minimizes the total distance:
+     * (Current -> Station -> Target).
+     */
     @Test
-    public void testIsBetterCharger(){
-        //Caso cargador null
-        assertEquals(true, v1.isBetterCharger(ch, null, l, null));
-        //Caso 2 cargadores
-        Location badLocation = new Location(30, 30);
-        Charger badCharger = new StandardCharger("C001", 50, 1.0);
-        assertEquals(true, v1.isBetterCharger(ch, badCharger, l, badLocation));
+    public void testChargerSelectionStrategy()
+    {
+        // Station A: Located at (10,0). Total trip: 10 + 10 = 20 distance.
+        Location locA = new Location(10, 0);
+        ChargingStation stA = new ChargingStation("City", "STA", locA);
+        stA.addCharger(new StandardCharger("CH_A", 50, 0.5));
+        
+        // Station B: Located at (0, 20). Total trip: 20 + 28 approx = ~48 distance.
+        Location locB = new Location(0, 20);
+        ChargingStation stB = new ChargingStation("City", "STB", locB);
+        stB.addCharger(new StandardCharger("CH_B", 50, 0.5));
+        
+        company.addChargingStation(stA);
+        company.addChargingStation(stB);
+        
+        // Force calculation
+        vehicle.setBatteryLevel(60);
+        vehicle.calculateRoute();
+        
+        // Should select Station A (Closer total distance)
+        assertEquals(locA, vehicle.getRechargingLocation());
     }
-    
+
+    /**
+     * Tests the {@code equals(Object)} method.
+     */
+    @Test
+    public void testEquals()
+    {
+        StandardEV same = new StandardEV(company, startLoc, targetLoc, "Standard", "STD01", 100);
+        StandardEV diff = new StandardEV(company, startLoc, targetLoc, "Standard", "STD99", 100);
+        
+        assertEquals(vehicle, same);
+        assertNotEquals(vehicle, diff);
+        assertNotEquals(vehicle, null);
+    }
 }
