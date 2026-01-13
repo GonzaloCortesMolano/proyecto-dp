@@ -180,7 +180,10 @@ public abstract class ElectricVehicle
         return this.chargesCost;
     }
     
-    /*TODO*/
+    /**
+     * Gets the specific type/tier of the electric vehicle.
+     * @return The {@link Enum} representing the vehicle type, or null if not set.
+     */
     public Enum getType(){
         return this.type;
     }
@@ -202,7 +205,6 @@ public abstract class ElectricVehicle
     /**
      * Set the required final target location.
      * @param location Where to go. Must not be null.
-     * @throws NullPointerException If location is null.
      */
     public void setTargetLocation(Location location)
     {
@@ -331,10 +333,24 @@ public abstract class ElectricVehicle
             setRechargingLocation(betterStation); // Si no se encuentra ninguna, se asigna null
         }
     } 
-    //Compara dos cargadores según el criterio del vehículo. Cada subclase tendrá su propia implementación
+    
+    /**
+     * Compares two chargers according to the vehicle's specific criteria. 
+     * Each subclass implements its own logic (e.g., shortest distance, lowest cost).
+     * @param newCharger The new charger to evaluate.
+     * @param currentBest The currently selected best charger.
+     * @param newLoc The location of the new charger.
+     * @param bestLoc The location of the current best charger.
+     * @return {@code true} if {@code newCharger} is considered better than {@code currentBest}, {@code false} otherwise.
+     */
     protected abstract boolean isBetterCharger(Charger newCharger, Charger currentBest, Location newLoc, Location bestLoc);
     
-    //requisitos necesarios para tomar la estacion como correcta
+    /**
+     * Checks if a station meets the basic requirements to be considered for recharging.
+     * @param distToStation The distance to the station.
+     * @param currentLocation The location of the station.
+     * @return {@code true} if the vehicle has enough battery to reach it and is not already there, {@code false} otherwise.
+     */
     boolean requirements(int distToStation, Location currentLocation){
         if(enoughBattery(distToStation) && !getLocation().equals(currentLocation)){
             return true;
@@ -353,23 +369,42 @@ public abstract class ElectricVehicle
         return true;
      }
      
-     //devuelve si puede llegar a la estacion, o false si ni siquiera tiene
-     public boolean canArriveStation(){
+    /**
+     * Checks if the vehicle can reach the planned recharging station with its current battery.
+     * @return {@code true} if it has a recharging location and enough battery to get there, {@code false} otherwise.
+     */
+    public boolean canArriveStation(){
         return hasRechargingLocation() && enoughBattery(getLocation().distance(getRechargingLocation()));    
     }
     
+    /**
+     * Checks if the vehicle can reach its final target location directly with its current battery.
+     * @return {@code true} if battery is sufficient, {@code false} otherwise.
+     */
     public boolean canArriveTarget(){
         return enoughBattery(distanceToTheTargetLocation());
     }
-    //devuelve si esta en el objetivo
+
+    /**
+     * Checks if the vehicle has arrived at its final target location.
+     * @return {@code true} if the current location equals the target location, {@code false} otherwise.
+     */
     public boolean isInTarget(){
         return location.equals(targetLocation);
     }
     
+    /**
+     * Checks if the vehicle is currently located at its planned recharging station.
+     * @return {@code true} if the vehicle has a recharging location and is at that location, {@code false} otherwise.
+     */
     public boolean isInStation(){
         return hasRechargingLocation() && location.equals(rechargingLocation);
     }
-    // devuelve si acaba de recargar
+    
+    /**
+     * Checks if the vehicle has completely recharged its battery.
+     * @return {@code true} if the battery level equals the battery capacity, {@code false} otherwise.
+     */
     public boolean hasRecharged(){
         return getBatteryLevel()==getBatteryCapacity();
     }
@@ -397,7 +432,13 @@ public abstract class ElectricVehicle
            load(step, freeCharger);
        }
     } 
-    //proceso de carga
+    
+    /**
+     * Executes the loading process at a specific charger.
+     * Charges battery to max, updates stats, notifies the company, and recalculates the route.
+     * @param step The current simulation step.
+     * @param freeCharger The charger to use.
+     */
     public void load(int step, Charger freeCharger){
         try{
             if(freeCharger == null){
@@ -418,9 +459,9 @@ public abstract class ElectricVehicle
         }
     }
     
-    
     /**
-     * Notifica a la compañía que se ha realizado una carga.
+     * Notifies the company that a recharge has been performed.
+     * @param charger The charger where the recharge took place.
      */
     protected void notifyCompany(Charger charger) { //este método lo llaman las compañías que necesiten 
                                                     //notificar; PriorityEV, no.
@@ -429,7 +470,10 @@ public abstract class ElectricVehicle
         }
     }
     
-    //coge un cargador de su tipo
+    /**
+     * Retrieves a free charger from the current station compatible with this vehicle's type.
+     * @return A compatible {@link Charger} if available, or {@code null} otherwise.
+     */
     public Charger getFreeChargerFromStation(){
         if(type==null){
             return company.getChargingStation(rechargingLocation).getFreeCharger();
@@ -450,11 +494,20 @@ public abstract class ElectricVehicle
         return "(step: " + step + " - " + info.substring(1); // quie hay un \n
     }
 
-    //muestra el texto de llegada
+    /**
+     * Generates a message indicating the vehicle has arrived at its final destination.
+     * @param step The current simulation step.
+     * @return A formatted string with the arrival message.
+     */
     public String getArrivalInfo(int step){
         return "(step: " + step + " - "+ this.getClass().getSimpleName()+ ": " + this.getPlate() + " at target destination ********)";
     }
-    //muestra el texto al llegar a una estacion
+    
+    /**
+     * Generates a message indicating the vehicle is recharging at a station.
+     * @param step The current simulation step.
+     * @return A formatted string with the recharging details (kWh recharged, cost, etc.).
+     */
     public String getChargingInfo(int step){
         ChargingStation station = getCompany().getChargingStation(getRechargingLocation());
         Charger charger=getFreeChargerFromStation();
@@ -535,8 +588,10 @@ public abstract class ElectricVehicle
         }
     }
     
-    /*
-     * Refactorizamos para permitir que las subclases reutilicen la lógica de movimiento
+    /**
+     * Moves the vehicle towards its next destination (either the recharging station or the final target).
+     * Updates location, reduces battery, and handles arrival or recharging events.
+     * @param step The current simulation step.
      */
     protected void move(int step){
             Location destination;
