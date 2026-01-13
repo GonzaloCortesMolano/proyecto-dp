@@ -21,7 +21,8 @@ public class StandardCharger extends Charger
      * @param id    The unique identifier of the charger.
      * @param speed The charging speed in kWh. Must be positive.
      * @param fee   The price per kWh. Must be non-negative.
-     * @throws IllegalArgumentException if speed is not positive or fee is negative.
+     * @throws RuntimeException if {@code id} is null or empty, {@code speed} {@code fee} are lower or equal than 0.
+     * @throws IllegalArgumentException if types is null.
      */
     public StandardCharger(String id, int speed, double fee)
     {

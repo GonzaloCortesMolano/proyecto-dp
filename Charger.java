@@ -20,7 +20,6 @@ public abstract class Charger
     private List<ElectricVehicle> eVsRecharged;
     private double amountCollected;
     private boolean free;
-
     protected List<Enum> types;
     
     /**
@@ -29,6 +28,7 @@ public abstract class Charger
      * @param id The unique identifier of the charger.
      * @param speed The maximum charging speed in kWh.
      * @param fee The cost per kWh for charging.
+     * @throws RuntimeException if {@code id} is null or empty, {@code speed} {@code fee} are lower or equal than 0.
      */
     public Charger(String id, int speed, double fee)
     {   try{
@@ -236,9 +236,14 @@ public abstract class Charger
     }
     
     /**
-     * MÉTODO GANCHO (Hook Method) o Primitiva.
-     * Implementación por defecto del cálculo del coste.
-     * Las subclases (Solar, UltraFast) sobrescribirán esto.
+     * Hook method for fee calculation.
+     * 
+     * Default implementation multiplies kWh by the charging fee.
+     * Subclasses may override this method to apply discounts
+     * or surcharges.
+     * 
+     * @param kwsRecharging Amount of energy recharged
+     * @return Calculated recharge cost
      */
     protected double calculateFee(int kwsRecharging) {
         return kwsRecharging * getChargingFee();
@@ -286,7 +291,15 @@ public abstract class Charger
     }
     
     /**
-     * TODO devuelve si el vehiculo puede cargar ahi
+     * Determines whether this {@code Charger} can recharge the given
+     * {@link ElectricVehicle}.
+     * 
+     * This method checks the compatibility between the charger and the vehicle
+     * based on the vehicle type restrictions configured for this charger.
+     * 
+     * @param vehicle The electric vehicle requesting a recharge
+     * @return {@code true} if the charger can recharge the given vehicle,
+     *         {@code false} otherwise
      */
     public boolean canCharge(ElectricVehicle vehicle){
         if (vehicle == null) {
@@ -299,7 +312,17 @@ public abstract class Charger
         
         return compareType(vehicle.getType()); 
     }
-    //mira si el tipo introducido es compatible con el mismo
+    
+    /**
+     * Checks whether the given vehicle type is compatible with this {@code Charger}.
+     * 
+     * The method compares the provided type against the list of vehicle types
+     * supported by this charger.
+     *
+     * @param type The vehicle type to be checked for compatibility
+     * @return {@code true} if the charger supports the given vehicle type,
+     *         {@code false} otherwise
+     */
     public boolean compareType(Enum type){
         return types.contains(type);
     }
