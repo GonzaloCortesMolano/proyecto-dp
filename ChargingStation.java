@@ -230,6 +230,44 @@ public class ChargingStation
     }
     
     /**
+     * Searches for the cheapest charger in the station that is free and compatible with the vehicle.
+     * This method iterates through the available chargers and selects the one with the lowest fee.
+     *
+     * @param vehicle The {@link ElectricVehicle} requesting the charge.
+     * @return The cheapest compatible {@link Charger} available, or {@code null} if none are found.
+     */
+    public Charger getCheapestCharger(ElectricVehicle vehicle) {
+        Charger best = null;
+        for (Charger c : chargers) {
+            if (c.getFree() && c.canCharge(vehicle)) {
+                if (best == null || c.getChargingFee() < best.getChargingFee()) {
+                    best = c;
+                }
+            }
+        }
+        return best;
+    }
+
+    /**
+     * Searches for the fastest charger in the station that is free and compatible with the vehicle.
+     * This method iterates through the available chargers and selects the one with the highest charging speed.
+     *
+     * @param vehicle The {@link ElectricVehicle} requesting the charge.
+     * @return The fastest compatible {@link Charger} available, or {@code null} if none are found.
+     */
+    public Charger getFastestCharger(ElectricVehicle vehicle) {
+        Charger best = null;
+        for (Charger c : chargers) {
+            if (c.getFree() && c.canCharge(vehicle)) {
+                if (best == null || c.getChargingSpeed() > best.getChargingSpeed()) {
+                    best = c;
+                }
+            }
+        }
+        return best;
+    }
+    
+    /**
      * Compares this charging station with another object for equality.
      * Two stations are considered equal if they share the same ID.
      *

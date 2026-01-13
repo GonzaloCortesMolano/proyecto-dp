@@ -187,6 +187,65 @@ import org.junit.jupiter.api.Test;
     }
     
     /**
+     * Tests {@code getCheapestCharger()}.
+     * <p>
+     * Verifies that the station selects the charger with the lowest fee among those available
+     * and compatible with the vehicle.
+     * </p>
+     */
+    @Test
+    public void testGetCheapestCharger()
+    {
+
+        Charger cheapest = station1.getCheapestCharger(eVehicle1);
+        assertEquals(charger3, cheapest, "Debería devolver charger3 (0.20€)");
+        
+
+        charger3.setFree(false);
+
+        cheapest = station1.getCheapestCharger(eVehicle1);
+        assertEquals(charger1, cheapest, "Si charger3 está ocupado, el siguiente es charger1");
+    }
+
+    /**
+     * Tests {@code getFastestCharger()}.
+     * <p>
+     * Verifies that the station selects the charger with the highest charging speed among those available
+     * and compatible with the vehicle.
+     * </p>
+     */
+    @Test
+    public void testGetFastestCharger()
+    {
+
+        Charger fastest = station1.getFastestCharger(eVehicle1);
+        assertEquals(charger4, fastest, "Debería devolver charger4 (60kwh)");
+        
+
+        charger4.setFree(false);
+
+        fastest = station1.getFastestCharger(eVehicle1);
+        assertEquals(charger2, fastest, "Si charger4 está ocupado, el siguiente es charger2");
+    }
+    
+    /**
+     * Tests charger compatibility during selection.
+     * <p>
+     * Verifies that a vehicle type (Priority) that is not compatible with Standard chargers
+     * does not receive any charger, even if they are free.
+     * </p>
+     */
+    @Test
+    public void testGetChargerCompatibility()
+    {
+        PriorityEV priorityCar = new PriorityEV(Vectalia, new Location(0,0), new Location(5,5), "Prio", "P0000", 50);
+        
+        Charger result = station1.getCheapestCharger(priorityCar);
+        
+        assertNull(result, "Un PriorityEV no debe recibir un StandardCharger aunque esté libre");
+    }
+    
+    /**
      * Tests {@code getCompleteInfo()}.
      * <p>
      * Ensures that the method returns a string representation
