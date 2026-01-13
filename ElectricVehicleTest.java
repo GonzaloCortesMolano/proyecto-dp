@@ -167,17 +167,17 @@ public class ElectricVehicleTest
      * * Verifies that the vehicle executes a movement step correctly,
      * updating its location and reducing its battery level.
      */
-    /*
+    
     @Test
     public void testAct()
     {
         Location start = standardV.getLocation();
         int battery = standardV.getBatteryLevel();
         
-        standardV.act(0);
+        standardV.possibilities(0);
         
         assertNotEquals(start, standardV.getLocation());
         assertTrue(standardV.getBatteryLevel() < battery); 
     }
-    */
+    
 }
