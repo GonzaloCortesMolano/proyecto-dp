@@ -26,8 +26,13 @@ public class StandardCharger extends Charger
     public StandardCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(VehicleTier.STANDARD);
-        types.add(VehicleTier.VTC);
+        try{
+            if(this.types==null) {throw new NullPointerException();}
+            types.add(VehicleTier.STANDARD);
+            types.add(VehicleTier.VTC);
+        } catch(NullPointerException e){
+            System.err.println("Error in the creation of the StandardCharger");
+        }
     }
     
     // NO se implementa calculateFee().

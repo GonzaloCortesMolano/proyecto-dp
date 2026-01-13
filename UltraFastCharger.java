@@ -25,7 +25,12 @@ public class UltraFastCharger extends Charger
     public UltraFastCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(VehicleTier.PREMIUM);
+        try{
+            if(this.types==null) {throw new NullPointerException();}
+            types.add(VehicleTier.PREMIUM);
+        } catch(NullPointerException e){
+            System.err.println("Error in the creation of the StandardCharger");
+        }
     }
     
     /**

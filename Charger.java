@@ -33,7 +33,7 @@ public abstract class Charger
     public Charger(String id, int speed, double fee)
     {   try{
             if(id == null || id.isEmpty()){
-                throw new IllegalArgumentException("Charger need a valid Id (Not null or empty)");
+                throw new NullPointerException("Charger need a valid Id (Not null or empty)");
             }
             if(speed <= 0){
                 throw new IllegalArgumentException("Charging speed of Charger must be positive");
@@ -41,14 +41,14 @@ public abstract class Charger
             if(fee <= 0) {
                 throw new IllegalArgumentException("Charging fee of Charger must be positive");
             }        
-        this.id=id;
-        this.chargingSpeed=speed;
-        this.chargingFee = fee;
-        this.eVsRecharged = new ArrayList<ElectricVehicle>();
-        this.amountCollected = 0;
-        this.free = true;
-        types=new ArrayList<Enum>();
-        } catch(IllegalArgumentException e){
+            this.id=id;
+            this.chargingSpeed=speed;
+            this.chargingFee = fee;
+            this.eVsRecharged = new ArrayList<ElectricVehicle>();
+            this.amountCollected = 0;
+            this.free = true;
+            types=new ArrayList<Enum>();
+        } catch(RuntimeException e){
             System.err.println("Error in the creation of the Charger: " + e.getMessage());
         }
     }
