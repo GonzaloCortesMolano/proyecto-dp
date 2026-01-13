@@ -42,78 +42,96 @@ public class EVDemo
     
     
     /**
-     * Creates the {@link ElectricVehicle}s based on {@code numVehiclesCreated}, assigns them
-     * starting and target {@link Location}s, and adds them to the company.
-     * The vehicles list is sorted by plate using {@link ComparatorEVPlate}.
+     * Creates the electric vehicles defined by the selected {@link DemoType}.
+     * <p>
+     * Each vehicle is assigned an initial location, a target destination,
+     * a vehicle tier, and a battery capacity. Vehicles are added to the
+     * {@link EVCompany} and their routes are calculated before the
+     * simulation starts.
+     * </p>
      */
     private void createElectricVehicles() {
-        Location [] locations = {new Location(1,1), new Location(1,1), new Location(1,19), new Location(1,19), 
-                                new Location(19,1), new Location(19,1), new Location(10,19), new Location(19,10),
-                                new Location(10,10), new Location(10,10)};
+        Location [] locations = {
+            new Location(1,1), new Location(1,1), new Location(1,19), new Location(1,19), 
+            new Location(19,1), new Location(19,1), new Location(10,19), new Location(19,10),
+            new Location(10,10), new Location(10,10)
+        };
 
-        Location [] targetLocations = {new Location(20,20), new Location(20,20), new Location(19,1), new Location(19,1), 
-                                       new Location(1,19), new Location(1,19), new Location(19,10), new Location(10,19),
-                                       new Location(10,20), new Location(20,10)};
+        Location [] targetLocations = {
+            new Location(20,20), new Location(20,20), new Location(19,1), new Location(19,1), 
+            new Location(1,19), new Location(1,19), new Location(19,10), new Location(10,19),
+            new Location(10,20), new Location(20,10)
+        };
                                         
-        //createLocations(locations,targetLocations);
-        for (int i=0;i < DEMO.getNumVehiclesToCreate();i++){
+        for (int i = 0; i < DEMO.getNumVehiclesToCreate(); i++) {
             ElectricVehicle ev;
             int module = i % VehicleTier.numTiers();
-            if (VehicleTier.values()[module] == VehicleTier.PRIORITY) ev = new PriorityEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
-            else if (VehicleTier.values()[module] == VehicleTier.VTC) ev = new VtcEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
-            else if (VehicleTier.values()[module] == VehicleTier.PREMIUM) ev = new PremiumEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
-            else ev = new StandardEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+
+            if (VehicleTier.values()[module] == VehicleTier.PRIORITY)
+                ev = new PriorityEV(company, locations[i], targetLocations[i], "EV"+i, i+"CCC", (i+1)*(20-i));
+            else if (VehicleTier.values()[module] == VehicleTier.VTC)
+                ev = new VtcEV(company, locations[i], targetLocations[i], "EV"+i, i+"CCC", (i+1)*(20-i));
+            else if (VehicleTier.values()[module] == VehicleTier.PREMIUM)
+                ev = new PremiumEV(company, locations[i], targetLocations[i], "EV"+i, i+"CCC", (i+1)*(20-i));
+            else
+                ev = new StandardEV(company, locations[i], targetLocations[i], "EV"+i, i+"CCC", (i+1)*(20-i));
+
             ev.calculateRoute();
             company.addElectricVehicle(ev);
         }
-        // TODO: Complete code here if needed
-        this.vehicles = new ArrayList<>(company.getVehicles());
 
+        this.vehicles = new ArrayList<>(company.getVehicles());
     }
     
 
     /**
-     * Creates predefined {@link ChargingStation}s and adds them to the company.
-     * The stations list is sorted by ID using {@link ComparatorChargingStationId}.
+     * Creates the charging stations defined by the selected {@link DemoType}
+     * and adds them to the {@link EVCompany}.
      */
     private void createStations() {  
-        Location [] locations = {new Location(5,5), new Location(15,15), new Location(5,15), new Location(15,5), new Location(10,10)};
+        Location [] locations = {
+            new Location(5,5), new Location(15,15),
+            new Location(5,15), new Location(15,5),
+            new Location(10,10)
+        };
                                 
-        for (int i=0;i<DEMO.getNumStationsToCreate();i++){
-            company.addChargingStation(new ChargingStation("Cáceres","CC0" + i,locations[i]));
+        for (int i = 0; i < DEMO.getNumStationsToCreate(); i++) {
+            company.addChargingStation(
+                new ChargingStation("Cáceres", "CC0" + i, locations[i])
+            );
         }
         
-        // TODO: Complete code here if needed
         this.stations = new ArrayList<>(company.getCityStations());
     }
 
     /**
-     * Creates a fixed number of {@link Charger} units for each {@link ChargingStation}
-     * and orders the chargers within each station.
+     * Creates chargers for each charging station.
+     * <p>
+     * Different charger types are created depending on the station index
+     * and charger index. Chargers are ordered once added to each station.
+     * </p>
      */
     private void createChargers() {  
         List<ChargingStation> stations = new ArrayList<>(company.getCityStations());
-        int j=0;
-        for (ChargingStation station : stations){
-            for (int i=0;i<DEMO.getNumChargersToCreate();i++){
-                // Creates chargers with varying speed and fee based on index 'i' and 'j'.
+        int j = 0;
+
+        for (ChargingStation station : stations) {
+            for (int i = 0; i < DEMO.getNumChargersToCreate(); i++) {
                 Charger ch;
-                if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate()-1)) {
-                    ch = new SolarCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
+
+                if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate() - 1)) {
+                    ch = new SolarCharger(station.getId() + "_00" + i, (i+j+1)*20, (i+1)*0.20f);
                 }    
                 else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())) {
-                    ch = new UltraFastCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
+                    ch = new UltraFastCharger(station.getId() + "_00" + i, (i+j+1)*20, (i+1)*0.20f);
                 } 
-                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate())+1) {
-                    ch = new PriorityCharger(station.getId() + "_00" + i, ((i+j+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
+                else if (i % DEMO.getNumChargersToCreate() == (j % DEMO.getNumStationsToCreate()) + 1) {
+                    ch = new PriorityCharger(station.getId() + "_00" + i, (i+j+1)*20, (i+1)*0.20f);
                 }    
                 else {
-                    ch = new StandardCharger(station.getId() + "_00" + i, ((i+1)*20), ((i+1)*0.20f));
-                    // TODO: Complete code here if needed
+                    ch = new StandardCharger(station.getId() + "_00" + i, (i+1)*20, (i+1)*0.20f);
                 }    
+
                 station.addCharger(ch);
             }
             station.orderList();
@@ -121,7 +139,9 @@ public class EVDemo
         }    
     }
 
-
+    /**
+     * Constructs the demo environment and runs the simulation.
+     */
     public EVDemo() {
         company = EVCompany.getInstance();
         reset();            
@@ -130,25 +150,27 @@ public class EVDemo
     }
 
     /**
-     * 
+     * Resets the simulation environment.
+     * <p>
+     * Clears the company data and recreates charging stations,
+     * chargers, and electric vehicles.
+     * </p>
      */
     public void reset() {
-       
         company.reset();
-        
-        // crear objetos y almacenarlos (hemos ordenado dentro de estos métodos)
         createStations();
         createChargers();
         createElectricVehicles();
     }
 
     /**
-     * 
+     * Executes the simulation for a fixed number of steps.
      */
-    public void run() { //ejecuta la simulación
+    public void run() {
         System.out.println("(------------------)");
         System.out.println("( Simulation start )");
         System.out.println("(------------------)");
+
         for (int i = 0; i < MAXSTEPS; i++) {
             step(i); 
         }
@@ -157,7 +179,9 @@ public class EVDemo
     }
 
     /**
-     * 
+     * Executes a single simulation step.
+     *
+     * @param step The current simulation step.
      */
     public void step(int step) {
         for (ElectricVehicle ev : vehicles) {
@@ -166,66 +190,55 @@ public class EVDemo
     }
 
     /**
-     * 
+     * Displays the initial state of the simulation, including
+     * vehicles and charging stations.
      */
     private void showInitialInfo() {
-        
         System.out.println("( " + company.getName() + " )");
-        
-        //Vehículos ordenados por matrícula
+
         System.out.println("(-------------------)");
         System.out.println("( Electric Vehicles )");
         System.out.println("(-------------------)");
-        for(ElectricVehicle ev : vehicles) {
+        for (ElectricVehicle ev : vehicles) {
             System.out.println(ev.toString()); 
         }
         
-        //Estaciones por ID y sus cargadores ordenados
         System.out.println("(-------------------)");
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
-        for(ChargingStation station : stations) {
+        for (ChargingStation station : stations) {
             System.out.println(station.getCompleteInfo()); 
         }
-       
     }
 
     /**
-     *
+     * Displays the final state of the simulation, including
+     * vehicle arrival information, charging station usage,
+     * and company statistics.
      */
     private void showFinalInfo() {
         System.out.println("(-------------------)");
         System.out.println("( Final information )");
         System.out.println("(-------------------)");
         
-        // Orden: Turno de llegada creciente (idleCount decreciente), luego Matrícula.
-        System.out.println("(-------------------)");
-        System.out.println("( Electric Vehicles )");
-        System.out.println("(-------------------)");
-        
-
-
-        //usar un set
         List<ElectricVehicle> finalVehicles = new ArrayList<>(vehicles);
         Collections.sort(finalVehicles, new ComparatorElectricVehicleIdleCount());
 
-        for(ElectricVehicle ev : finalVehicles) {
+        System.out.println("(-------------------)");
+        System.out.println("( Electric Vehicles )");
+        System.out.println("(-------------------)");
+        for (ElectricVehicle ev : finalVehicles) {
             System.out.println(ev.getInitialFinalInfo());
         }
 
         System.out.println("(-------------------)");
         System.out.println("( Charging Stations )");
         System.out.println("(-------------------)");
-        
-        //cambiar por set
-        
+
         List<ChargingStation> finalStations = new ArrayList<>(stations);
         Collections.sort(finalStations, new ComparatorChargingStationNumberRecharged()); 
         
-        // Registro de notificaciones por cargadores
-        Map<Charger, List<ElectricVehicle>> registry = company.getChargesRegistry();
-        
-        for(ChargingStation cs : finalStations) {
+        for (ChargingStation cs : finalStations) {
             System.out.println(cs.getCompleteInfo());
         }
         
@@ -233,22 +246,23 @@ public class EVDemo
         System.out.println("( Company Info )");
         System.out.println("(--------------)");
         System.out.println("(EVCompany: " + company.getName() + ")");  
-        
-        if (registry != null){
-            for (Map.Entry<Charger, List<ElectricVehicle>> mapa : registry.entrySet()){
-                
-                Charger charger = mapa.getKey(); 
-                List<ElectricVehicle> evs = mapa.getValue();
-                
-                System.out.println(charger.toString());
-                
-                for(ElectricVehicle ev : evs){
+
+        Map<Charger, List<ElectricVehicle>> registry = company.getChargesRegistry();
+        if (registry != null) {
+            for (Map.Entry<Charger, List<ElectricVehicle>> entry : registry.entrySet()) {
+                System.out.println(entry.getKey().toString());
+                for (ElectricVehicle ev : entry.getValue()) {
                     System.out.println(ev.toString());
                 }
             }
         }
     }
 
+    /**
+     * Entry point of the application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         new EVDemo();
     }
