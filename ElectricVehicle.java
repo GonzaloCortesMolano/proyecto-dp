@@ -36,19 +36,19 @@ public abstract class ElectricVehicle
     {   
         try{
             if(company == null){
-                throw new IllegalArgumentException("The vehicle need a owner");
+                throw new NullPointerException("The vehicle need a owner");
             }
             if(location == null){
-                throw new IllegalArgumentException("The vehicle need to stay in a valid Location");
+                throw new NullPointerException("The vehicle need to stay in a valid Location");
             }
             if(targetLocation == null) {
-                throw new IllegalArgumentException("The vehicle have to go to a valid Location");
+                throw new NullPointerException("The vehicle have to go to a valid Location");
             }
             if(name == null || name.isEmpty()){
-                throw new IllegalArgumentException("The vehicle need a valid name (Not null or empty)");
+                throw new NullPointerException("The vehicle need a valid name (Not null or empty)");
             }
             if(plate == null || plate.isEmpty()){
-                throw new IllegalArgumentException("Vehicle need a valid plate (Not null or empty)");
+                throw new NullPointerException("Vehicle need a valid plate (Not null or empty)");
             }
             if(batteryCapacity <= 0) {
                 throw new IllegalArgumentException("The battery capacity of the vehicle must be positive");
@@ -66,6 +66,8 @@ public abstract class ElectricVehicle
             this.chargesCount=0;
             this.chargesCost=0;
             this.type = null;
+        } catch(NullPointerException e){
+            System.err.println("Error creating vehicle: " + e.getMessage());
         } catch(IllegalArgumentException e){
             System.err.println("Error creating vehicle: " + e.getMessage());
         }

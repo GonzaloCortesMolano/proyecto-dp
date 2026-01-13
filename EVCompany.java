@@ -50,7 +50,7 @@ public class EVCompany
     {
         try{
             if(name == null || name.isEmpty()){
-                throw new IllegalArgumentException("The company need a name");
+                throw new NullPointerException("The company need a name");
             }
             this.name = name; 
             this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
