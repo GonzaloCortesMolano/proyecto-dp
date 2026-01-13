@@ -44,7 +44,7 @@ public class EVCompany
      * This constructor is private to enforce the Singleton pattern.
      *
      * @param name The name of the company. Must not be {@code null} or empty.
-     * @throws IllegalArgumentException if the name is {@code null} or empty.
+     * @throws NullPointerException if the name is {@code null} or empty.
      */
     private EVCompany(String name)
     {
@@ -56,7 +56,7 @@ public class EVCompany
             this.subscribedVehicles = new TreeSet<>(new ComparatorElectricVehicleIdleCount()); 
             this.stations = new TreeSet<>(new ComparatorChargingStationNumberRecharged());
             this.chargesRegistry = new TreeMap<>((c1, c2) -> c1.getId().compareTo(c2.getId())); //mapa para guardar los registros de las cargas de cada vehículo
-        } catch(IllegalArgumentException e){
+        } catch(NullPointerException e){
             System.err.println("Error in the creation of the company: " + e.getMessage());
         }
     }
