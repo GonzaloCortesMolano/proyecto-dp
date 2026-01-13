@@ -25,7 +25,12 @@ public class PriorityCharger extends Charger
     public PriorityCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(VehicleTier.PRIORITY);
+        try{
+            if(this.types==null) {throw new NullPointerException();}
+            types.add(VehicleTier.PRIORITY);
+        } catch(NullPointerException e){
+            System.err.println("Error in the creation of the PriorityCharger");
+        }
     }
     
     /**

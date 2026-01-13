@@ -24,7 +24,12 @@ public class SolarCharger extends Charger
     public SolarCharger(String id, int speed, double fee)
     {
         super(id, speed, fee);
-        types.add(VehicleTier.VTC);
+        try{
+            if(this.types==null) {throw new NullPointerException();}
+            types.add(VehicleTier.VTC);
+        } catch(NullPointerException e){
+            System.err.println("Error in the creation of the SolarCharger");
+        }
     }
 
     /**
