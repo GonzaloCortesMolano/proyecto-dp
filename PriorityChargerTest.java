@@ -5,28 +5,49 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link PriorityCharger} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of PriorityCharger:
- * - Fee calculation (Standard logic).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for specific behaviors of PriorityCharger:
+ * <ul>
+ *   <li>Fee calculation (Priority logic).</li>
+ *   <li>Compatibility checks.</li>
+ *   <li>Equality checks.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * Version: 12-11-2025
+ * </p>
  */
 public class PriorityChargerTest
 {
+    /** The PriorityCharger instance under test. */
     private PriorityCharger charger;
+    
+    /** A priority electric vehicle used in tests. */
     private ElectricVehicle prioEV;
+    
+    /** A standard electric vehicle used in tests. */
     private ElectricVehicle stdEV;
+    
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany Vectalia;
 
     /**
-     * Default constructor for test class PriorityChargerTest
+     * Default constructor for the test class.
+     * <p>
+     * Initializes a new instance of {@code PriorityChargerTest}.
+     * </p>
      */
     public PriorityChargerTest()
     {
     }
 
     /**
-     * Sets up the test fixture.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Resets the EVCompany singleton, creates a PriorityCharger, and initializes
+     * both priority and standard electric vehicles.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -43,7 +64,10 @@ public class PriorityChargerTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Cleans up all instances created during setup.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -55,8 +79,11 @@ public class PriorityChargerTest
     }
 
     /**
-     * Tests the specific {@code canCharge()} logic.
-     * PriorityCharger accepts only Priority vehicles.
+     * Tests the {@code calculateFee()} behavior of {@link PriorityCharger}.
+     * <p>
+     * Verifies that the recharge cost for a priority electric vehicle
+     * corresponds to the expected fee calculation.
+     * </p>
      */
     @Test
     public void testCalculateFee()
@@ -66,8 +93,11 @@ public class PriorityChargerTest
     }
     
     /**
-     * Tests the specific {@code canCharge()} logic.
-     * PriorityCharger accepts only Priority vehicles.
+     * Tests the {@code canCharge()} method of {@link PriorityCharger}.
+     * <p>
+     * Ensures that the charger correctly identifies compatible vehicles:
+     * only priority EVs should be accepted; standard EVs should be rejected.
+     * </p>
      */
     @Test
     public void testCompatibility()
@@ -77,7 +107,17 @@ public class PriorityChargerTest
     }
 
     /**
-     * Tests the {@code equals(Object)} method.
+     * Tests the {@code equals(Object)} method of {@link PriorityCharger}.
+     * <p>
+     * Verifies equality checks in various scenarios:
+     * <ul>
+     *   <li>Same object reference</li>
+     *   <li>Different objects with same type and data</li>
+     *   <li>Objects of different types</li>
+     *   <li>Objects with different IDs</li>
+     *   <li>Null comparison</li>
+     * </ul>
+     * </p>
      */
     @Test
     public void testEquals(){

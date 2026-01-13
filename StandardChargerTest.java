@@ -5,29 +5,50 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link StandardCharger} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of StandardCharger:
- * - Fee calculation (Standard logic).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for specific behaviors of StandardCharger:
+ * <ul>
+ *   <li>Fee calculation (Standard logic).</li>
+ *   <li>Compatibility checks.</li>
+ *   <li>Equality checks.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
+ * Version: 12-11-2025
+ * </p>
  */
 public class StandardChargerTest
 {
+    /** The StandardCharger instance under test. */
     private StandardCharger charger;
+    
+    /** A standard electric vehicle used in tests. */
     private ElectricVehicle stdEV;
+    
+    /** A premium electric vehicle used in tests. */
     private ElectricVehicle premEV;
+    
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany Vectalia;
     
     
     /**
-     * Default constructor for test class StandardChargerTest
+     * Default constructor for the test class.
+     * <p>
+     * Initializes a new instance of {@code StandardChargerTest}.
+     * </p>
      */
     public StandardChargerTest()
     {
     }
 
     /**
-     * Sets up the test fixture.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Resets the EVCompany singleton, creates a StandardCharger, and initializes
+     * both standard and premium electric vehicles.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -44,7 +65,10 @@ public class StandardChargerTest
     }
     
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Cleans up all instances created during setup.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -56,8 +80,11 @@ public class StandardChargerTest
     }
 
     /**
-     * Tests the {@code calculateFee()} logic implicitly via recharge.
-     * StandardCharger uses the base fee without modifications.
+     * Tests the {@code calculateFee()} behavior of {@link StandardCharger}.
+     * <p>
+     * Verifies that the recharge cost for a standard electric vehicle
+     * corresponds to the expected fee calculation.
+     * </p>
      */
     @Test
     public void testCalculateFee()
@@ -67,8 +94,11 @@ public class StandardChargerTest
     }
     
     /**
-     * Tests the specific {@code canCharge()} logic.
-     * StandardCharger accepts Standard and VTC vehicles.
+     * Tests the {@code canCharge()} method of {@link StandardCharger}.
+     * <p>
+     * Ensures that the charger correctly identifies compatible vehicles:
+     * standard EVs should be accepted, premium EVs should be rejected.
+     * </p>
      */
     @Test
     public void testCompatibility()
@@ -78,8 +108,17 @@ public class StandardChargerTest
     }
 
     /**
-     * Tests the {@code equals(Object)} method.
-     * Checks equality based on ID and type references.
+     * Tests the {@code equals(Object)} method of {@link StandardCharger}.
+     * <p>
+     * Verifies equality checks in various scenarios:
+     * <ul>
+     *   <li>Same object reference</li>
+     *   <li>Different objects with same type and data</li>
+     *   <li>Objects of different types</li>
+     *   <li>Objects with different IDs</li>
+     *   <li>Null comparison</li>
+     * </ul>
+     * </p>
      */
     @Test
     public void testEquals(){

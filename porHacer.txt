@@ -1,13 +1,2 @@
 Faltan los Test, comentarios que sobran, documentación interna. Try Catch. 
 Ordenaciones internas en las clases y no en EVDemo
-
-
-
-He hecho las pruebas de los modulos de las subclases de Charger. Tengo una duda,
-hay muchas pruebas hechas en las subclases que creo yo que lo que hacen es repetir
-codigo mas que otra cosa, pq basicamente no tiene nada que ver con su tipo 
-de Charger, como UpdateAMountColllected, y hay otras que se comprueban ya de 
-por si en otras que ya hay hechas.
-
-Las de ElectricVehicle no se, no me he puesto a verlas con detalle.
-Pero estan todos los equal de la subclases y sus pequeños modulos

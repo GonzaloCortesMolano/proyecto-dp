@@ -5,17 +5,31 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link SolarCharger} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of SolarCharger:
- * - Fee calculation (10% discount).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for core functionalities of SolarCharger:
+ * <ul>
+ *   <li>Calculation of recharge fees with a 10% discount.</li>
+ *   <li>Compatibility checks to ensure only VTC vehicles can be charged.</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class SolarChargerTest
 {
+    /** The SolarCharger instance under test. */
     private SolarCharger charger;
+
+    /** A VTC electric vehicle used in tests. */
     private ElectricVehicle vtcEV;
+
+    /** A standard electric vehicle used in tests. */
     private ElectricVehicle stdEV;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany Vectalia;
 
     /**
@@ -26,7 +40,7 @@ public class SolarChargerTest
     }
 
     /**
-     * Sets up the test fixture.
+     * Sets up the test fixture before each test method.
      */
     @BeforeEach
     public void setUp()
@@ -43,7 +57,7 @@ public class SolarChargerTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
      */
     @AfterEach
     public void tearDown()
