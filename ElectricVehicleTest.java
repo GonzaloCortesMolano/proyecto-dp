@@ -203,7 +203,7 @@ public class ElectricVehicleTest
         Location start = standardV.getLocation();
         int battery = standardV.getBatteryLevel();
         
-        standardV.possibilities(0); //llamada a possibilities para no mostrar en consola
+        standardV.act(0); 
         
         assertNotEquals(start, standardV.getLocation());
         assertTrue(standardV.getBatteryLevel() < battery); 
