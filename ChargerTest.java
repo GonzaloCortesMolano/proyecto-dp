@@ -5,27 +5,48 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link Charger} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * 
- * Provides unit tests for the core functionalities of the {@code Charger} class,
- * including:
- * - Charger construction and initial state
- * - Counting recharged electric vehicles
- * - Adding vehicles to the recharged list
- * - Performing recharges and updating collected amounts
- * - Retrieving complete information in formatted string output
+ * <p>
+ * Provides unit tests for core functionalities of Charger:
+ * <ul>
+ *   <li>Charger construction and initial state.</li>
+ *   <li>Counting recharged electric vehicles.</li>
+ *   <li>Adding vehicles to the recharged list.</li>
+ *   <li>Performing recharges and updating collected amounts.</li>
+ *   <li>Retrieving complete information in formatted string output.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class ChargerTest
 {
-    private Charger charger1; //standard
-    private Charger charger2; //solar
-    private Charger charger3; //premium
-    private Charger charger4; //priority
-    private ElectricVehicle eVehicle1; //standard
-    private ElectricVehicle eVehicle2; //vtc
-    private ElectricVehicle eVehicle3; //premium
-    private ElectricVehicle eVehicle4; //priority
+    /** A standard charger used in tests. */
+    private Charger charger1;
+
+    /** A solar charger used in tests. */
+    private Charger charger2;
+
+    /** An ultra-fast charger used in tests. */
+    private Charger charger3;
+
+    /** A priority charger used in tests. */
+    private Charger charger4;
+
+    /** A standard electric vehicle used in tests. */
+    private ElectricVehicle eVehicle1;
+
+    /** A VTC electric vehicle used in tests. */
+    private ElectricVehicle eVehicle2;
+
+    /** A premium electric vehicle used in tests. */
+    private ElectricVehicle eVehicle3;
+
+    /** A priority electric vehicle used in tests. */
+    private ElectricVehicle eVehicle4;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany Vectalia;
     
     /**
