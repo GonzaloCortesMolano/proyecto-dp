@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link VtcEV} class.
-<<<<<<< HEAD
-<<<<<<< HEAD
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 12-11-2025
  * * Provides unit tests for specific behaviors of VtcEV, including:
  * - Charger selection strategy (based on lowest charging cost).
  * - Equality checks.
-=======
  * <p>
  * Provides unit tests for core functionalities of VtcEV:
  * <ul>
@@ -27,8 +24,7 @@ import org.junit.jupiter.api.Test;
  * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
  * Version: 12-11-2025
  * </p>
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
-=======
+
  * <p>
  * Provides unit tests for core functionalities of VtcEV:
  * <ul>
@@ -43,17 +39,28 @@ import org.junit.jupiter.api.Test;
  * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
  * Version: 12-11-2025
  * </p>
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
+ * <p>
+ * Provides unit tests for core functionalities of VtcEV:
+ * <ul>
+ *   <li>Creation and initialization of VtcEV objects.</li>
+ *   <li>Calculation of the recharging position.</li>
+ *   <li>Retrieval of free chargers from a station.</li>
+ *   <li>Comparison of chargers to determine the better one.</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class VtcEVTest
 {
-<<<<<<< HEAD
     private VtcEV vehicle;
     private EVCompany company;
     private Location startLoc;
     private Location targetLoc;
 
-=======
     
     /** The VtcEV instance under test. */
     private ElectricVehicle v1;
@@ -76,23 +83,23 @@ public class VtcEVTest
     /** A charging station used to test charger selection (good choice). */
     private ChargingStation stationGood;
     
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
     /**
-<<<<<<< HEAD
-<<<<<<< HEAD
+
      * Default constructor for test class VtcEVTest.
-=======
      * Default constructor for the test class.
      * <p>
      * Initializes a new instance of {@code VtcEVTest}.
      * </p>
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
-=======
+
      * Default constructor for the test class.
      * <p>
      * Initializes a new instance of {@code VtcEVTest}.
      * </p>
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
+
+     * Default constructor for the test class.
+     * <p>
+     * Initializes a new instance of {@code VtcEVTest}.
+     * </p>
      */
     public VtcEVTest()
     {
@@ -123,19 +130,14 @@ public class VtcEVTest
     {
         vehicle = null; company = null; startLoc = null; targetLoc = null;
     }
-<<<<<<< HEAD
+
 
     /**
      * Tests the specific charger selection strategy for VtcEV.
      * * VtcEV should choose the charger with the lowest fee per kWh.
-=======
     
     /**
      * Tests the creation and proper initialization of a VtcEV instance.
-<<<<<<< HEAD
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
-=======
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
      */
     @Test
     public void testChargerSelectionStrategy()
@@ -164,18 +166,13 @@ public class VtcEVTest
         // Debe elegir B porque es más barata
         assertEquals(locB, vehicle.getRechargingLocation());
     }
-<<<<<<< HEAD
 
     /**
      * Tests the {@code equals(Object)} method.
-=======
     
     /**
      * Tests the {@code calculateRechargingPosition()} method.
-<<<<<<< HEAD
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
-=======
->>>>>>> 32360370a669a718ff1d4a21f5a11b04ec5e54ea
+
      */
     @Test
     public void testEquals()
