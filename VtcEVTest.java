@@ -1,29 +1,54 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class VtcEVTest.
- *
- * @author  (your name)
- * @version (a version number or a date)
+ * Test class for the {@link VtcEV} class.
+ * <p>
+ * Provides unit tests for core functionalities of VtcEV:
+ * <ul>
+ *   <li>Creation and initialization of VtcEV objects.</li>
+ *   <li>Calculation of the recharging position.</li>
+ *   <li>Retrieval of free chargers from a station.</li>
+ *   <li>Comparison of chargers to determine the better one.</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class VtcEVTest
 {
     
+    /** The VtcEV instance under test. */
     private ElectricVehicle v1;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany c;
+
+    /** A generic location used in tests. */
     private Location l;
+
+    /** The target location for the vehicle. */
     private Location target;
+
+    /** A charger instance used in tests. */
     private Charger ch;
+
+    /** A charging station used to test charger selection (bad choice). */
     private ChargingStation stationBad;
+
+    /** A charging station used to test charger selection (good choice). */
     private ChargingStation stationGood;
     
     /**
-     * Default constructor for test class VtcEVTest
+     * Default constructor for the test class.
+     * <p>
+     * Initializes a new instance of {@code VtcEVTest}.
+     * </p>
      */
     public VtcEVTest()
     {
@@ -72,6 +97,9 @@ public class VtcEVTest
         stationGood = null;
     }
     
+    /**
+     * Tests the creation and proper initialization of a VtcEV instance.
+     */
     @Test
     public void testCreation(){
         EVCompany.resetInstance();
@@ -97,6 +125,9 @@ public class VtcEVTest
         assertEquals(v1.getType(), VehicleTier.VTC);
     }
     
+    /**
+     * Tests the {@code calculateRechargingPosition()} method.
+     */
     @Test
     public void testCalculateRechargingPosition(){
         v1.calculateRechargingPosition();

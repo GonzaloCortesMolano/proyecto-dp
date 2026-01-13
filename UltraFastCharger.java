@@ -45,14 +45,15 @@ public class UltraFastCharger extends Charger
     }
     
     /**
-     * Indicates whether this charger is equal to another object.
-     * Two {@code UltraFastCharger} objects are considered equal if they
-     * are equal according to {@link Charger#equals(Object)} and are
-     * instances of the same class with identical supported vehicle types.
+     * Checks whether this {@code UltraFastCharger} is equal to another object.
+     * <p>
+     * Two {@code UltraFastCharger} objects are equal if they are equal according to
+     * {@link Charger#equals(Object)} and support the same vehicle types.
+     * </p>
      *
      * @param obj The object to compare with.
-     * @return {@code true} if the given object represents an equivalent
-     *         {@code UltraFastCharger}, {@code false} otherwise.
+     * @return {@code true} if the given object represents an equivalent {@code UltraFastCharger},
+     *         {@code false} otherwise.
      */
     @Override
     public boolean equals(Object obj){
