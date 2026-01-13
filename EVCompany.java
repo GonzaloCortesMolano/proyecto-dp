@@ -171,35 +171,6 @@ public class EVCompany
         return Collections.unmodifiableMap(chargesRegistry);
     }
     
-    
-    // -------------------------------------------------
-    // -------------------- Setters --------------------
-    // -------------------------------------------------
-    
-    /**
-     * Replaces the set of subscribed {@link ElectricVehicle}s.
-     *
-     * @param subsVehicles The new set of vehicles.
-     *                     If {@code null}, the operation is ignored.
-     */
-    public void setSubscribedVehicles(Set<ElectricVehicle> subsVehicles)
-    {
-        if(subsVehicles != null)
-            this.subscribedVehicles = subsVehicles;
-    }
-    
-    /**
-     * Replaces the set of managed {@link ChargingStation}s.
-     *
-     * @param sStations The new set of charging stations.
-     *                  If {@code null}, the operation is ignored.
-     */
-    public void setChargingStations(Set<ChargingStation> sStations)
-    {
-        if(sStations != null)
-            this.stations = sStations;
-    }
-    
     // ------------------------------------------------
     // -------------------- Others --------------------
     // ------------------------------------------------
@@ -238,7 +209,6 @@ public class EVCompany
         this.chargesRegistry.clear(); //nuevo
     }
     
-    
     /**
      * Registers a charging operation performed by a vehicle using a specific charger.
      * Each vehicle is recorded only once per charger.
@@ -262,7 +232,6 @@ public class EVCompany
         }
     }
     }
-    
     
     /**
      * Compares this company to another object for equality.
