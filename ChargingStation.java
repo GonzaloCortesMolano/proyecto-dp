@@ -43,9 +43,10 @@ public class ChargingStation
     /**
      * Constructs a new {@link ChargingStation}.
      *
-     * @param city The city where the station is located.
-     * @param id The unique identifier of the station.
-     * @param location The {@link Location} of the station.
+     * @param city The city where the station is located. Must not be {@code null} or empty.
+     * @param id The unique identifier of the station. Must not be {@code null} or empty.
+     * @param location The {@link Location} of the station. Must not be {@code null}.
+     * @throws NullPointerException If {@code city}, {@code id}, or {@code location} is {@code null} or invalid.
      */
     public ChargingStation(String city, String id, Location location)
     {   

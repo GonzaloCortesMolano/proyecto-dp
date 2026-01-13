@@ -30,7 +30,8 @@ public abstract class ElectricVehicle
      * @param name The name of the vehicle.
      * @param plate The license plate of the vehicle.
      * @param batteryCapacity The maximum capacity of the battery.
-     * @throws NullPointerException If company, location, or targetLocation is null.
+     * @throws NullPointerException If {@code company}, {@code location}, {@code targetLocation}, {@code name}, or {@code plate} is {@code null} (or empty for {@code name} and {@code plate}).
+     * @throws IllegalArgumentException If {@code batteryCapacity} is less than or equal to 0.
      */
     public ElectricVehicle(EVCompany company, Location location, Location targetLocation, String name, String plate, int batteryCapacity)
     {   
