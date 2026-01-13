@@ -180,8 +180,9 @@ public class EVDemo
 
     /**
      * Executes a single simulation step.
-     *
+     * <p>
      * @param step The current simulation step.
+     * </p>
      */
     public void step(int step) {
         for (ElectricVehicle ev : vehicles) {
@@ -260,8 +261,9 @@ public class EVDemo
 
     /**
      * Entry point of the application.
-     *
+     * <p>
      * @param args Command-line arguments (not used).
+     * </p>
      */
     public static void main(String[] args) {
         new EVDemo();
