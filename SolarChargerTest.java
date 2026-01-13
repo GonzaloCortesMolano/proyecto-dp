@@ -41,6 +41,10 @@ public class SolarChargerTest
 
     /**
      * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes the EVCompany instance, creates the SolarCharger under test,
+     * and instantiates one VTC and one Standard electric vehicle.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -58,6 +62,9 @@ public class SolarChargerTest
 
     /**
      * Tears down the test fixture after each test method.
+     * <p>
+     * Clears all object references to ensure isolation between tests.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -69,8 +76,11 @@ public class SolarChargerTest
     }
 
     /**
-     * Tests the {@code calculateFee()} logic implicitly via recharge.
-     * SolarCharger applies a 10% discount.
+     * Tests the {@code calculateFee()} logic via a recharge operation.
+     * <p>
+     * Verifies that the SolarCharger correctly applies a 10% discount to the base fee
+     * when recharging a VTC vehicle.
+     * </p>
      */
     @Test
     public void testCalculateFee()
@@ -80,8 +90,11 @@ public class SolarChargerTest
     }
     
     /**
-     * Tests the specific {@code canCharge()} logic.
-     * SolarCharger accepts only VTC vehicles.
+     * Tests the {@code canCharge()} method.
+     * <p>
+     * Ensures that the SolarCharger only accepts VTC vehicles and rejects others,
+     * such as StandardEV.
+     * </p>
      */
     @Test
     public void testCompatibility()
@@ -92,6 +105,16 @@ public class SolarChargerTest
 
     /**
      * Tests the {@code equals(Object)} method.
+     * <p>
+     * Compares the SolarCharger instance with various other objects:
+     * <ul>
+     *   <li>Same reference: should return true</li>
+     *   <li>Same type, different object: should return true</li>
+     *   <li>Different type but same data: should return false</li>
+     *   <li>Different ID but same type: should return false</li>
+     *   <li>null: should return false</li>
+     * </ul>
+     * </p>
      */
     @Test
     public void testEquals(){

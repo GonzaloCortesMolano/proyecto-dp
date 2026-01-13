@@ -5,17 +5,30 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link PremiumEV} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of PremiumEV, including:
- * - Charger selection strategy (based on highest charging speed).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for core functionalities of PremiumEV:
+ * <ul>
+ *   <li>Charger selection strategy based on highest charging speed.</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class PremiumEVTest
 {
+    /** The PremiumEV instance under test. */
     private PremiumEV vehicle;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany company;
+
+    /** The starting location of the vehicle. */
     private Location startLoc;
+
+    /** The target location of the vehicle. */
     private Location targetLoc;
 
     /**
@@ -26,9 +39,10 @@ public class PremiumEVTest
     }
 
     /**
-     * Sets up the test fixture.
-     * * Initializes the vehicle with a distant target to ensure 'calculateRoute' 
-     * triggers the search for a charging station.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes the PremiumEV instance with a distant target to force charger selection.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -45,7 +59,10 @@ public class PremiumEVTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Resets object references to ensure a clean state between test methods.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -54,9 +71,11 @@ public class PremiumEVTest
     }
 
     /**
-     * Tests the specific charger selection strategy for PremiumEV.
-     * * PremiumEV should choose the charger with the highest charging speed,
-     * regardless of distance (assuming reachable).
+     * Tests the charger selection strategy for PremiumEV.
+     * <p>
+     * Ensures that the PremiumEV chooses the charger with the highest charging speed,
+     * even if it is farther away, assuming it is reachable with the current battery level.
+     * </p>
      */
     @Test
     public void testChargerSelectionStrategy()
@@ -90,6 +109,10 @@ public class PremiumEVTest
 
     /**
      * Tests the {@code equals(Object)} method.
+     * <p>
+     * Ensures that two PremiumEV instances with the same ID are considered equal,
+     * while vehicles with different IDs are not equal.
+     * </p>
      */
     @Test
     public void testEquals()

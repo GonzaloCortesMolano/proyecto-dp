@@ -28,18 +28,6 @@ public class PriorityCharger extends Charger
         types.add(VehicleTier.PRIORITY);
     }
     
-    /*
-    public double recharge(ElectricVehicle vehicle,int kwsRecharging){
-        if(canCharge(vehicle)){
-            return super.recharge(vehicle, kwsRecharging);
-        }
-        
-        return 0;
-    }
-    */ 
-   
-    // Ocurre lo mismo que con StandardCharger.
-    
     /**
      * Indicates whether this charger is equal to another object.
      * Two {@code PriorityCharger} objects are considered equal if they

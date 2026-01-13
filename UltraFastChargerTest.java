@@ -41,6 +41,10 @@ public class UltraFastChargerTest
 
     /**
      * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes the EVCompany instance, creates the UltraFastCharger under test,
+     * and instantiates one Premium and one Standard electric vehicle.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -58,6 +62,9 @@ public class UltraFastChargerTest
 
     /**
      * Tears down the test fixture after each test method.
+     * <p>
+     * Clears all object references to ensure isolation between tests.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -68,9 +75,12 @@ public class UltraFastChargerTest
         Vectalia = null;
     }
 
-    /**
-     * Tests the {@code calculateFee()} logic implicitly via recharge.
-     * UltraFastCharger applies a 10% surcharge.
+     /**
+     * Tests the {@code calculateFee()} logic via a recharge operation.
+     * <p>
+     * Validates that UltraFastCharger correctly applies a 10% surcharge
+     * to the base charging fee when recharging a Premium vehicle.
+     * </p>
      */
     @Test
     public void testCalculateFee()
@@ -80,8 +90,11 @@ public class UltraFastChargerTest
     }
     
     /**
-     * Tests the specific {@code canCharge()} logic.
-     * UltraFastCharger accepts only Premium vehicles.
+     * Tests the {@code canCharge()} method.
+     * <p>
+     * Ensures that the UltraFastCharger only accepts Premium vehicles
+     * and rejects other vehicle types, such as StandardEV.
+     * </p>
      */
     @Test
     public void testCompatibility()
@@ -92,6 +105,17 @@ public class UltraFastChargerTest
 
     /**
      * Tests the {@code equals(Object)} method of {@link UltraFastCharger}.
+     * <p>
+     * Compares the UltraFastCharger instance with various other objects to cover
+     * different scenarios:
+     * <ul>
+     *   <li>Same object reference: should return true</li>
+     *   <li>Same type, different object: should return true</li>
+     *   <li>Different type but same ID/data: should return false</li>
+     *   <li>Different ID but same type: should return false</li>
+     *   <li>null: should return false</li>
+     * </ul>
+     * </p>
      */
     @Test
     public void testEquals(){

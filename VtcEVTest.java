@@ -4,41 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for the {@link VtcEV} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of VtcEV, including:
- * - Charger selection strategy (based on lowest charging cost).
- * - Equality checks.
- * <p>
- * Provides unit tests for core functionalities of VtcEV:
- * <ul>
- *   <li>Creation and initialization of VtcEV objects.</li>
- *   <li>Calculation of the recharging position.</li>
- *   <li>Retrieval of free chargers from a station.</li>
- *   <li>Comparison of chargers to determine the better one.</li>
- *   <li>Equality checks using {@code equals(Object)}.</li>
- * </ul>
- * </p>
- * <p>
- * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
- * Version: 12-11-2025
- * </p>
-
- * <p>
- * Provides unit tests for core functionalities of VtcEV:
- * <ul>
- *   <li>Creation and initialization of VtcEV objects.</li>
- *   <li>Calculation of the recharging position.</li>
- *   <li>Retrieval of free chargers from a station.</li>
- *   <li>Comparison of chargers to determine the better one.</li>
- *   <li>Equality checks using {@code equals(Object)}.</li>
- * </ul>
- * </p>
- * <p>
- * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
- * Version: 12-11-2025
- * </p>
  * <p>
  * Provides unit tests for core functionalities of VtcEV:
  * <ul>
@@ -56,47 +21,20 @@ import org.junit.jupiter.api.Test;
  */
 public class VtcEVTest
 {
-    private VtcEV vehicle;
-    private EVCompany company;
-    private Location startLoc;
-    private Location targetLoc;
-
-    
     /** The VtcEV instance under test. */
-    private ElectricVehicle v1;
+    private VtcEV vehicle;
 
     /** The singleton EVCompany instance used in tests. */
-    private EVCompany c;
+    private EVCompany company;
 
-    /** A generic location used in tests. */
-    private Location l;
+    /** The starting location of the vehicle. */
+    private Location startLoc;
 
-    /** The target location for the vehicle. */
-    private Location target;
-
-    /** A charger instance used in tests. */
-    private Charger ch;
-
-    /** A charging station used to test charger selection (bad choice). */
-    private ChargingStation stationBad;
-
-    /** A charging station used to test charger selection (good choice). */
-    private ChargingStation stationGood;
+    /** The target location of the vehicle. */
+    private Location targetLoc;
     
     /**
-
      * Default constructor for test class VtcEVTest.
-     * Default constructor for the test class.
-     * <p>
-     * Initializes a new instance of {@code VtcEVTest}.
-     * </p>
-
-     * Default constructor for the test class.
-     * <p>
-     * Initializes a new instance of {@code VtcEVTest}.
-     * </p>
-
-     * Default constructor for the test class.
      * <p>
      * Initializes a new instance of {@code VtcEVTest}.
      * </p>
@@ -106,9 +44,10 @@ public class VtcEVTest
     }
 
     /**
-     * Sets up the test fixture.
-     * * Initializes the vehicle with a distant target to ensure 'calculateRoute' 
-     * triggers the search for a charging station.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes the VtcEV instance with a distant target to force charger selection.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -123,7 +62,10 @@ public class VtcEVTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Resets object references to ensure a clean state between test methods.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -133,11 +75,11 @@ public class VtcEVTest
 
 
     /**
-     * Tests the specific charger selection strategy for VtcEV.
-     * * VtcEV should choose the charger with the lowest fee per kWh.
-    
-    /**
-     * Tests the creation and proper initialization of a VtcEV instance.
+     * Tests the charger selection strategy for VtcEV.
+     * <p>
+     * Ensures that the VtcEV chooses the charger with the lowest cost per kWh,
+     * even if it requires traveling a longer distance.
+     * </p>
      */
     @Test
     public void testChargerSelectionStrategy()
@@ -169,10 +111,10 @@ public class VtcEVTest
 
     /**
      * Tests the {@code equals(Object)} method.
-    
-    /**
-     * Tests the {@code calculateRechargingPosition()} method.
-
+     * <p>
+     * Ensures that two VtcEV instances with the same ID are considered equal,
+     * while vehicles with different IDs are not equal.
+     * </p>
      */
     @Test
     public void testEquals()

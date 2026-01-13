@@ -57,11 +57,11 @@ public class ChargerTest
     }
 
     /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     * Initializes chargers, company, vehicles, and links them
-     * to simulate a realistic charging scenario.
+     * Sets up the test fixture before each test.
+     * <p>
+     * Initializes a variety of chargers, locations, and electric vehicles to simulate a realistic
+     * charging scenario. One vehicle is pre-added to a standard charger to test counting logic.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -97,10 +97,11 @@ public class ChargerTest
     }
 
     /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     * Clears all object references to ensure test isolation.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * This ensures each test runs independently and prevents
+     * side effects between tests.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -117,10 +118,11 @@ public class ChargerTest
     }
     
     /**
-     * Tests the {@link Charger} constructor and its getter methods.
-     * Ensures that a new charger is initialized with correct properties:
-     * ID, charging speed, empty recharged list, zero collected amount,
-     * and marked as free.
+     * Tests the correct construction of a charger and initialization of its attributes.
+     * <p>
+     * Verifies that the ID, charging speed, list of recharged vehicles,
+     * and initial collected amount are as expected for a new charger.
+     * </p>
      */
     @Test
     public void testCharger()
@@ -134,9 +136,11 @@ public class ChargerTest
     }
     
     /**
-     * Tests the {@code getNumberEVRecharged()} method.
-     * Verifies that it correctly counts the number of electric vehicles
-     * recharged by the charger after multiple operations.
+     * Verifies that {@code getNumberEVRecharged()} returns the correct
+     * number of electric vehicles recharged by the charger.
+     * <p>
+     * Ensures that the counter increments correctly after multiple recharge operations.
+     * </p>
      */
     @Test
     public void testGetNumberEVRecharged()
@@ -155,8 +159,10 @@ public class ChargerTest
     
     /**
      * Tests the {@code addEvRecharged()} method.
+     * <p>
      * Ensures that manually adding vehicles to the recharged list
      * correctly increments the internal counter.
+     * </p>
      */
     @Test
     public void addEvRecharged()
@@ -168,8 +174,11 @@ public class ChargerTest
     
     /**
      * Tests the {@code recharge()} method.
+     * <p>
      * Validates that performing recharges increases the counter
-     * of recharged electric vehicles appropriately and the amount collected.
+     * of recharged vehicles and updates the collected amount correctly,
+     * taking into account the charger type (standard, solar, ultra-fast).
+     * </p>
      */
     @Test
     public void testRecharge()
@@ -193,8 +202,10 @@ public class ChargerTest
     
     /**
      * Tests the {@code updateAmountCollected()} method.
-     * Ensures that the amount collected by a charger updates correctly
-     * when new amounts are added, either directly or through recharges.
+     * <p>
+     * Ensures that the collected amount updates correctly when new amounts
+     * are added directly or through recharge operations.
+     * </p>
      */
     @Test
     public void updateAmountCollected()
@@ -212,8 +223,10 @@ public class ChargerTest
     
     /**
      * Tests the {@code getCompleteInfo()} method.
+     * <p>
      * Verifies that the method returns a formatted string representation
-     * of the charger and its associated vehicles (if any).
+     * of the charger and all associated recharged vehicles.
+     * </p>
      */
     @Test
     public void testGetCompleteInfo()

@@ -5,18 +5,31 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link PriorityEV} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of PriorityEV, including:
- * - Special movement logic (Double speed).
- * - Company notification overriding (Should not register).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for core functionalities of PriorityEV:
+ * <ul>
+ *   <li>Special movement logic (double movement per simulation step).</li>
+ *   <li>Company notification overriding (should not register in company logs).</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class PriorityEVTest
 {
+    /** The PriorityEV instance under test. */
     private PriorityEV vehicle;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany company;
+
+    /** The starting location of the vehicle. */
     private Location startLoc;
+
+    /** The target location of the vehicle. */
     private Location targetLoc;
 
     /**
@@ -27,7 +40,11 @@ public class PriorityEVTest
     }
 
     /**
-     * Sets up the test fixture.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes a PriorityEV instance at a starting location with a target, and links it
+     * to the EVCompany singleton.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -40,17 +57,26 @@ public class PriorityEVTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Clears references to ensure test isolation between cases.
+     * </p>
      */
     @AfterEach
     public void tearDown()
     {
-        vehicle = null; company = null; startLoc = null; targetLoc = null;
+        vehicle = null; 
+        company = null; 
+        startLoc = null; 
+        targetLoc = null;
     }
 
     /**
-     * Tests the specific {@code act()} logic for PriorityEV.
-     * * PriorityEV is capable of moving twice in a single simulation step.
+     * Tests the {@code act()} method for double movement.
+     * <p>
+     * Ensures that the PriorityEV moves two steps per simulation tick instead of one, 
+     * reflecting its priority behavior in the simulation.
+     * </p>
      */
     @Test
     public void testDoubleMove()
@@ -63,8 +89,11 @@ public class PriorityEVTest
     }
     
     /**
-     * Tests the {@code notifyCompany()} override.
-     * * PriorityEV should NOT register its recharges in the company registry.
+     * Tests the {@code notifyCompany()} override for PriorityEV.
+     * <p>
+     * Verifies that recharges performed by PriorityEV do not register in the company's
+     * recharge registry, as this type of vehicle is exempt from logging.
+     * </p>
      */
     @Test
     public void testNoRegistration()
@@ -90,6 +119,10 @@ public class PriorityEVTest
 
     /**
      * Tests the {@code equals(Object)} method.
+     * <p>
+     * Ensures that two PriorityEV instances with the same ID are considered equal,
+     * and vehicles with different IDs are not equal.
+     * </p>
      */
     @Test
     public void testEquals()

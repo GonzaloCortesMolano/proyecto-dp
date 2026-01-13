@@ -38,8 +38,7 @@ public class SolarCharger extends Charger
      * @return The discounted charging cost.
      */
     public double calculateFee(int kwsRecharging){
-        //if(canCharge(vehicle)) (ya comprobamos esto dentro de recharge en Charger)
-            return (super.calculateFee(kwsRecharging))*0.9;
+        return (super.calculateFee(kwsRecharging))*0.9;
     }
     
     /**

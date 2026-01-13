@@ -5,28 +5,49 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link ChargingStation} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 11-11-2025
- * Provides unit tests for core functionalities such as managing chargers,
- * tracking recharged vehicles, and verifying station properties.
- * 
- * Tests include:
- * - Getting a free charger
- * - Counting the total number of recharged vehicles
- * - Station construction and property getters
- * - Adding chargers to a station
- */
-public class ChargingStationTest
+ * <p>
+ * Provides unit tests for core functionalities of ChargingStation:
+ * <ul>
+ *   <li>Station construction and property getters.</li>
+ *   <li>Adding chargers to a station.</li>
+ *   <li>Retrieving a free charger using {@code getFreeCharger()}.</li>
+ *   <li>Counting the total number of recharged vehicles across all chargers.</li>
+ *   <li>Retrieving complete information in a formatted string.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés, Sergio Zambrano<br>
+ * Version: 11-11-2025
+ * </p>
+ */class ChargingStationTest
 {
+    /** The first charging station used in the tests. */
     private ChargingStation station1;
+    
+    /** The second charging station used in the tests. */
     private ChargingStation station2;
+    
+    /** The first charger associated with a charging station for testing purposes. */
     private Charger charger1;
+    
+    /** The second charger associated with a charging station for testing purposes. */
     private Charger charger2;
+    
+    /** The third charger associated with a charging station for testing purposes. */
     private Charger charger3;
+    
+    /** The fourth charger associated with a charging station for testing purposes. */
     private Charger charger4;
+    
+    /** The first electric vehicle used in the tests. */
     private ElectricVehicle eVehicle1;
+    
+    /** The second electric vehicle used in the tests. */
     private ElectricVehicle eVehicle2;
+    
+    /** The singleton instance of the EV company used in the tests. */
     private EVCompany Vectalia;
+    
     /**
      * Default constructor for test class ChargingStationTest
      */
@@ -35,9 +56,11 @@ public class ChargingStationTest
     }
 
     /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes stations, chargers, vehicles, and company instance.
+     * Also pre-recharges some vehicles to simulate occupied chargers.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -78,8 +101,9 @@ public class ChargingStationTest
 
     /**
      * Tears down the test fixture.
-     *
+     * <p>
      * Called after every test case method.
+     * </p>
      */
     @AfterEach
     public void tearDown()
@@ -97,9 +121,11 @@ public class ChargingStationTest
     
     /**
      * Tests the {@code getFreeCharger()} method.
+     * <p>
      * Ensures that the method returns the first charger that is free
      * (i.e., has {@code free == true}) among all chargers in the station.
      * Also validates behavior when some chargers are occupied.
+     * </p>
      */
     @Test
     public void testGetFreeCharger()
@@ -110,9 +136,12 @@ public class ChargingStationTest
     
     /**
      * Tests the {@code getNumberEVRecharged()} method.
+     * <p>
      * Verifies that the method correctly sums all electric vehicles
      * recharged across all chargers in the station.
+     * <p>
      * Checks both a station with recharged vehicles and a station with none.
+     * <>/p
      */
     @Test
     public void testGetNumerEVRecharged()
@@ -122,8 +151,11 @@ public class ChargingStationTest
     }
     
     /**
-     * Tests the {@link ChargingStation} constructor and some of its getters.
-     * Ensures that the station is created with the correct city, ID, and location.
+     * Tests the {@link ChargingStation} constructor and basic getters.
+     * <p>
+     * Verifies that a newly created station has the correct city, ID, location,
+     * and starts with zero chargers.
+     * </p>
      */
     @Test
     public void testChargingStation()
@@ -137,9 +169,10 @@ public class ChargingStationTest
     }
     
     /**
-     * Tests the {@code addCharger()} method.
-     * Ensures that chargers can be added to a station and that
-     * the station's list of chargers updates its size correctly.
+     * Tests {@code addCharger()}.
+     * <p>
+     * Ensures that chargers can be added to a station and the internal list updates correctly.
+     * </p>
      */
     @Test
     public void testAddCharger()
@@ -154,8 +187,11 @@ public class ChargingStationTest
     }
     
     /**
-     * Tests the {@code getCompleteInfo()} method.
-     * Ensures that the string is in the same format than as required.
+     * Tests {@code getCompleteInfo()}.
+     * <p>
+     * Ensures that the method returns a string representation
+     * containing the station and all its chargers in the correct format.
+     * </p>
      */
     @Test
     public void testGetCompleteInfo()

@@ -5,17 +5,30 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for the {@link StandardEV} class.
- * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
- * @version 12-11-2025
- * * Provides unit tests for specific behaviors of StandardEV, including:
- * - Charger selection strategy (based on shortest total distance).
- * - Equality checks.
+ * <p>
+ * Provides unit tests for core functionalities of StandardEV:
+ * <ul>
+ *   <li>Charger selection strategy based on shortest total distance (Current -> Station -> Target).</li>
+ *   <li>Equality checks using {@code equals(Object)}.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano<br>
+ * Version: 12-11-2025
+ * </p>
  */
 public class StandardEVTest
 {
+    /** The StandardEV instance under test. */
     private StandardEV vehicle;
+
+    /** The singleton EVCompany instance used in tests. */
     private EVCompany company;
+
+    /** The starting location of the vehicle. */
     private Location startLoc;
+
+    /** The target location of the vehicle. */
     private Location targetLoc;
 
     /**
@@ -26,7 +39,11 @@ public class StandardEVTest
     }
 
     /**
-     * Sets up the test fixture.
+     * Sets up the test fixture before each test method.
+     * <p>
+     * Initializes the StandardEV instance with a starting location, a target location,
+     * and a reference to the EVCompany singleton.
+     * </p>
      */
     @BeforeEach
     public void setUp()
@@ -39,18 +56,27 @@ public class StandardEVTest
     }
 
     /**
-     * Tears down the test fixture.
+     * Tears down the test fixture after each test method.
+     * <p>
+     * Clears references to ensure test isolation.
+     * </p>
      */
     @AfterEach
     public void tearDown()
     {
-        vehicle = null; company = null; startLoc = null; targetLoc = null;
+        vehicle = null; 
+        company = null; 
+        startLoc = null; 
+        targetLoc = null;
     }
 
     /**
-     * Tests the specific charger selection strategy for StandardEV.
-     * * StandardEV should choose the charger that minimizes the total distance:
-     * (Current -> Station -> Target).
+     * Tests the charger selection strategy for StandardEV.
+     * <p>
+     * StandardEV should select the charging station that minimizes the total distance
+     * from the current location to the station and then to the target.
+     * This ensures the vehicle makes efficient routing decisions.
+     * </p>
      */
     @Test
     public void testChargerSelectionStrategy()
@@ -78,6 +104,10 @@ public class StandardEVTest
 
     /**
      * Tests the {@code equals(Object)} method.
+     * <p>
+     * Ensures that two StandardEV instances with the same ID are considered equal,
+     * and that vehicles with different IDs or null references are not equal.
+     * </p>
      */
     @Test
     public void testEquals()
