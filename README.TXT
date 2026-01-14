@@ -1,5 +1,5 @@
 Project: EV-Charging-Station-Simulation
-Authors: Professors of the Software Development Course (Desarrollo de Programas)
+Authors: Ricardo Álvarez Sagardoy, Gonzalo Cortés Molano y Sergio Zambrano Vaquero.
 
 This project is an adaptation of the material for the Software Development (Desarrollo de Programas) 
 course at the University of Extremadura, based on the initial structure of the book:
