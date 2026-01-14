@@ -233,7 +233,7 @@ public class EVDemo
      * Displays the initial state of the simulation, including
      * vehicles and charging stations.
      */
-    private void showInitialInfo() {
+     private void showInitialInfo() {
         log("( " + company.getName() + " )");
 
         log("(-------------------)");
