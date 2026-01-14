@@ -12,7 +12,7 @@ import java.util.*;
  * @author: Ricardo Álvarez, Gonzalo Cortés y Sergio Zambrano
  * @version 13-1-2026
  */
-public class EVCompany  
+public class EVCompany extends NotificadorAbstracto 
 {
     /**
      * The name of the EV company.
@@ -48,6 +48,7 @@ public class EVCompany
      */
     private EVCompany(String name)
     {
+        super(); //observer
         try{
             if(name == null || name.isEmpty()){
                 throw new NullPointerException("The company need a name");
@@ -207,17 +208,17 @@ public class EVCompany
         this.subscribedVehicles.clear();
         this.stations.clear();
         this.chargesRegistry.clear(); //nuevo
+        clearObservers();
     }
     
     /**
-     * Registers a charging operation performed by a vehicle using a specific charger.
-     * Each vehicle is recorded only once per charger.
-     *
-     * @param charger The charger used for the recharge.
-     * @param vehicle The electric vehicle that was recharged.
+     * Registers a completed recharge for a specific vehicle at a specific charger.
+     * This method updates the internal registry map and notifies all subscribed observers 
+     * about the event (Observer Pattern).
+     * * @param charger The {@link Charger} where the recharge took place.
+     * @param ev The {@link ElectricVehicle} that performed the recharge.
      */
-    public void registerRecharge(Charger charger, ElectricVehicle vehicle)
-    {
+    public void registerRecharge(Charger charger, ElectricVehicle vehicle) {
         if (charger != null && vehicle != null) {
                 
         List<ElectricVehicle> list = chargesRegistry.get(charger);
@@ -230,6 +231,8 @@ public class EVCompany
         if (!list.contains(vehicle)) {
             list.add(vehicle);
         }
+    
+        notifyObservers(charger, vehicle); //cada vez que ocurre registramos, notificamos suscriptores
     }
     }
     

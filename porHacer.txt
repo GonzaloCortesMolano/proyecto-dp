@@ -1,4 +1,0 @@
-Try Catch. 
-comentarios en las clases normales (despues de try y catch)
-revisar resultados otra vez por si acaso
-revisar resto de datos minimos

@@ -172,6 +172,16 @@ public class EVDemo
         }
         
         company = EVCompany.getInstance();
+        
+        
+        //Ejemplo de uso del patrón Observer:
+        //Cada vez que se recarga, a este suscriptor se le muestra un mensaje
+        //En este caso no lo mostramos por consola para que la salida sea idéntica 
+        //a la salida por fichero
+        Suscriptor suscriptor = new Suscriptor("Suscriptor 1");
+        company.addObserver(suscriptor);
+        
+        
         reset();            
         showInitialInfo();  
         run();
