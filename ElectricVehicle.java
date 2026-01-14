@@ -21,6 +21,8 @@ public abstract class ElectricVehicle
     private double chargesCost;
     
     protected Enum type;
+    
+    private List<String> stepLogs;
 
     /**
      * Constructor of class ElectricVehicle.
@@ -67,6 +69,7 @@ public abstract class ElectricVehicle
             this.chargesCount=0;
             this.chargesCost=0;
             this.type = null;
+            this.stepLogs = new ArrayList<>();
         } catch(NullPointerException e){
             System.err.println("Error creating vehicle: " + e.getMessage());
         } catch(IllegalArgumentException e){
@@ -563,14 +566,29 @@ public abstract class ElectricVehicle
       * Moves one step towards the target (recharging or final) or stays idle.
       * @param step The current step of the simulation.
       */
-     public void act(int step)
-     {   
+     public List<String> act(int step)
+     {  
+        stepLogs.clear();
+        
         possibilities(step);
         //Añadir info del paso (step)
-        System.out.println(getStepInfo(step));
-         
+        logMessage(getStepInfo(step));
+        
+        return new ArrayList<>(stepLogs);
     }
     
+    /**
+     * Internal method to store log messages in the buffer instead of printing directly.
+     * @param message The message to log.
+     */
+    protected void logMessage(String message) {
+        stepLogs.add(message);
+    }
+    
+    /**
+     * Determines the possible actions for the vehicle in the current step (move, wait, or calculate route).
+     * @param step The current simulation step.
+     */
     public void possibilities(int step){
          if(canArriveStation() || canArriveTarget()){
              if(isInTarget()) { //estamos en el destino, contamos tiempo parado
@@ -604,13 +622,13 @@ public abstract class ElectricVehicle
                 
             setLocation(location.nextLocation(destination));
             if(isInTarget()) { //si llega a la estacion muestra mensaje
-                 System.out.println(getArrivalInfo(step));
+                 logMessage(getArrivalInfo(step));
             }
             reduceBatteryLevel();
                  
             //si llega a una estacion recarga
             if(isInStation()) {
-               System.out.println(getChargingInfo(step));
+               logMessage(getChargingInfo(step));
                recharge(step); 
             }    
     }

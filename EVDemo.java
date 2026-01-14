@@ -1,4 +1,7 @@
 import java.util.*;
+import java.io.BufferedWriter; 
+import java.io.FileWriter;     
+import java.io.IOException;
 /**
  * Provides a simple demonstration and simulation environment for the 
  * Electric Vehicle (EV) and Charging Station model.
@@ -40,6 +43,25 @@ public class EVDemo
     /** Constant for selecting the demo scenario, using the {@link DemoType} enumeration. */
     private static final DemoType DEMO=DemoType.ADVANCED;
     
+    private BufferedWriter writer; 
+    private static final String OUTPUT_FILE = "simulation_output.txt";
+    
+    /**
+     * Helper method to print to BOTH console and file using BufferedWriter.
+     * 
+     */
+    private void log(String message) {
+        System.out.println(message);
+        
+        if (writer != null) {
+            try {
+                writer.write(message); 
+                writer.newLine();      
+            } catch (IOException e) {
+                System.err.println("Error escribiendo en el fichero: " + e.getMessage()); // [cite: 1275]
+            }
+        }
+    }
     
     /**
      * Creates the electric vehicles defined by the selected {@link DemoType}.
@@ -143,10 +165,24 @@ public class EVDemo
      * Constructs the demo environment and runs the simulation.
      */
     public EVDemo() {
+        try {
+            writer = new BufferedWriter(new FileWriter(OUTPUT_FILE));
+        } catch (IOException e) {
+            System.err.println("Error creando el fichero de salida: " + e.getMessage());
+        }
+        
         company = EVCompany.getInstance();
         reset();            
         showInitialInfo();  
-        run();              
+        run();
+        
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            System.err.println("Error cerrando el fichero: " + e.getMessage());
+        }
     }
 
     /**
@@ -167,9 +203,9 @@ public class EVDemo
      * Executes the simulation for a fixed number of steps.
      */
     public void run() {
-        System.out.println("(------------------)");
-        System.out.println("( Simulation start )");
-        System.out.println("(------------------)");
+        log("(------------------)");
+        log("( Simulation start )");
+        log("(------------------)");
 
         for (int i = 0; i < MAXSTEPS; i++) {
             step(i); 
@@ -186,7 +222,10 @@ public class EVDemo
      */
     public void step(int step) {
         for (ElectricVehicle ev : vehicles) {
-            ev.act(step);
+            List<String> logs = ev.act(step);
+            for(String msg : logs) {
+                log(msg);
+            }
         }
     }
 
@@ -195,20 +234,20 @@ public class EVDemo
      * vehicles and charging stations.
      */
     private void showInitialInfo() {
-        System.out.println("( " + company.getName() + " )");
+        log("( " + company.getName() + " )");
 
-        System.out.println("(-------------------)");
-        System.out.println("( Electric Vehicles )");
-        System.out.println("(-------------------)");
+        log("(-------------------)");
+        log("( Electric Vehicles )");
+        log("(-------------------)");
         for (ElectricVehicle ev : vehicles) {
-            System.out.println(ev.toString()); 
+           log(ev.toString()); 
         }
         
-        System.out.println("(-------------------)");
-        System.out.println("( Charging Stations )");
-        System.out.println("(-------------------)");
+        log("(-------------------)");
+        log("( Charging Stations )");
+        log("(-------------------)");
         for (ChargingStation station : stations) {
-            System.out.println(station.getCompleteInfo()); 
+            log(station.getCompleteInfo()); 
         }
     }
 
@@ -218,42 +257,42 @@ public class EVDemo
      * and company statistics.
      */
     private void showFinalInfo() {
-        System.out.println("(-------------------)");
-        System.out.println("( Final information )");
-        System.out.println("(-------------------)");
+        log("(-------------------)");
+        log("( Final information )");
+        log("(-------------------)");
         
         List<ElectricVehicle> finalVehicles = new ArrayList<>(vehicles);
         Collections.sort(finalVehicles, new ComparatorElectricVehicleIdleCount());
 
-        System.out.println("(-------------------)");
-        System.out.println("( Electric Vehicles )");
-        System.out.println("(-------------------)");
+        log("(-------------------)");
+        log("( Electric Vehicles )");
+        log("(-------------------)");
         for (ElectricVehicle ev : finalVehicles) {
-            System.out.println(ev.getInitialFinalInfo());
+            log(ev.getInitialFinalInfo());
         }
 
-        System.out.println("(-------------------)");
-        System.out.println("( Charging Stations )");
-        System.out.println("(-------------------)");
+        log("(-------------------)");
+        log("( Charging Stations )");
+        log("(-------------------)");
 
         List<ChargingStation> finalStations = new ArrayList<>(stations);
         Collections.sort(finalStations, new ComparatorChargingStationNumberRecharged()); 
         
         for (ChargingStation cs : finalStations) {
-            System.out.println(cs.getCompleteInfo());
+            log(cs.getCompleteInfo());
         }
         
-        System.out.println("(--------------)");
-        System.out.println("( Company Info )");
-        System.out.println("(--------------)");
-        System.out.println("(EVCompany: " + company.getName() + ")");  
+        log("(--------------)");
+        log("( Company Info )");
+        log("(--------------)");
+        log("(EVCompany: " + company.getName() + ")");  
 
         Map<Charger, List<ElectricVehicle>> registry = company.getChargesRegistry();
         if (registry != null) {
             for (Map.Entry<Charger, List<ElectricVehicle>> entry : registry.entrySet()) {
-                System.out.println(entry.getKey().toString());
+                log(entry.getKey().toString());
                 for (ElectricVehicle ev : entry.getValue()) {
-                    System.out.println(ev.toString());
+                    log(ev.toString());
                 }
             }
         }
